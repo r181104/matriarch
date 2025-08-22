@@ -12,9 +12,47 @@ BASEPKGS=(
    zoxide
 )
 
+TERMPKGS=(
+    alacritty
+    kitty
+    ghostty
+)
+
+LSPSRVR=(
+    lua-language-server
+    python-lsp-server
+)
+
+FORMATTER=(
+    stylua
+    prettier
+    python-black
+    python-isort
+    shfmt
+    yamlfmt
+    clang 
+    go-tools
+    prettierd
+    google-java-format
+)
+
 BROWSER=(
     brave-bin
 )
+
+GTK=(
+    gtk2
+    gtk3 
+    gtk4
+    gdk-pixbuf2
+    libcups
+    pango 
+    cairo
+    gtk-update-icon-cache
+    shared-mime-info
+    hicolor-icon-theme
+)
+
 PREFFEREDDM=(
     cosmic
 )
@@ -36,5 +74,9 @@ install_package_group() {
 
 # Install all package groups
 install_package_group "write aything you need I am lazy so not writing anything" "${BASEPKGS[@]}"
+install_package_group "write aything you need I am lazy so not writing anything" "${TERMPKGS[@]}"
+install_package_group "write aything you need I am lazy so not writing anything" "${GTK[@]}"
+install_package_group "write aything you need I am lazy so not writing anything" "${LSPSRVR[@]}"
+install_package_group "write aything you need I am lazy so not writing anything" "${FORMATTER[@]}"
 install_package_group "write aything you need I am lazy so not writing anything" "${BROWSER[@]}"
 install_package_group "write aything you need I am lazy so not writing anything" "${PREFFEREDDM[@]}"
