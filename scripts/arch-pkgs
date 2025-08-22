@@ -94,6 +94,7 @@ HYPR_PKGS=(
     hyprland-qtutils
     hyprlock
     hyprpicker
+    bemenu
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-wlr
     xdg-desktop-portal-gtk
