@@ -10,6 +10,7 @@ BASE_PKGS=(
   starship
   fzf
   zoxide
+  tmux
 )
 
 TERM_PKGS=(
@@ -94,7 +95,7 @@ HYPR_PKGS=(
     hyprland-qtutils
     hyprlock
     hyprpicker
-    bemenu
+    rofi-wayland
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-wlr
     xdg-desktop-portal-gtk
