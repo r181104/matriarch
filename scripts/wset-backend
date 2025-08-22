@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 if [ "$#" -ne 1 ]; then
   echo "Usage: $0 <path_to_image"
@@ -12,6 +12,8 @@ notify-send "Changing Theme" "Applying new wallpaper and updating colors, please
 swww img "$IMAGE" --transition-type="center" --transition-step=1 --transition-fps="60"
 
 wal -i "$IMAGE" -n -s -t -e
+
+hyprctl reload
 
 pkill waybar
 waybar >/dev/null 2>&1 &

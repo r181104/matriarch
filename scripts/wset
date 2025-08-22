@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 Wall_DIR="$HOME/Wallpapers/Pictures"
 
@@ -11,8 +11,7 @@ IFS=$'\n'
 SELECTED_WALL=$(
     for a in *.jpg *.png *.jpeg; do
         echo "$a"
-    done | bemenu --fn 'JetBrainsMono NF 20' -l 8 -i --nb '#1d1f21cc' --nf '#c5c8c6' --sb '#81a2becc' --sf '#sffffff'
-    -i -p "Select Wallpaper: "
+    done | wofi --dmenu --font "JetBrainsMono NF 20" --lines 8 --prompt "Select Wallpaper:"
 )
 
 if [ -n "$SELECTED_WALL" ]; then
