@@ -85,13 +85,10 @@ alias restart-dm 'systemctl restart display-manager'
 #  =========================================
 #           PACKAGE MANAGEMENT
 #  =========================================
-alias rebel 'bash ~/snix/scripts/rebuild'
-alias uprebel 'bash ~/snix/scripts/up-rebuild'
-alias cwifi 'bash ~/snix/scripts/cwifi'
-alias op-net='bash ~/snix/scripts/optimize-network'
-alias wb '~/snix/scripts/wset'
-alias wq '~/sqtile/scripts/wset'
-alias wh '~/shypr/scripts/wset'
+alias rebel '~/senv/scripts/rebuild'
+alias uprebel '~/senv/scripts/up-rebuild'
+alias cwifi '~/senv/scripts/cwifi'
+alias op-net='~/senv/scripts/optimize-network'
 
 #  =========================================
 #           FILE OPERATIONS

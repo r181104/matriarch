@@ -1,82 +1,98 @@
 #!/bin/sh
 
-BASEPKGS=(
-   vim
-   neovim
-   git
-   wget
-   curl
-   fish
-   starship
-   fzf
-   zoxide
+BASE_PKGS=(
+  vim
+  neovim
+  git
+  wget
+  curl
+  fish
+  starship
+  fzf
+  zoxide
 )
 
-TERMPKGS=(
-    alacritty
-    kitty
-    ghostty
+TERM_PKGS=(
+  alacritty
+  kitty
+  ghostty
 )
 
-LSPSRVR=(
-    lua-language-server
-    python-lsp-server
+LSP_SERVERS=(
+  lua-language-server
+  python-lsp-server
+  gopls
+  vscode-langservers-extracted
+  hyprls-git
 )
 
-FORMATTER=(
-    stylua
-    prettier
-    python-black
-    python-isort
-    shfmt
-    yamlfmt
-    clang 
-    go-tools
-    prettierd
-    google-java-format
+FORMATTERS=(
+  stylua
+  prettier
+  python-black
+  python-isort
+  shfmt
+  yamlfmt
+  clang
+  go-tools
+  prettierd
+  google-java-format
 )
 
-BROWSER=(
-    brave-bin
+DEVELOPMENT=(
+    lazygit
+    gcc
+    rustup
+    go
+    python
+    uv
+    nodejs
+    ollama  
 )
 
-GTK=(
-    gtk2
-    gtk3 
-    gtk4
-    gdk-pixbuf2
-    libcups
-    pango 
-    cairo
-    gtk-update-icon-cache
-    shared-mime-info
-    hicolor-icon-theme
+BROWSERS=(
+  brave-bin
 )
 
-PREFFEREDDM=(
-    cosmic
+GTK_PKGS=(
+  gtk2
+  gtk3
+  gtk4
+  gdk-pixbuf2
+  libcups
+  pango
+  cairo
+  gtk-update-icon-cache
+  shared-mime-info
+  hicolor-icon-theme
 )
 
-# Install packages by category
+PREFERRED_DM=(
+  cosmic
+)
+
+BLUE='\033[1;34m'
+NC='\033[0m'
+
 install_package_group() {
   local group_name="$1"
   shift
   local packages=("$@")
 
-  echo -e "\n${BLUE}Installing $group_name...${NC}"
+  echo -e "\n${BLUE}Installing ${group_name}...${NC}"
   if paru -S --needed --noconfirm "${packages[@]}"; then
-    echo "Installed successfully"
+    echo "✔️  ${group_name} installed successfully"
   else
-    echo "Failed to install"
+    echo "❌  Failed to install ${group_name}"
     return 1
   fi
 }
 
-# Install all package groups
-install_package_group "write aything you need I am lazy so not writing anything" "${BASEPKGS[@]}"
-install_package_group "write aything you need I am lazy so not writing anything" "${TERMPKGS[@]}"
-install_package_group "write aything you need I am lazy so not writing anything" "${GTK[@]}"
-install_package_group "write aything you need I am lazy so not writing anything" "${LSPSRVR[@]}"
-install_package_group "write aything you need I am lazy so not writing anything" "${FORMATTER[@]}"
-install_package_group "write aything you need I am lazy so not writing anything" "${BROWSER[@]}"
-install_package_group "write aything you need I am lazy so not writing anything" "${PREFFEREDDM[@]}"
+install_package_group "Base Packages" "${BASE_PKGS[@]}"
+install_package_group "Terminal Emulators" "${TERM_PKGS[@]}"
+install_package_group "GTK Dependencies" "${GTK_PKGS[@]}"
+install_package_group "LSP Servers" "${LSP_SERVERS[@]}"
+install_package_group "Code Formatters" "${FORMATTERS[@]}"
+install_package_group "Development Languages and tools" "${DEVELOPMENT[@]}"
+install_package_group "Browser" "${BROWSERS[@]}"
+install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
