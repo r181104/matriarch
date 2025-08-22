@@ -1,5 +1,29 @@
 #!/bin/sh
 
+SYSTEM=(
+    base
+    base-devel
+    linux
+    linux-headers
+)
+
+GRAPHICS=(
+    mesa 
+    mesa-demos
+    libva-intel-driver 
+    vulkan-intel
+    lib32-mesa
+    lib32-vulkan-intel
+    nvidia
+    nvidia-utils
+    nvidia-settings
+    nvidia-prime
+    lib32-nvidia-utils
+    xf86-video-intel
+    lib32-mesa
+    prime-run
+)
+
 BASE_PKGS=(
   vim
   neovim
@@ -141,6 +165,8 @@ install_package_group() {
   fi
 }
 
+install_package_group "System Packages" "${SYSTEM[@]}"
+install_package_group "Graphics Packages" "${GRAPHICS[@]}"
 install_package_group "Base Packages" "${BASE_PKGS[@]}"
 install_package_group "Terminal Emulators" "${TERM_PKGS[@]}"
 install_package_group "GTK Dependencies" "${GTK_PKGS[@]}"
