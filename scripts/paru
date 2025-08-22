@@ -1,0 +1,72 @@
+#!/bin/sh
+
+# Function to install paru if not present
+install_paru() {
+  if command_exists paru; then
+    success "paru is already installed"
+    return 0
+  fi
+
+  section "Installing paru AUR helper"
+  warn "paru is not installed. Installing prerequisites and paru..."
+
+  # Install prerequisites with pacman
+  local prerequisites=(git base-devel)
+  local missing_prereqs=()
+
+  for pkg in "${prerequisites[@]}"; do
+    if ! pacman -Q "$pkg" >/dev/null 2>&1; then
+      missing_prereqs+=("$pkg")
+    fi
+  done
+
+  if [ ${#missing_prereqs[@]} -ne 0 ]; then
+    echo "Installing prerequisites: ${missing_prereqs[*]}"
+    sudo pacman -S --needed --noconfirm "${missing_prereqs[@]}" || {
+      fail "Failed to install prerequisites: ${missing_prereqs[*]}"
+      exit 1
+    }
+    success "Prerequisites installed successfully"
+  fi
+
+  # Create temporary directory and install paru
+  local temp_dir=$(mktemp -d)
+  local current_dir=$(pwd)
+
+  cd "$temp_dir" || {
+    fail "Failed to create temporary directory"
+    exit 1
+  }
+
+  echo "Cloning paru repository..."
+  if git clone https://aur.archlinux.org/paru.git; then
+    cd paru || {
+      fail "Failed to enter paru directory"
+      cd "$current_dir"
+      rm -rf "$temp_dir"
+      exit 1
+    }
+
+    echo "Building and installing paru..."
+    if makepkg -si --noconfirm; then
+      success "paru installed successfully"
+      cd "$current_dir"
+      rm -rf "$temp_dir"
+      return 0
+    else
+      fail "Failed to build paru"
+      cd "$current_dir"
+      rm -rf "$temp_dir"
+      exit 1
+    fi
+  else
+    fail "Failed to clone paru repository"
+    cd "$current_dir"
+    rm -rf "$temp_dir"
+    exit 1
+  fi
+}
+
+# Install paru first
+install_paru
+
