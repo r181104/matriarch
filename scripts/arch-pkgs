@@ -67,6 +67,57 @@ GTK_PKGS=(
   hicolor-icon-theme
 )
 
+AUDIO=(
+    pipewire
+    pipewire-pulse
+    pipewire-alsa
+    pipewire-jack
+    wireplumber
+    pavucontrol
+    helvum 
+    qpwgraph
+    jamesdsp
+)
+
+BLUETOOTH=(
+    blueman
+    bluez
+    bluez-utils
+    pipewire-bluetooth
+)
+
+HYPR_PKGS=(
+    hyprland
+    pyprland
+    hypridle
+    hyprland-qt-support
+    hyprland-qtutils
+    hyprlock
+    hyprpicker
+    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-wlr
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal
+    grimblast-git
+    waybar
+    swaync
+    swww
+    wlogout
+    wl-clipboard
+    wlroots
+    xwaylandvideobridge
+    xwayland-run
+    networkmanager
+    network-manager-applet
+    brightnessctl
+    nautilus
+    nwg-look
+    papirus-icon-theme
+    nordzy-hyprcursors
+    python-pywal
+    tty-colorscheme
+)
+
 PREFERRED_DM=(
   cosmic
 )
@@ -95,4 +146,7 @@ install_package_group "LSP Servers" "${LSP_SERVERS[@]}"
 install_package_group "Code Formatters" "${FORMATTERS[@]}"
 install_package_group "Development Languages and tools" "${DEVELOPMENT[@]}"
 install_package_group "Browser" "${BROWSERS[@]}"
+install_package_group "Pipewire packages" "${AUDIO[@]}"
+install_package_group "Bluetooth Packages" "${BLUETOOTH[@]}"
+install_package_group "Hyprland packages" "${HYPR_PKGS[@]}"
 install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
