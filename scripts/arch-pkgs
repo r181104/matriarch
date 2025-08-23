@@ -36,6 +36,7 @@ BASE_PKGS=(
   zoxide
   tmux
   ripgrep
+  bat
 )
 
 TERM_PKGS=(
