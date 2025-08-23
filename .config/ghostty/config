@@ -1,7 +1,7 @@
-font-family = JetBrainsMono NF
-font-family-bold = auto
-font-family-italic = auto
-font-family-bold-italic = auto
+font-family = JetBrainsMono NF Regular
+font-family-bold = JetBrainsMono NF Bold
+font-family-italic = JetBrainsMono NF Italic
+font-family-bold-italic = JetBrainsMono NF Bold Italic
 font-size = 20
 
 window-padding-x = 2
@@ -11,7 +11,7 @@ background = #000000
 background-opacity = 0.8
 background-blur = true
 
-theme = zenbones_dark
+theme = Chalk
 
 cursor-color = #008000
 cursor-style = block
