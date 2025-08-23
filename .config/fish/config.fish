@@ -126,8 +126,7 @@ alias bright 'brightnessctl set'
 #  =========================================
 #              GIT ALIASES
 #  =========================================
-alias ga 'git add .'
-alias gc 'git commit -m'
+alias gac 'git add .;git commit -m'
 alias gp 'git push'
 alias git-clean 'git reflog expire --expire=now --all; git gc --prune=now --aggressive'
 
@@ -195,10 +194,6 @@ bind \ed fzf_zoxide_dir
 
 function gacp
   git add .;git commit -m 's';git push
-end
-
-function gac
-  git add .;git commit -m
 end
 
 function gs
