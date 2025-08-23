@@ -10,18 +10,18 @@ colorscheme retrobox
 highlight Normal guibg=black ctermbg=black
 
 if has('gui_running')
-  set transparency=9
+    set transparency=9
 else
 endif
 set termguicolors
 if !has('gui_running')
-  set t_Co=256
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set t_Co=256
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-  let &t_SI = "\<Esc>[6 q"
-  let &t_SR = "\<Esc>[4 q"
-  let &t_EI = "\<Esc>[2 q"
+    let &t_SI = "\<Esc>[6 q"
+    let &t_SR = "\<Esc>[4 q"
+    let &t_EI = "\<Esc>[2 q"
 endif
 
 set number
@@ -85,64 +85,64 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <leader>l :set list!<CR>
 
 function! ToggleComment()
-  let comment_map = {
-        \ 'vim': '"',
-        \ 'python': '#',
-        \ 'sh': '#',
-        \ 'nix': '#',
-        \ 'zsh': '#',
-        \ 'javascript': '//',
-        \ 'typescript': '//',
-        \ 'c': '//',
-        \ 'cpp': '//',
-        \ 'go': '//',
-        \ 'lua': '--',
-        \ 'sql': '--',
-        \ 'ruby': '#',
-        \ 'yaml': '#',
-        \ 'conf': '#',
-        \ 'fstab': '#',
-        \ 'bash': '#',
-        \ 'make': '#',
-        \ 'cmake': '#'
-        \ }
+    let comment_map = {
+                \ 'vim': '"',
+                \ 'python': '#',
+                \ 'sh': '#',
+                \ 'nix': '#',
+                \ 'zsh': '#',
+                \ 'javascript': '//',
+                \ 'typescript': '//',
+                \ 'c': '//',
+                \ 'cpp': '//',
+                \ 'go': '//',
+                \ 'lua': '--',
+                \ 'sql': '--',
+                \ 'ruby': '#',
+                \ 'yaml': '#',
+                \ 'conf': '#',
+                \ 'fstab': '#',
+                \ 'bash': '#',
+                \ 'make': '#',
+                \ 'cmake': '#'
+                \ }
 
-  let comment = get(comment_map, &filetype, '#')
-  let regex = '^\s*' . comment . '\s\?'
-  let line = getline('.')
+    let comment = get(comment_map, &filetype, '#')
+    let regex = '^\s*' . comment . '\s\?'
+    let line = getline('.')
 
-  if line =~ regex
-    execute 's/' . regex . '//'
-  else
-    execute 's/^/' . comment . ' /'
-  endif
+    if line =~ regex
+        execute 's/' . regex . '//'
+    else
+        execute 's/^/' . comment . ' /'
+    endif
 endfunction
 
 nnoremap gcc :call ToggleComment()<CR>
 vnoremap gc :call ToggleComment()<CR>
 
 augroup vimrc_autocmds
-  autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
-  autocmd BufWritePre * %s/\s\+$//e
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
+    autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
 set listchars=tab:▸\ ,trail:•,nbsp:+,extends:»,precedes:«
 set fillchars=vert:│,fold:·
 
 function! HighlightSearch()
-  if &hls
-    return 'H'
-  else
-    return ''
-  endif
+    if &hls
+        return 'H'
+    else
+        return ''
+    endif
 endfunction
 
 set wildmode=longest:full,full
 set wildignore=*.o,*~,*.pyc,*.class
 
 if has('mouse')
-  set mouse=a
+    set mouse=a
 endif
 
 autocmd FileType python      setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -171,38 +171,38 @@ autocmd BufNewFile,BufRead *.nix set filetype=nix
 
 set showtabline=0
 let g:currentmode = {
-      \ 'n'  : ' NORMAL ',
-      \ 'i'  : ' INSERT ',
-      \ 'R'  : ' REPLACE ',
-      \ 'v'  : ' VISUAL ',
-      \ 'V'  : ' V-LINE ',
-      \ 'x22': ' V-BLOCK ',
-      \ 'c'  : ' COMMAND ',
-      \ 't'  : ' TERMINAL '
-      \}
+            \ 'n'  : ' NORMAL ',
+            \ 'i'  : ' INSERT ',
+            \ 'R'  : ' REPLACE ',
+            \ 'v'  : ' VISUAL ',
+            \ 'V'  : ' V-LINE ',
+            \ 'x22': ' V-BLOCK ',
+            \ 'c'  : ' COMMAND ',
+            \ 't'  : ' TERMINAL '
+            \}
 
 function! FileSize()
-  let bytes = getfsize(expand('%:p'))
-  if bytes <= 0 | return '' | endif
+    let bytes = getfsize(expand('%:p'))
+    if bytes <= 0 | return '' | endif
 
-  if bytes >= 1024 * 1024
-    return printf('%.1f MB', bytes / (1024.0 * 1024))
-  elseif bytes >= 1024
-    return printf('%.1f KB', bytes / 1024.0)
-  else
-    return bytes . ' B'
-  endif
+    if bytes >= 1024 * 1024
+        return printf('%.1f MB', bytes / (1024.0 * 1024))
+    elseif bytes >= 1024
+        return printf('%.1f KB', bytes / 1024.0)
+    else
+        return bytes . ' B'
+    endif
 endfunction
 
 function! ReadOnly()
-  return &readonly || !&modifiable ? '' : ''
+    return &readonly || !&modifiable ? '' : ''
 endfunction
 
 function! GitIndicator()
-  if !empty(finddir('.git', ';'))
-    return ' GIT'
-  endif
-  return ''
+    if !empty(finddir('.git', ';'))
+        return ' GIT'
+    endif
+    return ''
 endfunction
 
 set laststatus=2
