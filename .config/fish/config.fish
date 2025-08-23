@@ -9,9 +9,9 @@ set -gx BROWSER "brave"
 set -gx TERM "alacritty"
 set -gx EDITOR "zeditor"
 if set -q TMUX
-  set -gx TERM "tmux-256color"  # Inside tmux
+    set -gx TERM "tmux-256color"  # Inside tmux
 else
-  set -gx TERM "xterm-256color" # Outside tmux
+    set -gx TERM "xterm-256color" # Outside tmux
 end
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di 1;3;34:fi=0"
@@ -153,7 +153,7 @@ alias anime '~/stecore/scripts/./ani-cli'
 alias mirror-rating 'rate-mirrors --entry-country=IN --protocol=https arch | sudo tee /etc/pacman.d/mirrorlist'
 
 if command -q starship
-  starship init fish | source
+    starship init fish | source
 end
 
 if command -q zoxide
@@ -180,10 +180,10 @@ bind \er fzf_nvim
 
 function fzf_zoxide_dir --description "Fuzzy-find a directory from zoxide and jump"
     set -l selected_dir (
-        zoxide query -l | fzf --height=40% --reverse --ansi \
-            --prompt="📂 Jump to: " \
-            --preview 'eza --icons --tree --level=2 --color=always {} 2>/dev/null' \
-            --preview-window=right:50%:wrap
+    zoxide query -l | fzf --height=40% --reverse --ansi \
+        --prompt="📂 Jump to: " \
+        --preview 'eza --icons --tree --level=2 --color=always {} 2>/dev/null' \
+        --preview-window=right:50%:wrap
     )
     if test -n "$selected_dir"
         z "$selected_dir"
@@ -193,7 +193,7 @@ end
 bind \ed fzf_zoxide_dir
 
 function gacp
-  git add .;git commit -m 's';git push
+    git add .;git commit -m 's';git push
 end
 
 function gs
@@ -201,22 +201,22 @@ function gs
 end
 
 function optimise-nix
-  nix-env -q | xargs nix-env -e
-  sudo nix-store --gc --print-roots | grep obsolete
+    nix-env -q | xargs nix-env -e
+    sudo nix-store --gc --print-roots | grep obsolete
 end
 
 function clean-nix
-  sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +5
-  sudo nix-store --gc --print-roots | grep /tmp | awk '{print $1}' | xargs rm -f
+    sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +5
+    sudo nix-store --gc --print-roots | grep /tmp | awk '{print $1}' | xargs rm -f
 end
 
 function store-size
-  df -h /              
-  du -sh /nix/store     
+    df -h /              
+    du -sh /nix/store     
 end
 
 function fish_greeting
-  random choice "Hello!" "Hi!" "Good Day!" "Howdy!"
+    random choice "Hello!" "Hi!" "Good Day!" "Howdy!"
 end
 
 function fish_title
