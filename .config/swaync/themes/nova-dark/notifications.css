@@ -8,7 +8,7 @@
     color: @text;
     all: unset;
     font-size: 14px;
-    font-family: "JetBrainsMono Nerd Font", "Noto Color Emoji", monospace;
+    font-family: "MesloLGS Nerd Font", "Noto Color Emoji", monospace;
     transition: 200ms;
 }
 
