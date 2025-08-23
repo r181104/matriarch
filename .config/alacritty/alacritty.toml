@@ -29,7 +29,6 @@ transparent_background_colors = true
 [font]
 size = 20
 
-# Explicitly define styles for each variant
 [font.normal]
 family = "JetBrainsMono NF"
 style = "Regular"
