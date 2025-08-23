@@ -14,7 +14,6 @@ return {
 		vim.lsp.config("cssls", {})
 		vim.lsp.config("jsonls", {})
 		vim.lsp.config("eslint", {})
-		vim.lsp.config("nixd", {})
 		vim.lsp.config("hyprls", {})
 		vim.lsp.config("rust_analyzer", {})
 		vim.lsp.config("lua_ls", {
@@ -34,7 +33,6 @@ return {
 			"cssls",
 			"jsonls",
 			"eslint",
-			"nixd",
 			"hyprls",
 			"rust_analyzer",
 			"lua_ls",
