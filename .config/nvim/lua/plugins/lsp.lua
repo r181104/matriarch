@@ -9,7 +9,7 @@ return {
 		})
 		vim.lsp.config("clangd", {})
 		vim.lsp.config("gopls", {})
-		vim.lsp.config("pylsp", {})
+		vim.lsp.config("pyright", {})
 		vim.lsp.config("html", {})
 		vim.lsp.config("cssls", {})
 		vim.lsp.config("jsonls", {})
@@ -28,7 +28,7 @@ return {
 		vim.lsp.enable({
 			"clangd",
 			"gopls",
-			"pylsp",
+			"pyright",
 			"html",
 			"cssls",
 			"jsonls",

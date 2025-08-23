@@ -133,13 +133,18 @@ alias git-clean 'git reflog expire --expire=now --all; git gc --prune=now --aggr
 #  =========================================
 #              ARCH ALIASES
 #  =========================================
-alias i='paru --noconfirm -S --needed'
-alias u='paru --noconfirm -Syu'
-alias r='paru -Rns'
-alias s='paru -Ss'
-alias remove-orphaned='sudo pacman -Rns $(pacman -Qtdq) && paru -Rns $(pacman -Qtdq)'
-alias aggressively-clear-cache='sudo pacman -Scc && paru -Scc'
-alias clear-cache='sudo pacman -Sc && paru -Sc'
+alias i 'paru --noconfirm -S --needed'
+alias u 'paru --noconfirm -Syu'
+alias r 'paru -Rns'
+alias s 'paru -Ss'
+alias remove-orphaned 'sudo pacman -Rns $(pacman -Qtdq) && paru -Rns $(pacman -Qtdq)'
+alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc'
+alias clear-cache 'sudo pacman -Sc && paru -Sc'
+
+#  =========================================
+#           PROGRAMMING ALIASES
+#  =========================================
+alias pyr 'python'
 
 #  =========================================
 #           UTILITY ALIASES
