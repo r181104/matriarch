@@ -1,7 +1,7 @@
 [pyprland]
 plugins = [
-  "scratchpads",
-  "magnify",
+    "scratchpads",
+    "magnify",
 ]
 
 # Configure scratchpads
