@@ -39,6 +39,7 @@ BASE_PKGS=(
     tmux
     ripgrep
     bat
+    man
 )
 
 # NOTE: PACKAGES FOR TERMINAL
