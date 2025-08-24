@@ -11,7 +11,7 @@ background = "#000000"
 background-opacity = 0.6
 background-blur = true
 
-theme = "rose-pine"
+theme = "Ghostty Default StyleDark"
 
 cursor-color = "#008000"
 cursor-style = block
