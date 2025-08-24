@@ -11,11 +11,6 @@ set -gx _ZO_EXCLUDE_DIRS "$HOME/private/*"  # Exclude dirs from history
 set -gx BROWSER "brave"
 set -gx TERM "alacritty"
 set -gx EDITOR "zeditor"
-if set -q TMUX
-    set -gx TERM "tmux-256color"  # Inside tmux
-else
-    set -gx TERM "xterm-256color" # Outside tmux
-end
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di 1;3;34:fi=0"
 
