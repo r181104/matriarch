@@ -1,6 +1,9 @@
 if status is-interactive
 end
 
+set -gx LANG en_IN.UTF-8
+set -gx LC_ALL en_IN.UTF-8
+
 set -gx _ZO_ECHO 1       # Print directory after jumping (like `cd`)
 set -gx _ZO_EXCLUDE_DIRS "$HOME/private/*"  # Exclude dirs from history
 # functions --erase cd  # Restores Fish’s original `cd`
