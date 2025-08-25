@@ -1,9 +1,25 @@
+#!/bin/sh
+
+# WARN: Read everything in this script carefully before running and change anything
+# if you know what you are doing (recommend no touching i wrote it good)
+set -e
+
+CONF_PATH="/etc/pacman.conf"
+BACKUP_PATH="/etc/pacman.conf.bak.$(date +%Y%m%d-%H%M%S)"
+
+# Backup existing config
+if [ -f "$CONF_PATH" ]; then
+    echo "Backing up existing pacman.conf to $BACKUP_PATH"
+    sudo cp "$CONF_PATH" "$BACKUP_PATH"
+fi
+
+# Write new config
+sudo tee "$CONF_PATH" >/dev/null <<'EOF'
 [options]
 Color
 ILoveCandy
-CleanMethod = KeepInstalled
-IgnorePkg = linux firefox
-IgnorePkg = gnome
+CleanMethod = KeepCurrent
+IgnorePkg = linux firefox gnome
 HoldPkg = pacman glibc
 Architecture = auto
 CheckSpace
@@ -37,5 +53,8 @@ Include = /etc/pacman.d/mirrorlist
 [chaotic-aur]
 Include = /etc/pacman.d/chaotic-mirrorlist
 
-[blackarch]
-Include = /etc/pacman.d/blackarch-mirrorlist
+# [blackarch]
+# Include = /etc/pacman.d/blackarch-mirrorlist
+EOF
+
+echo "✅ New pacman.conf applied successfully!"
