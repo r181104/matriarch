@@ -28,7 +28,7 @@ GRAPHICS=(
 # NOTE: THESE ARE SOME OF THE BASIC PACKAGES FOR FISH TO WORK AND HAVE GOOD EXPERIENCE USING TERMINAL OR TTY
 BASE_PKGS=(
     vim
-    neovim-nightly
+    neovim
     git
     wget
     curl
@@ -106,11 +106,15 @@ GTK_PKGS=(
 
 # NOTE: PACKAGES TO RUN AUDIO THE BEST IN ARCH
 AUDIO=(
-    pipewire
-    pipewire-pulse
-    pipewire-alsa
-    pipewire-jack
-    wireplumber
+    pipewire 
+    pipewire-alsa 
+    pipewire-audio 
+    pipewire-pulse 
+    pipewire-jack 
+    pipewire-zeroconf 
+    gst-plugin-pipewire 
+    wireplumber 
+    pipewire-docs
     pavucontrol
     helvum 
     qpwgraph
