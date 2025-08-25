@@ -7,7 +7,6 @@ return {
             require("mason").setup()
         end,
     },
-
     -- NOTE: Mason LSPConfig (manages LSP servers)
     {
         "mason-org/mason-lspconfig.nvim",
@@ -28,44 +27,31 @@ return {
             automatic_installation = true,
         },
     },
-
     -- NOTE: Mason Tool Installer (manages formatters, linters, debuggers)
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         lazy = false,
         opts = {
             ensure_installed = {
-                -- NOTE: Lua
-                "stylua",
-                -- NOTE: Python
+                "stylua",             -- NOTE: Lua
+                "isort",              -- NOTE: Python
                 "black",
-                "isort",
-                -- NOTE: JS / TS / Web
+                "prettierd",          -- NOTE: JS / TS / Web
                 "prettier",
-                "prettierd",
-                -- NOTE: Go
+                "goimports",          -- NOTE: Go
                 "gofumpt",
-                "goimports",
-                -- NOTE: Rust
-                "rustfmt",
-                -- NOTE: Nix
-                "alejandra",
-                -- NOTE: Shell
-                "shfmt",
-                -- NOTE: YAML
-                "yamlfmt",
-                -- NOTE: C / C++
-                "clang-format",
-                -- NOTE: Java
-                "google-java-format",
-                -- NOTE: SQL
-                "sqlfluff",
+                "rustfmt",            -- NOTE: Rust
+                "alejandra",          -- NOTE: Nix
+                "shfmt",              -- NOTE: Shell
+                "yamlfmt",            -- NOTE: YAML
+                "clang-format",       -- NOTE: C / C++
+                "google-java-format", -- NOTE: Java
+                "sqlfluff",           -- NOTE: SQL
             },
             auto_update = true,
             run_on_start = true,
         },
     },
-
     -- NOTE: LSP setup via nvim-lspconfig
     {
         "neovim/nvim-lspconfig",
@@ -86,7 +72,6 @@ return {
                             capabilities = capabilities,
                         })
                     end,
-
                     -- NOTE: Lua custom config
                     ["lua_ls"] = function()
                         lspconfig.lua_ls.setup({
@@ -98,7 +83,6 @@ return {
                             },
                         })
                     end,
-
                     -- NOTE: Clangd custom config
                     ["clangd"] = function()
                         lspconfig.clangd.setup({
