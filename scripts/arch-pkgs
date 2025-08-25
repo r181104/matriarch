@@ -49,29 +49,6 @@ TERM_PKGS=(
     ghostty
 )
 
-# NOTE: PACKGES FOR LANGUAGE SERVERS TO WORK CORRECTLY IN NEOVIM
-LSP_SERVERS=(
-    lua-language-server
-    python-lsp-server
-    gopls
-    vscode-langservers-extracted
-    hyprls-git
-)
-
-# NOTE: PACKGES FOR FORMATTERS FOR CONFORM WORK CORRECTLY IN NEOVIM
-FORMATTERS=(
-    stylua
-    prettier
-    python-black
-    python-isort
-    shfmt
-    yamlfmt
-    clang
-    go-tools
-    prettierd
-    google-java-format
-)
-
 # NOTE: SOME PACKGES FOR PROGRAMMING LANGUAGES I LIKE
 DEVELOPMENT=(
     lazygit
@@ -200,8 +177,6 @@ install_package_group "Graphics Packages" "${GRAPHICS[@]}"
 install_package_group "Base Packages" "${BASE_PKGS[@]}"
 install_package_group "Terminal Emulators" "${TERM_PKGS[@]}"
 install_package_group "GTK Dependencies" "${GTK_PKGS[@]}"
-install_package_group "LSP Servers" "${LSP_SERVERS[@]}"
-install_package_group "Code Formatters" "${FORMATTERS[@]}"
 install_package_group "Development Languages and tools" "${DEVELOPMENT[@]}"
 install_package_group "Browser" "${BROWSERS[@]}"
 install_package_group "Pipewire packages" "${AUDIO[@]}"
