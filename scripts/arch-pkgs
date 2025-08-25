@@ -87,6 +87,7 @@ DEVELOPMENT=(
 # NOTE: BROWERS I LIKE TO HAVE
 BROWSERS=(
     brave-bin
+    zen-browser-bin
 )
 
 # NOTE: PACKAGES FOR GTK TO RUN CORRECTLY
