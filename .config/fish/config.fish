@@ -14,8 +14,6 @@ set -gx EDITOR "zeditor"
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di 1;3;34:fi=0"
 
-set -x PARU_FLAGS "--ipv4"
-
 set -g fish_key_bindings fish_default_key_bindings
 
 bind \en down-or-search
@@ -133,13 +131,13 @@ alias git-clean 'git reflog expire --expire=now --all; git gc --prune=now --aggr
 #  =========================================
 #              ARCH ALIASES
 #  =========================================
-alias i 'paru --noconfirm -S --needed'
-alias u 'paru --noconfirm -Syu'
-alias r 'paru -Rns'
-alias s 'paru -Ss'
-alias remove-orphaned 'sudo pacman -Rns $(pacman -Qtdq) && paru -Rns $(pacman -Qtdq)'
-alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc'
-alias clear-cache 'sudo pacman -Sc && paru -Sc'
+alias i 'yay --noconfirm -S --needed'
+alias u 'yay --noconfirm -Syu'
+alias r 'yay -Rns'
+alias s 'yay -Ss'
+alias remove-orphaned 'sudo pacman -Rns $(pacman -Qtdq) && yay -Rns $(pacman -Qtdq)'
+alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
+alias clear-cache 'sudo pacman -Sc && yay -Sc'
 
 #  =========================================
 #           PROGRAMMING ALIASES

@@ -1,0 +1,89 @@
+#!/bin/sh
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Function to install yay if not present
+install_yay() {
+    if command_exists yay; then
+        echo "yay is already installed"
+        return 0
+    fi
+
+    echo "Installing yay AUR helper..."
+
+    # Install prerequisites with pacman
+    local prerequisites=(git base-devel)
+    local missing_prereqs=()
+    local go_installed_during_process=0
+
+    for pkg in "${prerequisites[@]}"; do
+        if ! pacman -Q "$pkg" >/dev/null 2>&1; then
+            missing_prereqs+=("$pkg")
+        fi
+    done
+
+    # Check if go is missing (yay requires go)
+    if ! pacman -Q go >/dev/null 2>&1; then
+        missing_prereqs+=(go)
+        go_installed_during_process=1
+    fi
+
+    if [ ${#missing_prereqs[@]} -ne 0 ]; then
+        echo "Installing prerequisites: ${missing_prereqs[*]}"
+        sudo pacman -S --needed --noconfirm "${missing_prereqs[@]}" || {
+            echo "Failed to install prerequisites: ${missing_prereqs[*]}"
+                    exit 1
+                }
+            echo "Prerequisites installed successfully"
+    fi
+
+    # Create temporary directory and install yay
+    local temp_dir=$(mktemp -d)
+    local current_dir=$(pwd)
+
+    cd "$temp_dir" || {
+        echo "Failed to create temporary directory"
+            exit 1
+        }
+
+    echo "Cloning yay repository..."
+    if git clone https://aur.archlinux.org/yay.git; then
+        cd yay || {
+            echo "Failed to enter yay directory"
+                    cd "$current_dir"
+                    rm -rf "$temp_dir"
+                    exit 1
+                }
+
+            echo "Building and installing yay..."
+            if makepkg -si --noconfirm; then
+                echo "yay installed successfully"
+
+                # Remove go if it was installed during this process
+                if [ $go_installed_during_process -eq 1 ]; then
+                    echo "Removing Go as it was installed only for yay..."
+                    sudo pacman -Rns --noconfirm go
+                fi
+
+                cd "$current_dir"
+                rm -rf "$temp_dir"
+                return 0
+            else
+                echo "Failed to build yay"
+                cd "$current_dir"
+                rm -rf "$temp_dir"
+                exit 1
+            fi
+        else
+            echo "Failed to clone yay repository"
+            cd "$current_dir"
+            rm -rf "$temp_dir"
+            exit 1
+    fi
+}
+
+# Install yay
+install_yay

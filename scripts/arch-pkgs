@@ -6,8 +6,8 @@ set -e
 SYSTEM=(
     base
     base-devel
-    linux
-    linux-headers
+    linux-zen
+    linux-zen-headers
 )
 
 # NOTE: GRAPHICS PACKAGES FOR INTEL AND NVIDIA
@@ -188,7 +188,7 @@ install_package_group() {
     local packages=("$@")
 
     echo -e "\n${BLUE}Installing ${group_name}...${NC}"
-    if paru -S --needed --noconfirm "${packages[@]}"; then
+    if yay -S --needed --noconfirm "${packages[@]}"; then
         echo "✔️  ${group_name} installed successfully"
     else
         echo "❌  Failed to install ${group_name}"
