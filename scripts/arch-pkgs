@@ -18,7 +18,8 @@ GRAPHICS=(
     vulkan-intel
     lib32-mesa
     lib32-vulkan-intel
-    nvidia
+    dkms
+    nvidia-dkms
     nvidia-utils
     nvidia-settings
     nvidia-prime
@@ -42,6 +43,8 @@ BASE_PKGS=(
     ripgrep
     bat
     man
+    stow
+    eza
 )
 
 # NOTE: PACKAGES FOR TERMINAL
