@@ -14,6 +14,8 @@ set -gx EDITOR "zeditor"
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di 1;3;34:fi=0"
 
+set -x PARU_FLAGS "--ipv4"
+
 set -g fish_key_bindings fish_default_key_bindings
 
 bind \en down-or-search
@@ -139,7 +141,6 @@ alias remove-orphaned 'sudo pacman -Rns $(pacman -Qtdq) && paru -Rns $(pacman -Q
 alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc'
 alias clear-cache 'sudo pacman -Sc && paru -Sc'
 
-alias curl 'curl -4'
 #  =========================================
 #           PROGRAMMING ALIASES
 #  =========================================
@@ -238,7 +239,20 @@ function tty_kill_all
     end
 end
 
+# Force curl to prefer IPv4
+function curl
+    command curl -4 $argv
+end
+
 if status is-login
-    eval (gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
-    set -x SSH_AUTH_SOCK $SSH_AUTH_SOCK
+    # Start gnome-keyring-daemon and capture its environment variables
+    for line in (gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
+        if string match -r '^SSH_AUTH_SOCK=' $line
+            set -x SSH_AUTH_SOCK (string sub -s 15 $line)
+        else if string match -r '^GNOME_KEYRING_CONTROL=' $line
+            set -x GNOME_KEYRING_CONTROL (string sub -s 21 $line)
+        else if string match -r '^GPG_AGENT_INFO=' $line
+            set -x GPG_AGENT_INFO (string sub -s 15 $line)
+        end
+    end
 end
