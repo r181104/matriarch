@@ -139,6 +139,7 @@ alias remove-orphaned 'sudo pacman -Rns $(pacman -Qtdq) && paru -Rns $(pacman -Q
 alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc'
 alias clear-cache 'sudo pacman -Sc && paru -Sc'
 
+alias curl 'curl -4'
 #  =========================================
 #           PROGRAMMING ALIASES
 #  =========================================

@@ -1,13 +1,14 @@
 #!/bin/sh
-# NOTE: UFW Firewall Setup Script for Arch Linux
-# NOTE: Secure defaults + SSH + Browser (outgoing only)
+
+# NOTE: Arch Linux UFW + IPv4-only + AUR helper fixes
+# NOTE: Secure defaults + SSH + Browser + Force IPv4
 
 set -e
 
-echo "[+] Installing ufw..."
+echo "[+] Installing UFW..."
 sudo pacman -S --needed --noconfirm ufw
 
-echo "[+] Enabling ufw service..."
+echo "[+] Enabling UFW service..."
 sudo systemctl enable --now ufw
 
 echo "[+] Resetting existing rules..."
@@ -20,10 +21,10 @@ sudo ufw default allow outgoing
 echo "[+] Allowing SSH (with rate limiting)..."
 sudo ufw limit ssh comment 'Allow SSH with rate limit'
 
-# Browsers don’t need incoming rules (they just use outgoing connections),
-# so we don’t open any extra ports for Chrome/Firefox/etc.
+# Browsers, AUR helpers, and most applications only need outgoing connections
+# No extra incoming ports are opened for them
 
-echo "[+] Enabling IPv6 support..."
+echo "[+] Enabling IPv6 support in UFW..."
 sudo sed -i 's/IPV6=no/IPV6=yes/' /etc/ufw/ufw.conf
 
 echo "[+] Enabling UFW logging..."
@@ -34,3 +35,5 @@ sudo ufw --force enable
 
 echo "[+] Current firewall status:"
 sudo ufw status verbose
+
+echo "[+] Done! Your system is now secured with UFW for both IPv4 and IPv6."
