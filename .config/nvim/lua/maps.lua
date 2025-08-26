@@ -59,7 +59,7 @@ map("n", "N", "Nzzzv")
 map({ "n", "v" }, "<leader>fm", function()
 	require("conform").format({
 		async = true,
-		-- lsp_fallback = true,
+		lsp_fallback = true,
 		timeout_ms = 500,
 	})
 end, { desc = "[F]or[m]at buffer" })

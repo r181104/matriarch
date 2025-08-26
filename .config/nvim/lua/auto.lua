@@ -8,19 +8,32 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-	callback = function()
-		local map = vim.keymap.set
-		-- LSP
-		map("n", "gd", vim.lsp.buf.definition)
-		map("n", "K", vim.lsp.buf.hover)
-		map("n", "<leader>ws", vim.lsp.buf.workspace_symbol)
-		map("n", "<leader>fd", vim.diagnostic.open_float)
-		map("n", "<leader>ca", vim.lsp.buf.code_action)
-		map("n", "<leader>gr", vim.lsp.buf.references)
-		map("n", "<leader>rn", vim.lsp.buf.rename)
-		map("n", "<leader>for", vim.lsp.buf.format)
-		map("n", "<leader>fe", vim.diagnostic.open_float, { desc = "Show diagnostics" })
-		map("n", "<leader>ce", vim.diagnostic.setqflist, { desc = "Diagnostics to quickfix" })
+	callback = function(ev)
+		local map = function(mode, lhs, rhs, desc)
+			vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, desc = desc })
+		end
+		-- NOTE: LSP core
+		map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+		map("n", "gr", vim.lsp.buf.references, "Find references")
+		map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+		map("n", "K", vim.lsp.buf.hover, "Hover documentation")
+		map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
+		-- NOTE: Workspace
+		map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
+		map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
+		map("n", "<leader>wl", function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, "List workspace folders")
+		map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, "Search workspace symbols")
+		-- NOTE: Actions
+		map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+		map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+		map("n", "<leader>f", function()
+			vim.lsp.buf.format({ async = true })
+		end, "Format buffer")
+		-- NOTE: Diagnostics
+		map("n", "<leader>fe", vim.diagnostic.open_float, "Show diagnostics in float")
+		map("n", "<leader>ce", vim.diagnostic.setqflist, "Send diagnostics to quickfix")
 	end,
 })
 
