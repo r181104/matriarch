@@ -63,6 +63,27 @@ DEVELOPMENT=(
     ollama  
 )
 
+LSP=(
+    pyright
+    lua-language-server
+)
+
+FORMATTERS=(
+    stylua 
+    black 
+    isort 
+    prettier 
+    gofumpt 
+    goimports 
+    rustfmt 
+    shfmt 
+    clang 
+    sqlfluff 
+    yamlfmt
+    prettierd
+    google-java-format
+)
+
 # NOTE: BROWERS I LIKE TO HAVE
 BROWSERS=(
     brave-bin
@@ -180,6 +201,8 @@ install_package_group "Base Packages" "${BASE_PKGS[@]}"
 install_package_group "Terminal Emulators" "${TERM_PKGS[@]}"
 install_package_group "GTK Dependencies" "${GTK_PKGS[@]}"
 install_package_group "Development Languages and tools" "${DEVELOPMENT[@]}"
+install_package_group "LSP's for neovim" "${LSP[@]}"
+install_package_group "Formatters for neovim" "${FORMATTERS[@]}"
 install_package_group "Browser" "${BROWSERS[@]}"
 install_package_group "Pipewire packages" "${AUDIO[@]}"
 install_package_group "Pipewire packages" "${VIDEO[@]}"
