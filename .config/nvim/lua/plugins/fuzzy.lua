@@ -7,9 +7,13 @@ return {
 			winopts = {
 				height = 0.9,
 				width = 0.9,
-				-- preview = {
-				-- 	hidden = "hidden",
-				-- },
+				border = "rounded",
+				preview = {
+					vertical = "down:40%",
+					horizontal = "right:30%",
+					layout = "horizontal",
+					hidden = false,
+				},
 			},
 			keymap = {
 				fzf = {
