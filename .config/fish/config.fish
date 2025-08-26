@@ -236,3 +236,8 @@ function tty_kill_all
         echo "No TTYs found (excluding tty1)"
     end
 end
+
+if status is-login
+    eval (gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
+    set -x SSH_AUTH_SOCK $SSH_AUTH_SOCK
+end
