@@ -3,6 +3,7 @@ local fzf = require("fzf-lua")
 
 -- General
 map({ "n", "i", "c", "v", "x" }, "<C-c>", "<Esc>")
+map("n", ";", ":")
 map("n", "<leader>so", ":update<CR> :source<CR>")
 map("n", "<leader>si", "source ~/.config/nvim/init.lua<CR>")
 map("n", "<leader>rr", ":restart<CR>")
