@@ -1,5 +1,5 @@
 local map = vim.keymap.set
-local pick = require("mini.pick")
+local fzf = require("fzf-lua")
 
 -- General
 map({ "n", "i", "c", "v", "x" }, "<C-c>", "<Esc>")
@@ -26,18 +26,21 @@ map("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "Move to right split" 
 -- Git Blame
 map("n", "<leader>gb", ":Gitsigns blame_line<CR>", { desc = "Git blame" })
 
--- Mini.pick
+-- NOTE: FZF_LUA
 map("n", "<leader>ff", function()
-	pick.builtin.files()
+	fzf.files()
 end, { desc = "Find files" })
+-- Live grep (search text in project)
 map("n", "<leader>fg", function()
-	pick.builtin.grep_live()
+	fzf.live_grep()
 end, { desc = "Search text (live grep)" })
+-- Buffers
 map("n", "<leader>fb", function()
-	pick.builtin.buffers()
+	fzf.buffers()
 end, { desc = "Find buffers" })
+-- Help tags
 map("n", "<leader>fh", function()
-	pick.builtin.help()
+	fzf.help_tags()
 end, { desc = "Search help tags" })
 
 -- Colorizer toggle
