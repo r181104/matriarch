@@ -13,6 +13,7 @@ SYSTEM=(
 # NOTE: GRAPHICS PACKAGES FOR INTEL AND NVIDIA
 GRAPHICS=(
     mesa 
+    mesa-utils
     mesa-demos
     libva-intel-driver 
     vulkan-intel
