@@ -1,3 +1,6 @@
+[colors.primary]
+background = "#000000"
+
 [cursor]
 unfocused_hollow = false
 
