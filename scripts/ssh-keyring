@@ -1,0 +1,8 @@
+#!/bin/sh
+
+sudo pacman -S --needed openssh
+
+systemctl --user enable ssh-agent.service
+systemctl --user start ssh-agent.service
+
+ssh-add ~/.ssh/id_rsa
