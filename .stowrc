@@ -2,7 +2,7 @@
 --ignore=.stowrc
 --ignore=screenshots
 --ignore=scripts
---ignore=pacman
+--ignore=guide
 --ignore=README
 --ignore=LICENSE
 --ignore=.git
