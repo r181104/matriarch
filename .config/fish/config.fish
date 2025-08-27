@@ -124,7 +124,6 @@ alias bright 'brightnessctl set'
 #  =========================================
 #              GIT ALIASES
 #  =========================================
-alias gac 'git add .;git commit -m'
 alias gp 'git push'
 alias git-clean 'git reflog expire --expire=now --all; git gc --prune=now --aggressive'
 
@@ -235,6 +234,10 @@ function tty_kill_all
     else
         echo "No TTYs found (excluding tty1)"
     end
+end
+
+function gac
+    git add .;git commit -m $argv
 end
 
 # Force curl to prefer IPv4

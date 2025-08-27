@@ -24,3 +24,5 @@ window-theme = "dark"
 copy-on-select = true
 
 confirm-close-surface = false
+
+shell-integration = fish
