@@ -172,9 +172,6 @@ HYPR_PKGS=(
     nordzy-hyprcursors
     python-pywal
     tty-colorscheme
-    gnome-keyring
-    seahorse 
-    libsecret
 )
 
 # WARN: IF YOU ARE ON A NEW ARCH INSTALL HAVE NO DESKTOP AND WANT TO RICE A WINDOW MANAGER FROM SCRATCH THEN 
