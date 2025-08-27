@@ -1,6 +1,8 @@
 if status is-interactive
 end
 
+set -Ux SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+
 set -gx LANG en_IN.UTF-8
 set -gx LC_ALL en_IN.UTF-8
 
@@ -243,17 +245,4 @@ end
 # Force curl to prefer IPv4
 function curl
     command curl -4 $argv
-end
-
-if status is-login
-    # Start gnome-keyring-daemon and capture its environment variables
-    for line in (gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
-        if string match -r '^SSH_AUTH_SOCK=' $line
-            set -x SSH_AUTH_SOCK (string sub -s 15 $line)
-        else if string match -r '^GNOME_KEYRING_CONTROL=' $line
-            set -x GNOME_KEYRING_CONTROL (string sub -s 21 $line)
-        else if string match -r '^GPG_AGENT_INFO=' $line
-            set -x GPG_AGENT_INFO (string sub -s 15 $line)
-        end
-    end
 end
