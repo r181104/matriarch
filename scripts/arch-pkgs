@@ -29,6 +29,16 @@ GRAPHICS=(
     lib32-mesa
 )
 
+GAMING_PKGS=(
+    steam 
+    gamemode
+    lib32-gamemode
+    mangohud 
+    lib32-mangohud
+    vulkan-icd-loader 
+    lib32-vulkan-icd-loader
+)
+
 # NOTE: THESE ARE SOME OF THE BASIC PACKAGES FOR FISH TO WORK AND HAVE GOOD EXPERIENCE USING TERMINAL OR TTY
 BASE_PKGS=(
     vim
@@ -202,6 +212,7 @@ install_package_group() {
 # some of the important things are installed through here
 install_package_group "System Packages" "${SYSTEM[@]}"
 install_package_group "Graphics Packages" "${GRAPHICS[@]}"
+install_package_group "Gaming Packages" "${GAMING_PKGS[@]}"
 install_package_group "Base Packages" "${BASE_PKGS[@]}"
 install_package_group "Terminal Emulators" "${TERM_PKGS[@]}"
 install_package_group "GTK Dependencies" "${GTK_PKGS[@]}"
