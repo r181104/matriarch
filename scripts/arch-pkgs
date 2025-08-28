@@ -46,6 +46,7 @@ BASE_PKGS=(
     man
     stow
     eza
+    bc
 )
 
 # NOTE: PACKAGES FOR TERMINAL
