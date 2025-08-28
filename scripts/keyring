@@ -1,61 +1,7 @@
-#!/usr/bin/env bash
-# One-shot GNOME Keyring + SSH setup for Hyprland (Arch Linux)
+#!/bin/sh
 
 set -euo pipefail
 
-USER_HOME="$HOME"
-
-echo "==> Installing packages (requires sudo)..."
-sudo pacman -S --needed --noconfirm gnome-keyring libsecret seahorse openssh
-
-echo "==> Enabling PAM integration (requires sudo)..."
-for pam_file in /etc/pam.d/login /etc/pam.d/sudo; do
-    if ! grep -q "pam_gnome_keyring.so" "$pam_file"; then
-        echo "Updating $pam_file ..."
-        echo -e "auth optional pam_gnome_keyring.so\nsession optional pam_gnome_keyring.so auto_start" | sudo tee -a "$pam_file" >/dev/null
-    fi
-done
-
-echo "==> Configuring Hyprland autostart..."
-STARTUP_FILE="$USER_HOME/.config/hypr/conf/startup.conf"
-ENVIRONMENTAL_VARS="$USER_HOME/.config/hypr/conf/enviromentalvars.conf"
-mkdir -p "$(dirname "$STARTUP_FILE")"
-touch "$STARTUP_FILE"
-
-grep -q "gnome-keyring-daemon" "$STARTUP_FILE" ||
-    echo 'exec-once = /usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg' >>"$STARTUP_FILE"
-
-grep -q "SSH_AUTH_SOCK" "$ENVIRONMENTAL_VARS" ||
-    echo 'env = SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh' >>"$ENVIRONMENTAL_VARS"
-
-grep -q "GPG_AGENT_INFO" "$ENVIRONMENTAL_VARS" ||
-    echo 'env = GPG_AGENT_INFO,$XDG_RUNTIME_DIR/keyring/gpg:0:1' >>"$ENVIRONMENTAL_VARS"
-
-grep -q "GNOME_KEYRING_CONTROL" "$ENVIRONMENTAL_VARS" ||
-    echo 'env = GNOME_KEYRING_CONTROL,$XDG_RUNTIME_DIR/keyring' >>"$ENVIRONMENTAL_VARS"
-
-echo "==> Setting up systemd user service..."
-sudo mkdir -p "$USER_HOME/.config/systemd/user"
-
-sudo cat >"$USER_HOME/.config/systemd/user/gnome-keyring-daemon.service" <<'EOF'
-[Unit]
-Description=GNOME Keyring Daemon
-After=graphical.target
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/gnome-keyring-daemon --foreground --components=pkcs11,secrets,ssh,gpg
-Restart=on-failure
-
-[Install]
-WantedBy=default.target
-EOF
-
-systemctl --user daemon-reload
-systemctl --user enable --now gnome-keyring-daemon.service
-systemctl --user enable --now ssh-agent.service || true
-
-# Try to add default SSH key if exists
 SSH_KEY="$USER_HOME/.ssh/id_rsa"
 if [[ -f "$SSH_KEY" ]]; then
     echo "Adding SSH key..."
@@ -67,4 +13,4 @@ fi
 
 echo
 echo "==> ✅ Done!"
-echo "Reboot or log out/in from Hyprland to activate GNOME Keyring + SSH integration."
+echo "Reboot or log out/in to activate SSH integration."
