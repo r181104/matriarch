@@ -152,7 +152,7 @@ alias kssh "kitty +kitten ssh"
 alias web 'cd /var/www/html'
 alias da 'date "+%Y-%m-%d %A %T %Z"'
 alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l'
-alias anime '~/stecore/scripts/./ani-cli'
+alias anime '~/senv/scripts/ani-cli'
 
 alias mirror-rating 'rate-mirrors --entry-country=IN --protocol=https arch | sudo tee /etc/pacman.d/mirrorlist'
 
