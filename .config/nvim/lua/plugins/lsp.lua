@@ -24,6 +24,7 @@ return {
 			},
 		})
 		setup("pyright")
+		setup("jdtls")
 		setup("rust_analyzer")
 	end,
 }
