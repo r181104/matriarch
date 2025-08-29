@@ -255,34 +255,29 @@ function curl
     command curl -4 $argv
 end
 
-# NOTE: Arch package manager
-function package_manager
-    if type -q paru
-        function i; paru --noconfirm -S --needed $argv; end
-        function u; paru --noconfirm -Syu $argv; end
-        function r; paru -Rns $argv; end
-        function s; paru -Ss $argv; end
-        function remove-orphaned; sudo pacman -Rns (pacman -Qtdq); paru -Rns (pacman -Qtdq); end
-        function aggressively-clear-cache; sudo pacman -Scc; paru -Scc; end
-        function clear-cache; sudo pacman -Sc; paru -Sc; end
-
-    else if type -q yay
-        function i; yay --noconfirm -S --needed $argv; end
-        function u; yay --noconfirm -Syu $argv; end
-        function r; yay -Rns $argv; end
-        function s; yay -Ss $argv; end
-        function remove-orphaned; sudo pacman -Rns (pacman -Qtdq); yay -Rns (pacman -Qtdq); end
-        function aggressively-clear-cache; sudo pacman -Scc; yay -Scc; end
-        function clear-cache; sudo pacman -Sc; yay -Sc; end
-
-    else
-        function i; sudo pacman --noconfirm -S --needed $argv; end
-        function u; sudo pacman --noconfirm -Syu $argv; end
-        function r; sudo pacman -Rns $argv; end
-        function s; sudo pacman -Ss $argv; end
-        function remove-orphaned; sudo pacman -Rns (pacman -Qtdq); end
-        function aggressively-clear-cache; sudo pacman -Scc; end
-        function clear-cache; sudo pacman -Sc; end
-    end
+# NOTE: Arch Package Manager
+if type -q paru
+    alias i 'paru --noconfirm -S --needed'
+    alias u 'paru --noconfirm -Syu'
+    alias r 'paru -Rns'
+    alias s 'paru -Ss'
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && paru -Rns (pacman -Qtdq)'
+    alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc'
+    alias clear-cache 'sudo pacman -Sc && paru -Sc'
+else if type -q yay
+    alias i 'yay --noconfirm -S --needed'
+    alias u 'yay --noconfirm -Syu'
+    alias r 'yay -Rns'
+    alias s 'yay -Ss'
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && yay -Rns (pacman -Qtdq)'
+    alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
+    alias clear-cache 'sudo pacman -Sc && yay -Sc'
+else
+    alias i 'sudo pacman --noconfirm -S --needed'
+    alias u 'sudo pacman --noconfirm -Syu'
+    alias r 'sudo pacman -Rns'
+    alias s 'sudo pacman -Ss'
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq)'
+    alias aggressively-clear-cache 'sudo pacman -Scc'
+    alias clear-cache 'sudo pacman -Sc'
 end
-package_manager
