@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- NOTE: Actions
 		map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 		map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-		map("n", "<leader>f", function()
+		map("n", "<leader>for", function()
 			vim.lsp.buf.format({ async = true })
 		end, "Format buffer")
 		-- NOTE: Diagnostics
