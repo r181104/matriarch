@@ -72,8 +72,11 @@ DEVELOPMENT=(
     gcc
     rustup
     go
-    python uv
-    jdk-openjdk maven gradle
+    python
+    uv
+    jdk-openjdk
+    maven
+    gradle
     nodejs
     ollama  
     obsidian-bin
