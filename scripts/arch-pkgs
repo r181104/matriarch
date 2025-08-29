@@ -72,8 +72,8 @@ DEVELOPMENT=(
     gcc
     rustup
     go
-    python
-    uv
+    python uv
+    jdk-openjdk maven gradle
     nodejs
     ollama  
     obsidian-bin
@@ -82,6 +82,7 @@ DEVELOPMENT=(
 LSP=(
     pyright
     lua-language-server
+    jdtls
 )
 
 FORMATTERS=(

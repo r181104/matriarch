@@ -1,14 +1,19 @@
+# =========================================
+#           INTERACTIVE CHECK
+# =========================================
 if status is-interactive
+    # Commands to run in interactive sessions only
 end
 
+# =========================================
+#           ENVIRONMENT VARIABLES
+# =========================================
 set -Ux SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
 set -gx LANG en_IN.UTF-8
-set -gx LC_ALL en_IN.UTF-8
 
 set -gx _ZO_ECHO 1       # Print directory after jumping (like `cd`)
 set -gx _ZO_EXCLUDE_DIRS "$HOME/private/*"  # Exclude dirs from history
-# functions --erase cd  # Restores Fish’s original `cd`
 
 set -gx BROWSER "brave"
 set -gx TERM "alacritty"
@@ -16,14 +21,22 @@ set -gx EDITOR "zeditor"
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di 1;3;34:fi=0"
 
-set -g fish_key_bindings fish_default_key_bindings
+# =========================================
+#           JAVA ENVIRONMENT
+# =========================================
+set -Ux JAVA_HOME (archlinux-java get | string replace 'java-' '/usr/lib/jvm/java-')
+set -Ux PATH $JAVA_HOME/bin $PATH
 
+# =========================================
+#           KEY BINDINGS
+# =========================================
+set -g fish_key_bindings fish_default_key_bindings
 bind \en down-or-search
 bind \ep up-or-search
 
-#  =========================================
-#           BASIC ALIASES (using eza)
-#  =========================================
+# =========================================
+#           BASIC ALIASES (eza)
+# =========================================
 alias ls 'eza -a --icons'
 alias l 'eza -a --icons'
 alias la 'eza -a --icons -l'
@@ -40,7 +53,9 @@ alias labc 'eza -a --icons --sort=name'
 alias tree 'eza -a --icons --tree'
 alias c 'clear'
 
-# Navigation shortcuts
+# =========================================
+#           NAVIGATION SHORTCUTS
+# =========================================
 alias home 'cd ~'
 alias .. 'cd ..'
 alias ... 'cd ../..'
@@ -48,31 +63,31 @@ alias .... 'cd ../../..'
 alias ..... 'cd ../../../..'
 alias bd 'cd "$OLDPWD"'
 
-#  =========================================
+# =========================================
 #           EDITOR ALIASES
-#  =========================================
+# =========================================
 alias n 'nvim'
 alias sn 'sudo nvim'
 alias v 'vim'
 alias sv 'sudo vim'
 
-#  =========================================
+# =========================================
 #           TMUX ALIASES
-#  =========================================
+# =========================================
 alias tns 'tmux new -s'
 alias ta 'tmux attach'
 alias td 'tmux detach'
 
-#  =========================================
+# =========================================
 #           SYSTEM ALIASES
-#  =========================================
+# =========================================
 alias ps 'ps auxf'
 alias ping 'ping -c 5'
 alias less 'less -R'
 alias h "history | grep "
 alias p "ps aux | grep "
 alias topcpu "ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
-alias find "fzf --preview='bat {}' --bind 'enter:execute(nvim {})'"
+alias ffind "fzf --preview='bat {}' --bind 'enter:execute(nvim {})'"  # safer than overriding find
 alias f "find . | grep "
 alias openports 'netstat -tulanp'
 
@@ -82,31 +97,30 @@ alias shutdown 'shutdown now'
 alias logout 'loginctl kill-session $XDG_SESSION_ID'
 alias restart-dm 'systemctl restart display-manager'
 
-#  =========================================
+# =========================================
 #           PACKAGE MANAGEMENT
-#  =========================================
+# =========================================
 alias rebel '~/senv/scripts/rebuild'
 alias uprebel '~/senv/scripts/up-rebuild'
 alias cwifi '~/senv/scripts/cwifi'
-alias op-net='~/senv/scripts/optimize-network'
+alias op-net '~/senv/scripts/optimize-network'
 
-#  =========================================
+# =========================================
 #           FILE OPERATIONS
-#  =========================================
+# =========================================
 alias cp 'cp -i'
 alias mv 'mv -i'
 alias mkdir 'mkdir -p'
-alias rmd '/bin/rm  --recursive --force --verbose'
+alias rmd '/bin/rm --recursive --force --verbose'
 
-# Disk and space management
 alias diskspace "du -S | sort -n -r | less"
 alias folders 'du -h --max-depth=1'
 alias mountedinfo 'df -hT'
 alias duf 'duf -hide special'
 
-#  =========================================
+# =========================================
 #           PERMISSIONS & SECURITY
-#  =========================================
+# =========================================
 alias mx 'chmod a+x'
 alias 000 'chmod -R 000'
 alias 644 'chmod -R 644'
@@ -116,38 +130,38 @@ alias 777 'chmod -R 777'
 alias sha1 'openssl sha1'
 alias chown 'sudo chown -R $USER'
 
-#  =========================================
-#           DEVELOPMENT & TOOLS
-#  =========================================
+# =========================================
+#           DEV & TOOLS
+# =========================================
 alias grep 'grep --color=auto'
 alias rg 'rg --color=auto'
 alias bright 'brightnessctl set'
 
-#  =========================================
-#              GIT ALIASES
-#  =========================================
+# =========================================
+#           GIT
+# =========================================
 alias gp 'git push'
 alias git-clean 'git reflog expire --expire=now --all; git gc --prune=now --aggressive'
 
-#  =========================================
-#              ARCH ALIASES
-#  =========================================
+# =========================================
+#           ARCH LINUX ALIASES
+# =========================================
 alias i 'yay --noconfirm -S --needed'
 alias u 'yay --noconfirm -Syu'
 alias r 'yay -Rns'
 alias s 'yay -Ss'
-alias remove-orphaned 'sudo pacman -Rns $(pacman -Qtdq) && yay -Rns $(pacman -Qtdq)'
+alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && yay -Rns (pacman -Qtdq)'
 alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
 alias clear-cache 'sudo pacman -Sc && yay -Sc'
 
-#  =========================================
-#           PROGRAMMING ALIASES
-#  =========================================
+# =========================================
+#           PROGRAMMING
+# =========================================
 alias pyr 'python'
 
-#  =========================================
-#           UTILITY ALIASES
-#  =========================================
+# =========================================
+#           UTILITY
+# =========================================
 alias kssh "kitty +kitten ssh"
 alias web 'cd /var/www/html'
 alias da 'date "+%Y-%m-%d %A %T %Z"'
@@ -156,6 +170,9 @@ alias anime '~/senv/scripts/ani-cli'
 
 alias mirror-rating 'rate-mirrors --entry-country=IN --protocol=https arch | sudo tee /etc/pacman.d/mirrorlist'
 
+# =========================================
+#           PROMPT / TOOLS INIT
+# =========================================
 if command -q starship
     starship init fish | source
 end
@@ -169,6 +186,9 @@ if command -q fzf
     fzf_key_bindings | source
 end
 
+# =========================================
+#           FUNCTIONS
+# =========================================
 function fzf_nvim --description "Fuzzy-find a file and open in Neovim"
     set -l selected_file (fzf --height=40% --reverse --ansi \
         --prompt="📝 Open in nvim: " \
@@ -181,13 +201,12 @@ function fzf_nvim --description "Fuzzy-find a file and open in Neovim"
 end
 bind \er fzf_nvim
 
-
 function fzf_zoxide_dir --description "Fuzzy-find a directory from zoxide and jump"
     set -l selected_dir (
-    zoxide query -l | fzf --height=40% --reverse --ansi \
-        --prompt="📂 Jump to: " \
-        --preview 'eza --icons --tree --level=2 --color=always {} 2>/dev/null' \
-        --preview-window=right:50%:wrap
+        zoxide query -l | fzf --height=40% --reverse --ansi \
+            --prompt="📂 Jump to: " \
+            --preview 'eza --icons --tree --level=2 --color=always {} 2>/dev/null' \
+            --preview-window=right:50%:wrap
     )
     if test -n "$selected_dir"
         z "$selected_dir"
@@ -197,7 +216,7 @@ end
 bind \ed fzf_zoxide_dir
 
 function gacp
-    git add .;git commit -m 's';git push
+    git add .; git commit -m 's'; git push
 end
 
 function gs
@@ -215,8 +234,8 @@ function clean-nix
 end
 
 function store-size
-    df -h /              
-    du -sh /nix/store     
+    df -h /
+    du -sh /nix/store
 end
 
 function fish_greeting
@@ -239,7 +258,7 @@ function tty_kill_all
 end
 
 function gac
-    git add .;git commit -m $argv
+    git add .; git commit -m $argv
 end
 
 # Force curl to prefer IPv4
