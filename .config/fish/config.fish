@@ -144,17 +144,6 @@ alias gp 'git push'
 alias git-clean 'git reflog expire --expire=now --all; git gc --prune=now --aggressive'
 
 # =========================================
-#           ARCH LINUX ALIASES
-# =========================================
-alias i 'yay --noconfirm -S --needed'
-alias u 'yay --noconfirm -Syu'
-alias r 'yay -Rns'
-alias s 'yay -Ss'
-alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && yay -Rns (pacman -Qtdq)'
-alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
-alias clear-cache 'sudo pacman -Sc && yay -Sc'
-
-# =========================================
 #           PROGRAMMING
 # =========================================
 alias pyr 'python'
@@ -265,3 +254,35 @@ end
 function curl
     command curl -4 $argv
 end
+
+# NOTE: Arch package manager
+function package_manager
+    if type -q paru
+        function i; paru --noconfirm -S --needed $argv; end
+        function u; paru --noconfirm -Syu $argv; end
+        function r; paru -Rns $argv; end
+        function s; paru -Ss $argv; end
+        function remove-orphaned; sudo pacman -Rns (pacman -Qtdq); paru -Rns (pacman -Qtdq); end
+        function aggressively-clear-cache; sudo pacman -Scc; paru -Scc; end
+        function clear-cache; sudo pacman -Sc; paru -Sc; end
+
+    else if type -q yay
+        function i; yay --noconfirm -S --needed $argv; end
+        function u; yay --noconfirm -Syu $argv; end
+        function r; yay -Rns $argv; end
+        function s; yay -Ss $argv; end
+        function remove-orphaned; sudo pacman -Rns (pacman -Qtdq); yay -Rns (pacman -Qtdq); end
+        function aggressively-clear-cache; sudo pacman -Scc; yay -Scc; end
+        function clear-cache; sudo pacman -Sc; yay -Sc; end
+
+    else
+        function i; sudo pacman --noconfirm -S --needed $argv; end
+        function u; sudo pacman --noconfirm -Syu $argv; end
+        function r; sudo pacman -Rns $argv; end
+        function s; sudo pacman -Ss $argv; end
+        function remove-orphaned; sudo pacman -Rns (pacman -Qtdq); end
+        function aggressively-clear-cache; sudo pacman -Scc; end
+        function clear-cache; sudo pacman -Sc; end
+    end
+end
+package_manager
