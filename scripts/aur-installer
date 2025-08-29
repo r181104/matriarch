@@ -1,0 +1,130 @@
+#!/bin/sh
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Generic function to install an AUR helper (yay or paru)
+install_aur_helper() {
+    local helper="$1"
+
+    if command_exists "$helper"; then
+        echo "$helper is already installed"
+        return 0
+    fi
+
+    echo "Installing $helper AUR helper..."
+
+    # Install prerequisites with pacman
+    local prerequisites=(git base-devel)
+    local missing_prereqs=()
+    local go_installed_during_process=0
+
+    for pkg in "${prerequisites[@]}"; do
+        if ! pacman -Q "$pkg" >/dev/null 2>&1; then
+            missing_prereqs+=("$pkg")
+        fi
+    done
+
+    # Check if go is missing (yay/paru requires go)
+    if ! pacman -Q go >/dev/null 2>&1; then
+        missing_prereqs+=(go)
+        go_installed_during_process=1
+    fi
+
+    if [ ${#missing_prereqs[@]} -ne 0 ]; then
+        echo "Installing prerequisites: ${missing_prereqs[*]}"
+        sudo pacman -S --needed --noconfirm "${missing_prereqs[@]}" || {
+            echo "Failed to install prerequisites: ${missing_prereqs[*]}"
+                    exit 1
+                }
+            echo "Prerequisites installed successfully"
+    fi
+
+    # Create temporary directory and install helper
+    local temp_dir
+    temp_dir=$(mktemp -d)
+    local current_dir
+    current_dir=$(pwd)
+
+    cd "$temp_dir" || {
+        echo "Failed to create temporary directory"
+            exit 1
+        }
+
+    echo "Cloning $helper repository..."
+    if git clone "https://aur.archlinux.org/${helper}.git"; then
+        cd "$helper" || {
+            echo "Failed to enter $helper directory"
+                    cd "$current_dir"
+                    rm -rf "$temp_dir"
+                    exit 1
+                }
+
+            echo "Building and installing $helper..."
+            if makepkg -si --noconfirm; then
+                echo "$helper installed successfully"
+
+                # Remove go if it was installed during this process
+                if [ $go_installed_during_process -eq 1 ]; then
+                    echo "Removing Go as it was installed only for $helper..."
+                    sudo pacman -Rns --noconfirm go
+                fi
+
+                cd "$current_dir"
+                rm -rf "$temp_dir"
+                return 0
+            else
+                echo "Failed to build $helper"
+                cd "$current_dir"
+                rm -rf "$temp_dir"
+                exit 1
+            fi
+        else
+            echo "Failed to clone $helper repository"
+            cd "$current_dir"
+            rm -rf "$temp_dir"
+            exit 1
+    fi
+}
+
+# Main function to handle user choice
+main() {
+    local choice="$1"
+
+    if [ -z "$choice" ]; then
+        echo "Which AUR helper do you want to install?"
+        echo "1) yay-only"
+        echo "2) paru-only"
+        echo "3) both"
+        read -r -p "Enter choice [1-3]: " choice_num
+
+        case "$choice_num" in
+            1) choice="yay-only" ;;
+            2) choice="paru-only" ;;
+            3) choice="both" ;;
+            *) echo "Invalid choice"; exit 1 ;;
+        esac
+    fi
+
+    case "$choice" in
+        yay-only)
+            install_aur_helper yay
+            ;;
+        paru-only)
+            install_aur_helper paru
+            ;;
+        both)
+            install_aur_helper yay
+            install_aur_helper paru
+            ;;
+        *)
+            echo "Usage: $0 {yay-only|paru-only|both}"
+            exit 1
+            ;;
+    esac
+}
+
+# Run main with provided argument (if any)
+main "$1"

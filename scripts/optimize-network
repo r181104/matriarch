@@ -1,7 +1,8 @@
 #!/bin/sh
+# Universal Network Optimizer Script (works on most Linux distros)
 
 # =============================
-# Color variables for output
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -14,67 +15,147 @@ success() { echo -e "${GREEN}✔ $1${NC}"; }
 fail() { echo -e "${RED}✖ $1${NC}"; }
 warn() { echo -e "${YELLOW}! $1${NC}"; }
 
-set -e
+# =============================
+# Logging
+if [ "$(id -u)" -eq 0 ]; then
+    LOGFILE="/var/log/network_optimize.log"
+else
+    LOGFILE="$HOME/.local/state/network_optimize.log"
+    mkdir -p "$(dirname "$LOGFILE")"
+fi
+log() { echo "$(date '+%F %T') - $1" >> "$LOGFILE"; }
 
-# Ensure root privileges
+# =============================
+# Root check (sudo or doas)
 if [ "$(id -u)" -ne 0 ]; then
-  warn "Script requires root privileges. Re-executing with sudo..."
-  exec sudo "$0" "$@"
+    if command -v sudo >/dev/null 2>&1; then
+        warn "Re-running with sudo..."
+        exec sudo "$0" "$@"
+    elif command -v doas >/dev/null 2>&1; then
+        warn "Re-running with doas..."
+        exec doas "$0" "$@"
+    else
+        fail "Root privileges required (install sudo or doas)"
+        exit 1
+    fi
 fi
 
+# =============================
+# Dependency check
+for cmd in nmcli iw lsmod systemctl ping curl; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        fail "Missing required command: $cmd"
+        exit 1
+    fi
+done
+
+# =============================
+# DNS provider selection
+section "Choose DNS provider"
+echo "1) Cloudflare (1.1.1.1, 2606:4700:4700::1111)"
+echo "2) Google     (8.8.8.8, 2001:4860:4860::8888)"
+echo "3) Quad9      (9.9.9.9, 2620:fe::fe)"
+echo "4) OpenDNS    (208.67.222.222, 2620:119:35::35)"
+read -rp "Select provider [1-4]: " choice
+
+case $choice in
+    1) DNS4="1.1.1.1,1.0.0.1"; DNS6="2606:4700:4700::1111,2606:4700:4700::1001"; NAME="Cloudflare" ;;
+    2) DNS4="8.8.8.8,8.8.4.4"; DNS6="2001:4860:4860::8888,2001:4860:4860::8844"; NAME="Google" ;;
+    3) DNS4="9.9.9.9,149.112.112.112"; DNS6="2620:fe::fe,2620:fe::9"; NAME="Quad9" ;;
+    4) DNS4="208.67.222.222,208.67.220.220"; DNS6="2620:119:35::35,2620:119:53::53"; NAME="OpenDNS" ;;
+    *) DNS4="1.1.1.1,8.8.8.8"; DNS6="2606:4700:4700::1111,2001:4860:4860::8888"; NAME="Default (Cloudflare+Google)" ;;
+esac
+success "Using DNS: $NAME"
+
+# =============================
+# Detect active connections
 section "Detecting active network connections"
-wifi_info=$(nmcli -t -f NAME,DEVICE,TYPE con show --active | awk -F: '$3=="802-11-wireless" || $3=="wifi" {print $0}' || true)
-eth_info=$(nmcli -t -f NAME,DEVICE,TYPE con show --active | awk -F: '$3=="802-3-ethernet" || $3=="ethernet" {print $0}' || true)
+wifi_info=$(nmcli -t -f NAME,DEVICE,TYPE con show --active | awk -F: '$3 ~ /802-11-wireless|wifi/ {print $0}' || true)
+eth_info=$(nmcli -t -f NAME,DEVICE,TYPE con show --active | awk -F: '$3 ~ /802-3-ethernet|ethernet/ {print $0}' || true)
 
-wifi_conn=""
-wifi_dev=""
-eth_conn=""
-eth_dev=""
-
-if [ -n "$wifi_info" ]; then
-  wifi_conn=$(echo "$wifi_info" | cut -d: -f1)
-  wifi_dev=$(echo "$wifi_info" | cut -d: -f2)
-fi
-if [ -n "$eth_info" ]; then
-  eth_conn=$(echo "$eth_info" | cut -d: -f1)
-  eth_dev=$(echo "$eth_info" | cut -d: -f2)
-fi
+wifi_conn=$(echo "$wifi_info" | cut -d: -f1)
+wifi_dev=$(echo "$wifi_info" | cut -d: -f2)
+eth_conn=$(echo "$eth_info" | cut -d: -f1)
+eth_dev=$(echo "$eth_info" | cut -d: -f2)
 
 if [ -z "$wifi_conn" ] && [ -z "$eth_conn" ]; then
-  warn "No active Wi-Fi or Ethernet connections found."
-  exit 0
+    warn "No active Wi-Fi or Ethernet connections found."
+    exit 0
 fi
 
+# =============================
 # Optimize Wi-Fi
 if [ -n "$wifi_conn" ]; then
-  section "Optimizing Wi-Fi: $wifi_conn ($wifi_dev)"
-  iw dev "$wifi_dev" set power_save off 2>/dev/null && success "Disabled Wi-Fi power saving for $wifi_dev" || warn "Failed to disable power saving for $wifi_dev (may not be supported)"
-  if lsmod | grep -q iwlwifi; then
-    echo "options iwlwifi power_save=0" >/etc/modprobe.d/iwlwifi.conf
-    success "Set permanent Wi-Fi power saving disable in /etc/modprobe.d/iwlwifi.conf"
+    section "Optimizing Wi-Fi: $wifi_conn ($wifi_dev)"
+
+    if iw dev "$wifi_dev" set power_save off 2>/dev/null; then
+        success "Disabled Wi-Fi power saving for $wifi_dev"
+    else
+        warn "Failed to disable Wi-Fi power saving (may not be supported)"
   fi
-  nmcli connection modify "$wifi_conn" ipv4.dns "1.1.1.1,8.8.8.8" || warn "Failed to set IPv4 DNS for $wifi_conn"
-  nmcli connection modify "$wifi_conn" ipv6.dns "2606:4700:4700::1111,2001:4860:4860::8888" || warn "Failed to set IPv6 DNS for $wifi_conn"
-  success "Set Cloudflare (primary) and Google (secondary) DNS servers for $wifi_conn"
+
+  if lsmod | grep -q iwlwifi; then
+      CONF_FILE="/etc/modprobe.d/iwlwifi.conf"
+      if ! grep -q "power_save=0" "$CONF_FILE" 2>/dev/null; then
+          echo "options iwlwifi power_save=0" >> "$CONF_FILE"
+          success "Permanent Wi-Fi power save disabled in $CONF_FILE"
+      else
+          warn "Wi-Fi power save already disabled in $CONF_FILE"
+    fi
+  fi
+
+  nmcli connection modify "$wifi_conn" ipv4.dns "$DNS4"
+  nmcli connection modify "$wifi_conn" ipv6.dns "$DNS6"
+  success "Applied $NAME DNS for Wi-Fi"
 fi
 
+# =============================
 # Optimize Ethernet
 if [ -n "$eth_conn" ]; then
-  section "Optimizing Ethernet: $eth_conn ($eth_dev)"
-  nmcli connection modify "$eth_conn" ipv4.dns "1.1.1.1,8.8.8.8" || warn "Failed to set IPv4 DNS for $eth_conn"
-  nmcli connection modify "$eth_conn" ipv6.dns "2606:4700:4700::1111,2001:4860:4860::8888" || warn "Failed to set IPv6 DNS for $eth_conn"
-  success "Set Cloudflare (primary) and Google (secondary) DNS servers for $eth_conn"
+    section "Optimizing Ethernet: $eth_conn ($eth_dev)"
+    nmcli connection modify "$eth_conn" ipv4.dns "$DNS4"
+    nmcli connection modify "$eth_conn" ipv6.dns "$DNS6"
+    success "Applied $NAME DNS for Ethernet"
 fi
 
-section "Restarting NetworkManager"
-systemctl restart NetworkManager && success "NetworkManager restarted successfully" || fail "Failed to restart NetworkManager"
+# =============================
+# Restart network manager
+section "Restarting Network Service"
+if systemctl is-active --quiet NetworkManager; then
+    systemctl restart NetworkManager && success "NetworkManager restarted"
+elif systemctl is-active --quiet wicked; then
+    systemctl restart wicked && success "Wicked restarted"
+elif systemctl is-active --quiet systemd-networkd; then
+    systemctl restart systemd-networkd && success "systemd-networkd restarted"
+else
+    warn "Unknown network service manager, skipping restart"
+fi
+
 sleep 3
 
-# Reactivate connections
-[ -n "$wifi_conn" ] && nmcli connection up "$wifi_conn" && success "Reactivated Wi-Fi: $wifi_conn" || warn "Failed to reactivate $wifi_conn"
-[ -n "$eth_conn" ] && nmcli connection up "$eth_conn" && success "Reactivated Ethernet: $eth_conn" || warn "Failed to reactivate $eth_conn"
+[ -n "$wifi_conn" ] && nmcli connection up "$wifi_conn" && success "Reactivated Wi-Fi: $wifi_conn"
+[ -n "$eth_conn" ] && nmcli connection up "$eth_conn" && success "Reactivated Ethernet: $eth_conn"
 
+# =============================
+# Flush DNS caches (multi-distro)
+section "Flushing DNS cache"
+if systemctl is-active --quiet systemd-resolved; then
+    resolvectl flush-caches && success "Flushed systemd-resolved cache"
+elif systemctl is-active --quiet dnsmasq; then
+    systemctl restart dnsmasq && success "Restarted dnsmasq (cache flushed)"
+elif systemctl is-active --quiet nscd; then
+    systemctl restart nscd && success "Restarted nscd (cache flushed)"
+elif systemctl is-active --quiet unbound; then
+    systemctl restart unbound && success "Restarted unbound (cache flushed)"
+else
+    warn "No DNS caching service detected (nothing to flush)"
+fi
+
+# =============================
+# Connectivity test
 section "Testing connectivity"
-ping -c 4 8.8.8.8 && success "Ping test successful!" || warn "Ping test failed; check network status."
+ping -c 4 8.8.8.8 >/dev/null 2>&1 && success "Ping test successful!" || warn "Ping failed"
+curl -s --max-time 5 https://1.1.1.1 >/dev/null && success "HTTP connectivity OK" || warn "HTTP test failed"
 
-echo -e "${GREEN}${BOLD}Network optimization complete!${NC}"
+echo -e "${GREEN}${BOLD}✔ Network optimization complete!${NC}"
+log "Network optimization completed with DNS: $NAME"
