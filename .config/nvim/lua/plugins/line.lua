@@ -61,7 +61,7 @@ return {
 					},
 				},
 			},
-			extensions = { "fugitive", "nvim-tree", "lazy", "mason", "toggleterm" },
+			extensions = { "fugitive", "oil", "lazy", "toggleterm" },
 		})
 	end,
 }
