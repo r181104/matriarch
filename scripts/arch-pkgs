@@ -90,11 +90,11 @@ LSP=(
 
 FORMATTERS=(
     stylua 
-    black 
-    isort 
+    python-black 
+    python-isort 
     prettier 
     gofumpt 
-    goimports 
+    goimports-reviser
     rustfmt 
     shfmt 
     clang 
@@ -205,7 +205,7 @@ install_package_group() {
     local packages=("$@")
 
     echo -e "\n${BLUE}Installing ${group_name}...${NC}"
-    if yay -S --needed --noconfirm "${packages[@]}"; then
+    if paru -S --needed --noconfirm "${packages[@]}"; then
         echo "✔️  ${group_name} installed successfully"
     else
         echo "❌  Failed to install ${group_name}"
