@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -e
+
+echo "==> Installing intel-undervolt..."
+if ! command -v paru >/dev/null 2>&1; then
+    echo "ERROR: paru is not installed. Please install paru first."
+    exit 1
+fi
+
+paru -S --noconfirm intel-undervolt
+
+echo "==> Creating undervolt configuration..."
+sudo tee /etc/intel-undervolt.conf >/dev/null <<'EOF'
+
+enable no
+
+undervolt 0 'CPU' -100
+undervolt 1 'GPU' -50
+undervolt 2 'CPU Cache' -100
+undervolt 3 'System Agent' 0
+undervolt 4 'Analog I/O' 0
+
+interval 5000
+
+daemon undervolt:once
+daemon power
+daemon tjoffset
+EOF
+
+echo "==> Applying undervolt..."
+sudo intel-undervolt apply || {
+    echo "⚠️ Failed to apply undervolt, check msr module."
+    exit 1
+}
+
+echo "==> Enabling service at boot..."
+sudo systemctl enable intel-undervolt --now
+
+echo "==> Verifying current values..."
+intel-undervolt read || sudo intel-undervolt read
+
+echo "✅ Undervolt setup complete!"
+echo "   Default values: CPU -100 mV, Cache -100 mV, GPU -50 mV"
+echo "   You can edit them in /etc/intel-undervolt.conf"
