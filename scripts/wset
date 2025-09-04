@@ -1,6 +1,6 @@
 #!/bin/sh
 
-Wall_DIR="$HOME/Wallpapers/Pictures"
+Wall_DIR="$HOME/Wallpapers"
 
 CWD="$(pwd)"
 
