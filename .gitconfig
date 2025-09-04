@@ -1,6 +1,21 @@
-[core]
-    editor = nvim
-
 [user]
     name = r181104
     email = sten181104@gmail.com
+    signingkey = ~/.ssh/id_rsa
+
+[core]
+    editor = nvim
+    pager = delta
+    autocrlf = input
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true
+
+[push]
+    default = current
+
+[color]
+    ui = auto

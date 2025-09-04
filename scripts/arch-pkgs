@@ -44,6 +44,7 @@ BASE_PKGS=(
     vim
     neovim
     git
+    git-delta
     wget
     curl
     fish
