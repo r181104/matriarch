@@ -5,6 +5,10 @@ if status is-interactive
     # Commands to run in interactive sessions only
 end
 
+if command -q starship
+    starship init fish | source
+end
+
 # =========================================
 #           ENVIRONMENT VARIABLES
 # =========================================
@@ -160,10 +164,6 @@ alias anime '~/senv/scripts/ani-cli'
 # =========================================
 #           PROMPT / TOOLS INIT
 # =========================================
-if command -q starship
-    starship init fish | source
-end
-
 if command -q zoxide
     set -gx _ZO_FZF_PREVIEW 'ls --color=always {}'
     zoxide init fish | source

@@ -1,2 +1,4 @@
-command_timeout = 1000
 add_newline = false
+
+[git_status]
+disabled = true
