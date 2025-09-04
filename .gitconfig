@@ -8,11 +8,18 @@
     pager = delta
     autocrlf = input
 
+[interactive]
+    diffFilter = delta --color-only
 
 [delta]
-    line-numbers = true
-    side-by-side = false
+    navigate = true       
+    line-numbers = true   
+    side-by-side = true   
     syntax-theme = Dracula
+    hyperlinks = true     
+
+[diff]
+    colorMoved = default
 
 [init]
     defaultBranch = main
