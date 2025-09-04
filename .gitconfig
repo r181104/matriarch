@@ -8,6 +8,12 @@
     pager = delta
     autocrlf = input
 
+
+[delta]
+    line-numbers = true
+    side-by-side = false
+    syntax-theme = Dracula
+
 [init]
     defaultBranch = main
 
