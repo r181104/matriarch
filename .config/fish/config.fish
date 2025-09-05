@@ -33,23 +33,6 @@ set -g fish_key_bindings fish_default_key_bindings
 bind \en down-or-search    # NOTE: Next search with ↑
 bind \ep up-or-search      # NOTE: Previous search with ↓
 
-# NOTE: File listing (using eza instead of ls)
-alias ls 'eza -a --icons'                      # list all with icons
-alias l 'eza -a --icons'                       # shorthand for ls
-alias la 'eza -a --icons -l'                   # detailed list
-alias ll 'eza -a --icons -l'                   # same as la
-alias lx 'eza -a --icons -l --sort=extension'  # sort by extension
-alias lk 'eza -a --icons -l --sort=size'       # sort by size
-alias lc 'eza -a --icons -l --sort=changed'    # sort by change time
-alias lu 'eza -a --icons -l --sort=accessed'   # sort by access time
-alias lr 'eza -a --icons -l -R'                # recursive
-alias lt 'eza -a --icons -l --sort=modified'   # sort by modified time
-alias lm 'eza -a --icons -l | less'            # list with pager
-alias lw 'eza -a --icons -x'                   # wide view
-alias labc 'eza -a --icons --sort=name'        # sort alphabetically
-alias tree 'eza -a --icons --tree'             # tree view
-alias c 'clear'                                # clear terminal
-
 # NOTE: Navigation shortcuts
 alias home 'cd ~'             # go home
 alias .. 'cd ..'              # up one dir
@@ -57,6 +40,7 @@ alias ... 'cd ../..'          # up two dirs
 alias .... 'cd ../../..'      # up three dirs
 alias ..... 'cd ../../../..'  # up four dirs
 alias bd 'cd "$OLDPWD"'       # back to previous dir
+alias c 'clear'               # clear terminal
 
 # NOTE: Editors
 alias n 'nvim'        # Neovim
@@ -132,6 +116,107 @@ alias web 'cd /var/www/html'      # go to web root
 alias da 'date "+%Y-%m-%d %A %T %Z"' # pretty date
 alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l' # lockscreen
 alias anime '~/senv/scripts/ani-cli' # anime cli
+
+# WARN: FUNCITON ARE FROM HERE
+# NOTE: Update Arch mirrors interactively
+function mirror-rating
+    set -l mirrorlist /etc/pacman.d/mirrorlist
+    set -l backup /etc/pacman.d/mirrorlist.bak
+
+    echo "  Backing up current mirrorlist → $backup"
+    sudo cp $mirrorlist $backup
+
+    echo
+    echo "  Select mirror scope:"
+    echo "1) India only"
+    echo "2) India + nearby (Singapore, Japan, Hong Kong)"
+    read -l choice
+
+    switch $choice
+        case 1
+            set countries IN
+        case 2
+            set countries IN,SG,JP,HK
+        case '*'
+            echo "  Invalid choice. Aborting."
+            return 1
+    end
+
+    echo
+    echo "  Fetching fastest mirrors for: $countries"
+    rate-mirrors --entry-country=$countries --protocol=https --max-mirrors-to-output=20 arch | sudo tee $mirrorlist
+
+    echo
+    echo "  Refresh pacman databases now? (y/n)"
+    read -l refresh
+    if test "$refresh" = y
+        sudo pacman -Syyu
+    else
+        echo "  Mirrorlist updated. Run 'sudo pacman -Syyu' manually when ready."
+    end
+end
+
+# NOTE: Listing Aliases
+if type -q eza
+    # eza-based aliases
+    alias ls    'eza -a --icons'                      # list all with icons
+    alias l     'eza -a --icons'                      # shorthand for ls
+    alias la    'eza -a --icons -l'                   # detailed list
+    alias ll    'eza -a --icons -l'                   # same as la
+    alias lx    'eza -a --icons -l --sort=extension'  # sort by extension
+    alias lk    'eza -a --icons -l --sort=size'       # sort by size
+    alias lc    'eza -a --icons -l --sort=changed'    # sort by change time
+    alias lu    'eza -a --icons -l --sort=accessed'   # sort by access time
+    alias lr    'eza -a --icons -l -R'                # recursive
+    alias lt    'eza -a --icons -l --sort=modified'   # sort by modified time
+    alias lm    'eza -a --icons -l | less'            # list with pager
+    alias lw    'eza -a --icons -x'                   # wide view
+    alias labc  'eza -a --icons --sort=name'          # sort alphabetically
+    alias tree  'eza -a --icons --tree'               # tree view
+else
+    # coreutils ls-based fallbacks
+    alias ls    'ls -A --color=auto'        # list all with color
+    alias l     'ls -A --color=auto'        # shorthand for ls
+    alias la    'ls -lhA --color=auto'      # detailed list
+    alias ll    'ls -lhA --color=auto'      # same as la
+    alias lx    'ls -lhA --color=auto'      # no sort by extension in ls
+    alias lk    'ls -lhAS --color=auto'     # sort by size
+    alias lc    'ls -lhAt --color=auto'     # sort by change time (ctime not always portable)
+    alias lu    'ls -lhAu --color=auto'     # sort by access time
+    alias lr    'ls -lhAR --color=auto'     # recursive
+    alias lt    'ls -lhAt --color=auto'     # sort by modified time
+    alias lm    'ls -lhA --color=auto | less' # list with pager
+    alias lw    'ls -xA --color=auto'       # wide view
+    alias labc  'ls -lhA --color=auto'      # ls already sorts alphabetically by default
+    alias tree  'ls -R --color=auto'        # pseudo-tree
+end
+
+# NOTE: Package manager aliases (detect paru/yay/pacman)
+if type -q paru
+    alias i 'paru --noconfirm -S --needed'    # install
+    alias u 'paru --noconfirm -Syu'          # update
+    alias r 'paru -Rns'                      # remove
+    alias s 'paru -Ss'                       # search
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && paru -Rns (pacman -Qtdq)' # remove unused
+    alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc' # clear all cache
+    alias clear-cache 'sudo pacman -Sc && paru -Sc'                # clear partial cache
+else if type -q yay
+    alias i 'yay --noconfirm -S --needed'
+    alias u 'yay --noconfirm -Syu'
+    alias r 'yay -Rns'
+    alias s 'yay -Ss'
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && yay -Rns (pacman -Qtdq)'
+    alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
+    alias clear-cache 'sudo pacman -Sc && yay -Sc'
+else
+    alias i 'sudo pacman --noconfirm -S --needed'
+    alias u 'sudo pacman --noconfirm -Syu'
+    alias r 'sudo pacman -Rns'
+    alias s 'sudo pacman -Ss'
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq)'
+    alias aggressively-clear-cache 'sudo pacman -Scc'
+    alias clear-cache 'sudo pacman -Sc'
+end
 
 # NOTE: Init zoxide if installed
 if command -q zoxide
@@ -230,69 +315,4 @@ end
 # NOTE: Force curl to IPv4
 function curl
     command curl -4 $argv
-end
-
-# NOTE: Update Arch mirrors interactively
-function mirror-rating
-    set -l mirrorlist /etc/pacman.d/mirrorlist
-    set -l backup /etc/pacman.d/mirrorlist.bak
-
-    echo "  Backing up current mirrorlist → $backup"
-    sudo cp $mirrorlist $backup
-
-    echo
-    echo "  Select mirror scope:"
-    echo "1) India only"
-    echo "2) India + nearby (Singapore, Japan, Hong Kong)"
-    read -l choice
-
-    switch $choice
-        case 1
-            set countries IN
-        case 2
-            set countries IN,SG,JP,HK
-        case '*'
-            echo "  Invalid choice. Aborting."
-            return 1
-    end
-
-    echo
-    echo "  Fetching fastest mirrors for: $countries"
-    rate-mirrors --entry-country=$countries --protocol=https --max-mirrors-to-output=20 arch | sudo tee $mirrorlist
-
-    echo
-    echo "  Refresh pacman databases now? (y/n)"
-    read -l refresh
-    if test "$refresh" = y
-        sudo pacman -Syyu
-    else
-        echo "  Mirrorlist updated. Run 'sudo pacman -Syyu' manually when ready."
-    end
-end
-
-# NOTE: Package manager aliases (detect paru/yay/pacman)
-if type -q paru
-    alias i 'paru --noconfirm -S --needed'    # install
-    alias u 'paru --noconfirm -Syu'          # update
-    alias r 'paru -Rns'                      # remove
-    alias s 'paru -Ss'                       # search
-    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && paru -Rns (pacman -Qtdq)' # remove unused
-    alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc' # clear all cache
-    alias clear-cache 'sudo pacman -Sc && paru -Sc'                # clear partial cache
-else if type -q yay
-    alias i 'yay --noconfirm -S --needed'
-    alias u 'yay --noconfirm -Syu'
-    alias r 'yay -Rns'
-    alias s 'yay -Ss'
-    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && yay -Rns (pacman -Qtdq)'
-    alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
-    alias clear-cache 'sudo pacman -Sc && yay -Sc'
-else
-    alias i 'sudo pacman --noconfirm -S --needed'
-    alias u 'sudo pacman --noconfirm -Syu'
-    alias r 'sudo pacman -Rns'
-    alias s 'sudo pacman -Ss'
-    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq)'
-    alias aggressively-clear-cache 'sudo pacman -Scc'
-    alias clear-cache 'sudo pacman -Sc'
 end
