@@ -1,182 +1,151 @@
-# =========================================
-#           INTERACTIVE CHECK
-# =========================================
+# NOTE: Run only in interactive shell
 if status is-interactive
-    # Commands to run in interactive sessions only
 end
 
+# NOTE: Load Starship prompt if available
 if command -q starship
     starship init fish | source
 end
 
-# =========================================
-#           ENVIRONMENT VARIABLES
-# =========================================
+# NOTE: GPG agent as SSH auth socket
 set -Ux SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
+# NOTE: System locale
 set -gx LANG en_IN.UTF-8
 
-set -gx _ZO_ECHO 1       # Print directory after jumping (like `cd`)
-set -gx _ZO_EXCLUDE_DIRS "$HOME/private/*"  # Exclude dirs from history
+# NOTE: Zoxide settings
+set -gx _ZO_ECHO 1
+set -gx _ZO_EXCLUDE_DIRS "$HOME/private/*"
 
+# NOTE: Default applications
 set -gx BROWSER "brave"
 set -gx TERM "alacritty"
 set -gx EDITOR "zeditor"
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di 1;3;34:fi=0"
 
-# =========================================
-#           JAVA ENVIRONMENT
-# =========================================
+# NOTE: Java environment (auto-detect JDK)
 set -Ux JAVA_HOME (archlinux-java get | string replace 'java-' '/usr/lib/jvm/java-')
 set -Ux PATH $JAVA_HOME/bin $PATH
 
-# =========================================
-#           KEY BINDINGS
-# =========================================
+# NOTE: Default Fish key bindings
 set -g fish_key_bindings fish_default_key_bindings
-bind \en down-or-search
-bind \ep up-or-search
+bind \en down-or-search    # NOTE: Next search with ↑
+bind \ep up-or-search      # NOTE: Previous search with ↓
 
-# =========================================
-#           BASIC ALIASES (eza)
-# =========================================
-alias ls 'eza -a --icons'
-alias l 'eza -a --icons'
-alias la 'eza -a --icons -l'
-alias ll 'eza -a --icons -l'
-alias lx 'eza -a --icons -l --sort=extension'
-alias lk 'eza -a --icons -l --sort=size'
-alias lc 'eza -a --icons -l --sort=changed'
-alias lu 'eza -a --icons -l --sort=accessed'
-alias lr 'eza -a --icons -l -R'
-alias lt 'eza -a --icons -l --sort=modified'
-alias lm 'eza -a --icons -l | less'
-alias lw 'eza -a --icons -x'
-alias labc 'eza -a --icons --sort=name'
-alias tree 'eza -a --icons --tree'
-alias c 'clear'
+# NOTE: File listing (using eza instead of ls)
+alias ls 'eza -a --icons'                      # list all with icons
+alias l 'eza -a --icons'                       # shorthand for ls
+alias la 'eza -a --icons -l'                   # detailed list
+alias ll 'eza -a --icons -l'                   # same as la
+alias lx 'eza -a --icons -l --sort=extension'  # sort by extension
+alias lk 'eza -a --icons -l --sort=size'       # sort by size
+alias lc 'eza -a --icons -l --sort=changed'    # sort by change time
+alias lu 'eza -a --icons -l --sort=accessed'   # sort by access time
+alias lr 'eza -a --icons -l -R'                # recursive
+alias lt 'eza -a --icons -l --sort=modified'   # sort by modified time
+alias lm 'eza -a --icons -l | less'            # list with pager
+alias lw 'eza -a --icons -x'                   # wide view
+alias labc 'eza -a --icons --sort=name'        # sort alphabetically
+alias tree 'eza -a --icons --tree'             # tree view
+alias c 'clear'                                # clear terminal
 
-# =========================================
-#           NAVIGATION SHORTCUTS
-# =========================================
-alias home 'cd ~'
-alias .. 'cd ..'
-alias ... 'cd ../..'
-alias .... 'cd ../../..'
-alias ..... 'cd ../../../..'
-alias bd 'cd "$OLDPWD"'
+# NOTE: Navigation shortcuts
+alias home 'cd ~'             # go home
+alias .. 'cd ..'              # up one dir
+alias ... 'cd ../..'          # up two dirs
+alias .... 'cd ../../..'      # up three dirs
+alias ..... 'cd ../../../..'  # up four dirs
+alias bd 'cd "$OLDPWD"'       # back to previous dir
 
-# =========================================
-#           EDITOR ALIASES
-# =========================================
-alias n 'nvim'
-alias sn 'sudo nvim'
-alias v 'vim'
-alias sv 'sudo vim'
+# NOTE: Editors
+alias n 'nvim'        # Neovim
+alias sn 'sudo nvim'  # Neovim as root
+alias v 'vim'         # Vim
+alias sv 'sudo vim'   # Vim as root
 
-# =========================================
-#           TMUX ALIASES
-# =========================================
-alias tns 'tmux new -s'
-alias ta 'tmux attach'
-alias td 'tmux detach'
+# NOTE: Tmux shortcuts
+alias tns 'tmux new -s'   # new session
+alias ta 'tmux attach'    # attach session
+alias td 'tmux detach'    # detach session
 
-# =========================================
-#           SYSTEM ALIASES
-# =========================================
-alias ps 'ps auxf'
-alias ping 'ping -c 5'
-alias less 'less -R'
-alias h "history | grep "
-alias p "ps aux | grep "
-alias topcpu "ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
-alias ffind "fzf --preview='bat {}' --bind 'enter:execute(nvim {})'"  # safer than overriding find
-alias f "find . | grep "
-alias openports 'netstat -tulanp'
+# NOTE: System helpers
+alias ps 'ps auxf'                               # process tree
+alias ping 'ping -c 5'                           # ping 5 packets
+alias less 'less -R'                             # keep colors in less
+alias h "history | grep "                        # search history
+alias p "ps aux | grep "                         # search processes
+alias topcpu "ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10" # top CPU usage
+alias ffind "fzf --preview='bat {}' --bind 'enter:execute(nvim {})'" # fuzzy file finder
+alias f "find . | grep "                         # grep inside find
+alias openports 'netstat -tulanp'                # list open ports
 
-# System control
+# NOTE: System control
 alias reboot 'systemctl reboot'
 alias shutdown 'shutdown now'
 alias logout 'loginctl kill-session $XDG_SESSION_ID'
 alias restart-dm 'systemctl restart display-manager'
 
-# =========================================
-#           PACKAGE MANAGEMENT
-# =========================================
+# NOTE: Custom scripts (no extra notes needed)
 alias rebel '~/senv/scripts/rebuild'
 alias uprebel '~/senv/scripts/up-rebuild'
 alias cwifi '~/senv/scripts/cwifi'
 alias op-net '~/senv/scripts/optimize-network'
 
-# =========================================
-#           FILE OPERATIONS
-# =========================================
-alias cp 'cp -i'
-alias mv 'mv -i'
-alias mkdir 'mkdir -p'
-alias rmd '/bin/rm --recursive --force --verbose'
+# NOTE: File operations
+alias cp 'cp -i'                  # safe copy
+alias mv 'mv -i'                  # safe move
+alias mkdir 'mkdir -p'            # make parent dirs if needed
+alias rmd '/bin/rm -rfv'          # force delete with verbose
 
-alias diskspace "du -S | sort -n -r | less"
-alias folders 'du -h --max-depth=1'
-alias mountedinfo 'df -hT'
-alias duf 'duf -hide special'
+# NOTE: Disk usage
+alias diskspace "du -S | sort -n -r | less"  # sorted disk space
+alias folders 'du -h --max-depth=1'          # folder sizes
+alias mountedinfo 'df -hT'                   # mounted info
+alias duf 'duf -hide special'                # nicer df output
 
-# =========================================
-#           PERMISSIONS & SECURITY
-# =========================================
-alias mx 'chmod a+x'
-alias 000 'chmod -R 000'
-alias 644 'chmod -R 644'
-alias 666 'chmod -R 666'
-alias 755 'chmod -R 755'
-alias 777 'chmod -R 777'
-alias sha1 'openssl sha1'
-alias chown 'sudo chown -R $USER'
+# NOTE: Permissions & security
+alias mx 'chmod a+x'             # make executable
+alias 000 'chmod -R 000'         # remove all perms
+alias 644 'chmod -R 644'         # owner read/write, others read
+alias 666 'chmod -R 666'         # everyone read/write
+alias 755 'chmod -R 755'         # owner rwx, others rx
+alias 777 'chmod -R 777'         # everyone rwx
+alias sha1 'openssl sha1'        # sha1 checksum
+alias chown 'sudo chown -R $USER' # take ownership
 
-# =========================================
-#           DEV & TOOLS
-# =========================================
-alias grep 'grep --color=auto'
-alias rg 'rg --color=auto'
-alias bright 'brightnessctl set'
+# NOTE: Dev & tools
+alias grep 'grep --color=auto'   # grep with color
+alias rg 'rg --color=auto'       # ripgrep with color
+alias bright 'brightnessctl set' # adjust brightness
 
-# =========================================
-#           GIT
-# =========================================
+# NOTE: Git helpers
 alias gp 'git push'
 alias git-clean 'git reflog expire --expire=now --all; git gc --prune=now --aggressive'
 
-# =========================================
-#           PROGRAMMING
-# =========================================
-alias pyr 'python'
+# NOTE: Programming helpers
+alias pyr 'python'  # python shortcut
 
-# =========================================
-#           UTILITY
-# =========================================
-alias kssh "kitty +kitten ssh"
-alias web 'cd /var/www/html'
-alias da 'date "+%Y-%m-%d %A %T %Z"'
-alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l'
-alias anime '~/senv/scripts/ani-cli'
+# NOTE: Utilities
+alias kssh "kitty +kitten ssh"    # kitty ssh
+alias web 'cd /var/www/html'      # go to web root
+alias da 'date "+%Y-%m-%d %A %T %Z"' # pretty date
+alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l' # lockscreen
+alias anime '~/senv/scripts/ani-cli' # anime cli
 
-# =========================================
-#           PROMPT / TOOLS INIT
-# =========================================
+# NOTE: Init zoxide if installed
 if command -q zoxide
     set -gx _ZO_FZF_PREVIEW 'ls --color=always {}'
     zoxide init fish | source
 end
 
+# NOTE: Init fzf if installed
 if command -q fzf
     fzf_key_bindings | source
 end
 
-# =========================================
-#           FUNCTIONS
-# =========================================
-function fzf_nvim --description "Fuzzy-find a file and open in Neovim"
+# NOTE: Fuzzy-find file and open in nvim
+function fzf_nvim
     set -l selected_file (fzf --height=40% --reverse --ansi \
         --prompt="📝 Open in nvim: " \
         --preview 'eza --icons --color=always --long --git --group --modified {1..1} 2>/dev/null' \
@@ -188,7 +157,8 @@ function fzf_nvim --description "Fuzzy-find a file and open in Neovim"
 end
 bind \er fzf_nvim
 
-function fzf_zoxide_dir --description "Fuzzy-find a directory from zoxide and jump"
+# NOTE: Fuzzy-jump with zoxide
+function fzf_zoxide_dir
     set -l selected_dir (
         zoxide query -l | fzf --height=40% --reverse --ansi \
             --prompt="📂 Jump to: " \
@@ -202,38 +172,51 @@ function fzf_zoxide_dir --description "Fuzzy-find a directory from zoxide and ju
 end
 bind \ed fzf_zoxide_dir
 
+# NOTE: Git add, commit, push (quick)
 function gacp
     git add .; git commit -m 's'; git push
 end
 
+# NOTE: Git status shortcut
 function gs
     git status
 end
 
+# NOTE: Git add + custom commit message
+function gac
+    git add .; git commit -m $argv
+end
+
+# NOTE: Optimize Nix store
 function optimise-nix
     nix-env -q | xargs nix-env -e
     sudo nix-store --gc --print-roots | grep obsolete
 end
 
+# NOTE: Clean Nix store
 function clean-nix
     sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +5
     sudo nix-store --gc --print-roots | grep /tmp | awk '{print $1}' | xargs rm -f
 end
 
+# NOTE: Show Nix store size
 function store-size
     df -h /
     du -sh /nix/store
 end
 
+# NOTE: Fun greetings
 function fish_greeting
     random choice "Hello!" "Hi!" "Good Day!" "Howdy!"
 end
 
+# NOTE: Custom terminal title
 function fish_title
     echo $argv[1] (prompt_pwd)
     pwd
 end
 
+# NOTE: Kill all TTYs except tty1
 function tty_kill_all
     set ttys (who | grep -v 'tty1' | cut -d' ' -f2 | sort -u)
     if test -n "$ttys"
@@ -244,16 +227,13 @@ function tty_kill_all
     end
 end
 
-function gac
-    git add .; git commit -m $argv
-end
-
-# Force curl to prefer IPv4
+# NOTE: Force curl to IPv4
 function curl
     command curl -4 $argv
 end
 
-function mirror-rating --description 'Update Arch Linux mirrors (India + optional nearby countries)'
+# NOTE: Update Arch mirrors interactively
+function mirror-rating
     set -l mirrorlist /etc/pacman.d/mirrorlist
     set -l backup /etc/pacman.d/mirrorlist.bak
 
@@ -262,8 +242,8 @@ function mirror-rating --description 'Update Arch Linux mirrors (India + optiona
 
     echo
     echo "  Select mirror scope:"
-    echo "1)   India only"
-    echo "2)   India + nearby (Singapore, Japan, Hong Kong)"
+    echo "1) India only"
+    echo "2) India + nearby (Singapore, Japan, Hong Kong)"
     read -l choice
 
     switch $choice
@@ -290,15 +270,15 @@ function mirror-rating --description 'Update Arch Linux mirrors (India + optiona
     end
 end
 
-# NOTE: Arch Package Manager
+# NOTE: Package manager aliases (detect paru/yay/pacman)
 if type -q paru
-    alias i 'paru --noconfirm -S --needed'
-    alias u 'paru --noconfirm -Syu'
-    alias r 'paru -Rns'
-    alias s 'paru -Ss'
-    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && paru -Rns (pacman -Qtdq)'
-    alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc'
-    alias clear-cache 'sudo pacman -Sc && paru -Sc'
+    alias i 'paru --noconfirm -S --needed'    # install
+    alias u 'paru --noconfirm -Syu'          # update
+    alias r 'paru -Rns'                      # remove
+    alias s 'paru -Ss'                       # search
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && paru -Rns (pacman -Qtdq)' # remove unused
+    alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc' # clear all cache
+    alias clear-cache 'sudo pacman -Sc && paru -Sc'                # clear partial cache
 else if type -q yay
     alias i 'yay --noconfirm -S --needed'
     alias u 'yay --noconfirm -Syu'
