@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+echo "Installing dependencies"
+paru --noconfirm -Syu --needed llama.cpp-vulkan
+
+echo "Downloading Qwen2 for llm usage"
+mkdir ~/LLMS
+cd ~/LLMS
+wget https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf
+cd ~

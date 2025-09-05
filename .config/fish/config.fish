@@ -22,7 +22,8 @@ set -gx BROWSER "brave"
 set -gx TERM "alacritty"
 set -gx EDITOR "zeditor"
 set -gx COLORTERM "truecolor"
-set -gx LS_COLORS "di 1;3;34:fi=0"
+set -gx LS_COLORS "di=1;34:fi=0"
+# set -gx LS_COLORS "di 1;3;34:fi=0"
 
 # NOTE: Java environment (auto-detect JDK)
 set -Ux JAVA_HOME (archlinux-java get | string replace 'java-' '/usr/lib/jvm/java-')
@@ -117,6 +118,10 @@ alias da 'date "+%Y-%m-%d %A %T %Z"' # pretty date
 alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l' # lockscreen
 alias anime '~/senv/scripts/ani-cli' # anime cli
 
+# NOTE: LLMS aliases
+alias llama-chat "llama-simple-chat -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ngl 12"
+alias llama-server "llama-server -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ngl 12"
+
 # WARN: FUNCITON ARE FROM HERE
 # NOTE: Update Arch mirrors interactively
 function mirror-rating
@@ -156,77 +161,10 @@ function mirror-rating
     end
 end
 
-# NOTE: Listing Aliases
-if type -q eza
-    # eza-based aliases
-    alias ls    'eza -a --icons'                      # list all with icons
-    alias l     'eza -a --icons'                      # shorthand for ls
-    alias la    'eza -a --icons -l'                   # detailed list
-    alias ll    'eza -a --icons -l'                   # same as la
-    alias lx    'eza -a --icons -l --sort=extension'  # sort by extension
-    alias lk    'eza -a --icons -l --sort=size'       # sort by size
-    alias lc    'eza -a --icons -l --sort=changed'    # sort by change time
-    alias lu    'eza -a --icons -l --sort=accessed'   # sort by access time
-    alias lr    'eza -a --icons -l -R'                # recursive
-    alias lt    'eza -a --icons -l --sort=modified'   # sort by modified time
-    alias lm    'eza -a --icons -l | less'            # list with pager
-    alias lw    'eza -a --icons -x'                   # wide view
-    alias labc  'eza -a --icons --sort=name'          # sort alphabetically
-    alias tree  'eza -a --icons --tree'               # tree view
-else
-    # coreutils ls-based fallbacks
-    alias ls    'ls -A --color=auto'        # list all with color
-    alias l     'ls -A --color=auto'        # shorthand for ls
-    alias la    'ls -lhA --color=auto'      # detailed list
-    alias ll    'ls -lhA --color=auto'      # same as la
-    alias lx    'ls -lhA --color=auto'      # no sort by extension in ls
-    alias lk    'ls -lhAS --color=auto'     # sort by size
-    alias lc    'ls -lhAt --color=auto'     # sort by change time (ctime not always portable)
-    alias lu    'ls -lhAu --color=auto'     # sort by access time
-    alias lr    'ls -lhAR --color=auto'     # recursive
-    alias lt    'ls -lhAt --color=auto'     # sort by modified time
-    alias lm    'ls -lhA --color=auto | less' # list with pager
-    alias lw    'ls -xA --color=auto'       # wide view
-    alias labc  'ls -lhA --color=auto'      # ls already sorts alphabetically by default
-    alias tree  'ls -R --color=auto'        # pseudo-tree
-end
-
-# NOTE: Package manager aliases (detect paru/yay/pacman)
-if type -q paru
-    alias i 'paru --noconfirm -S --needed'    # install
-    alias u 'paru --noconfirm -Syu'          # update
-    alias r 'paru -Rns'                      # remove
-    alias s 'paru -Ss'                       # search
-    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && paru -Rns (pacman -Qtdq)' # remove unused
-    alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc' # clear all cache
-    alias clear-cache 'sudo pacman -Sc && paru -Sc'                # clear partial cache
-else if type -q yay
-    alias i 'yay --noconfirm -S --needed'
-    alias u 'yay --noconfirm -Syu'
-    alias r 'yay -Rns'
-    alias s 'yay -Ss'
-    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && yay -Rns (pacman -Qtdq)'
-    alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
-    alias clear-cache 'sudo pacman -Sc && yay -Sc'
-else
-    alias i 'sudo pacman --noconfirm -S --needed'
-    alias u 'sudo pacman --noconfirm -Syu'
-    alias r 'sudo pacman -Rns'
-    alias s 'sudo pacman -Ss'
-    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq)'
-    alias aggressively-clear-cache 'sudo pacman -Scc'
-    alias clear-cache 'sudo pacman -Sc'
-end
-
-# NOTE: Init zoxide if installed
-if command -q zoxide
-    set -gx _ZO_FZF_PREVIEW 'ls --color=always {}'
-    zoxide init fish | source
-end
-
-# NOTE: Init fzf if installed
-if command -q fzf
-    fzf_key_bindings | source
+# NOTE: Opencode
+function opencode
+    export LOCAL_ENDPOINT="http://localhost:1235/v1"
+    opencode
 end
 
 # NOTE: Fuzzy-find file and open in nvim
@@ -315,4 +253,77 @@ end
 # NOTE: Force curl to IPv4
 function curl
     command curl -4 $argv
+end
+
+# NOTE: Listing Aliases
+if type -q eza
+    # eza-based aliases
+    alias ls    'eza -a --icons'                      # list all with icons
+    alias l     'eza -a --icons'                      # shorthand for ls
+    alias la    'eza -a --icons -l'                   # detailed list
+    alias ll    'eza -a --icons -l'                   # same as la
+    alias lx    'eza -a --icons -l --sort=extension'  # sort by extension
+    alias lk    'eza -a --icons -l --sort=size'       # sort by size
+    alias lc    'eza -a --icons -l --sort=changed'    # sort by change time
+    alias lu    'eza -a --icons -l --sort=accessed'   # sort by access time
+    alias lr    'eza -a --icons -l -R'                # recursive
+    alias lt    'eza -a --icons -l --sort=modified'   # sort by modified time
+    alias lm    'eza -a --icons -l | less'            # list with pager
+    alias lw    'eza -a --icons -x'                   # wide view
+    alias labc  'eza -a --icons --sort=name'          # sort alphabetically
+    alias tree  'eza -a --icons --tree'               # tree view
+else
+    # coreutils ls-based fallbacks
+    alias ls    'ls -A --color=auto'        # list all with color
+    alias l     'ls -A --color=auto'        # shorthand for ls
+    alias la    'ls -lhA --color=auto'      # detailed list
+    alias ll    'ls -lhA --color=auto'      # same as la
+    alias lx    'ls -lhA --color=auto'      # no sort by extension in ls
+    alias lk    'ls -lhAS --color=auto'     # sort by size
+    alias lc    'ls -lhAt --color=auto'     # sort by change time (ctime not always portable)
+    alias lu    'ls -lhAu --color=auto'     # sort by access time
+    alias lr    'ls -lhAR --color=auto'     # recursive
+    alias lt    'ls -lhAt --color=auto'     # sort by modified time
+    alias lm    'ls -lhA --color=auto | less' # list with pager
+    alias lw    'ls -xA --color=auto'       # wide view
+    alias labc  'ls -lhA --color=auto'      # ls already sorts alphabetically by default
+    alias tree  'ls -R --color=auto'        # pseudo-tree
+end
+
+# NOTE: Package manager aliases (detect paru/yay/pacman)
+if type -q paru
+    alias i 'paru --noconfirm -S --needed'    # install
+    alias u 'paru --noconfirm -Syu'          # update
+    alias r 'paru -Rns'                      # remove
+    alias s 'paru -Ss'                       # search
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && paru -Rns (pacman -Qtdq)' # remove unused
+    alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc' # clear all cache
+    alias clear-cache 'sudo pacman -Sc && paru -Sc'                # clear partial cache
+else if type -q yay
+    alias i 'yay --noconfirm -S --needed'
+    alias u 'yay --noconfirm -Syu'
+    alias r 'yay -Rns'
+    alias s 'yay -Ss'
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq) && yay -Rns (pacman -Qtdq)'
+    alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
+    alias clear-cache 'sudo pacman -Sc && yay -Sc'
+else
+    alias i 'sudo pacman --noconfirm -S --needed'
+    alias u 'sudo pacman --noconfirm -Syu'
+    alias r 'sudo pacman -Rns'
+    alias s 'sudo pacman -Ss'
+    alias remove-orphaned 'sudo pacman -Rns (pacman -Qtdq)'
+    alias aggressively-clear-cache 'sudo pacman -Scc'
+    alias clear-cache 'sudo pacman -Sc'
+end
+
+# NOTE: Init zoxide if installed
+if command -q zoxide
+    set -gx _ZO_FZF_PREVIEW 'ls --color=always {}'
+    zoxide init fish | source
+end
+
+# NOTE: Init fzf if installed
+if command -q fzf
+    fzf_key_bindings | source
 end

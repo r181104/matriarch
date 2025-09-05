@@ -79,7 +79,6 @@ DEVELOPMENT=(
     maven
     gradle
     nodejs
-    ollama  
     obsidian-bin
 )
 
