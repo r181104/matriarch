@@ -79,7 +79,10 @@ DEVELOPMENT=(
     maven
     gradle
     nodejs
+    npm
+    vite
     obsidian-bin
+    joplin-appimage
 )
 
 LSP=(
