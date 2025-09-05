@@ -1,265 +1,157 @@
 {
-    // ==========================================
-    //           BAR SETTINGS
-    // ==========================================
-    "layer": "bottom", // Bar layer
-    "exclusive": true, // Exclusive positioning
-    "position": "bottom", // Bar position
-    "fixed-center": true, // Fixed center positioning
-    // ==========================================
-    //           MODULE LAYOUT
-    // ==========================================
-    // Left modules: Stream status, workspaces, network speed
+    "layer": "bottom",
+    "exclusive": true,
+    "position": "bottom",
+    "fixed-center": true,
+
     "modules-left": [
-        "hyprland/workspaces", // Hyprland workspace switcher
-        "clock" // Date and time
+        "custom/stream_status",
+        "hyprland/workspaces",
+        "custom/weather"
     ],
-    // Center modules: Clock and system tray
     "modules-center": [
-        // "custom/stream_status",          // Custom stream status indicator
-        "custom/netspeed", // Network speed monitor
-        "tray", // System tray
-        "custom/notification"
+        "clock",
+        "custom/notification",
+        "tray"
     ],
-    // Right modules: System monitoring and controls
     "modules-right": [
-        "cpu", // CPU usage
-        "memory", // Memory usage
-        "disk", // Root disk usage
-        "disk#home", // Home disk usage
-        "pulseaudio", // Audio controls
-        "battery#forest", // Battery status
-        "custom/lock" // Lock screen button
+        "cpu",
+        "memory",
+        "disk",
+        "disk#home",
+        "pulseaudio",
+        "battery#forest",
+        "custom/lock",
     ],
-    // ==========================================
-    //           HYPRLAND WORKSPACES
-    // ==========================================
-    // Workspace switcher with custom icons
+
     "hyprland/workspaces": {
         "disable-scroll": false,
         "all-outputs": true,
-        "format": " {icon} ",
+        "format": "{icon}",
         "on-click": "activate",
-        // "persistent-workspaces": {
-        //   "*":[1,2,3,4,5,6,7,8,9,10]
-        // },
         "format-icons": {
-            "1": "󰣇 ",
-            "2": "󰈹 ",
-            "3": " ",
-            "4": " ",
-            "3": " ",
-            "6": " ",
-            "7": " ",
-            "8": " ",
-            "9": "󰈹 ",
-            "10": " ",
-            "active": "󰮯 ",
-            "default": " ",
-            "urgent": "👻",
-        },
+            "1": "󰣇", "2": "󰈹", "3": "", "4": "",
+            "6": "", "7": "", "8": "", "9": "󰈹",
+            "10": "", "active": "󰮯", "default": "", "urgent": "👻"
+        }
     },
-    // ==========================================
-    //           SYSTEM TRAY
-    // ==========================================
-    // System tray configuration
+
     "tray": {
-        "icon-size": 21, // Tray icon size
-        "spacing": 10, // Icon spacing
+        "icon-size": 20,
+        "spacing": 8
     },
-    // ==========================================
-    //           CLOCK MODULE
-    // ==========================================
-    // Date and time display
+
     "clock": {
         "timezone": "Asia/Kolkata",
-        "format": "{:%A, %d %B %Y | %H:%M}", // Weekday, date, time
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>", // Tooltip format
-        "tooltip": true,
+        "format": "{:%A, %d %b %Y | %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip": true
     },
-    // ==========================================
-    //           NETWORK MODULE
-    // ==========================================
-    // Network status (commented out)
+
     "network": {
-        "format-wifi": "󰤢 ", // WiFi icon
-        "format-ethernet": "󰈀 ", // Ethernet icon
-        "format-disconnected": "󰤠 ", // Disconnected icon
-        "interval": 5, // Update interval
-        "tooltip": false, // Disable tooltip
+        "format-wifi": "󰤢",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤠",
+        "interval": 5,
+        "tooltip": false
     },
-    // ==========================================
-    //           CPU MODULE
-    // ==========================================
-    // CPU usage with visual indicators
+
     "cpu": {
-        "interval": 1, // Update every second
-        "format": "  {icon0}{icon1}{icon2}{icon3} 󰾆 {usage:>2}%", // Display format
-        "format-icons": [
-            "▁",
-            "▂",
-            "▃",
-            "▄",
-            "▅",
-            "▆",
-            "▇",
-            "█"
-        ], // Visual bars
+        "interval": 1,
+        "format": "{icon} {usage:>2}%",
+        "format-icons": ["▁","▂","▃","▄","▅","▆","▇","█"]
     },
-    // ==========================================
-    //           MEMORY MODULE
-    // ==========================================
-    // Memory usage display
+
     "memory": {
         "interval": 10,
-        "format": "  {used:0.1f}G/{total:0.1f}G", // Display format
-        "format-alt": "{percentage}%  ",
-        "format-alt-click": "click",
+        "format": " {used:0.1f}/{total:0.1f}G",
+        "format-alt": "{percentage}% ",
         "tooltip": true,
-        "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
+        "tooltip-format": "{used:.1f}G / {total:.1f}G"
     },
-    // ==========================================
-    //           AUDIO MODULE
-    // ==========================================
-    // PulseAudio audio controls
+
+    "disk": {
+        "interval": 30,
+        "format": "󰆼 {percentage_used}%",
+        "path": "/",
+        "tooltip": true,
+        "tooltip-format": "Root: {used:.1f}G / {total:.1f}G ({percentage_used}%)"
+    },
+
+    "disk#home": {
+        "interval": 30,
+        "format": "󰆼 {percentage_used}%",
+        "path": "/home",
+        "tooltip": true,
+        "tooltip-format": "Home: {used:.1f}G / {total:.1f}G ({percentage_used}%)"
+    },
+
     "pulseaudio": {
-        "on-click": "pavucontrol",
+        "on-click": "pypr toggle pavucontrol && hyprctl dispatch bringactivetotop",
         "format": "{icon} {volume}%",
         "format-bluetooth": "{icon} 󰂰 {volume}%",
         "format-muted": "󰖁",
         "format-icons": {
-            "headphone": " ",
-            "hands-free": " ",
-            "headset": " ",
-            "phone": " ",
-            "portable": " ",
-            "car": " ",
-            "default": [
-                "",
-                " ",
-                "󰕾 ",
-                " "
-            ],
-        },
+            "headphone": "",
+            "headset": "",
+            "phone": "",
+            "car": "",
+            "default": ["","","󰕾",""]
+        }
     },
-    // ==========================================
-    //           LOCK MODULE
-    // ==========================================
-    // Lock screen button
+
+    "battery#forest": {
+        "align": 0,
+        "full-at": 100,
+        "design-capacity": false,
+        "states": {"good": 95, "warning": 30, "critical": 15},
+        "format": "{icon} {capacity}%",
+        "format-charging": "󱐌 {capacity}%",
+        "format-plugged": "󱘖 {capacity}%",
+        "format-full": "{icon} Full",
+        "format-alt": "{icon} {time}",
+        "format-time": "{H}h {M}min",
+        "tooltip": true,
+        "tooltip-format": "{timeTo} {power}w",
+        "format-icons": ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
+    },
+
     "custom/lock": {
-        "tooltip": false, // Disable tooltip
-        "on-click": "sh -c '(wlogout)' & disown", // Launch logout menu
-        "format": " ", // Lock icon
+        "tooltip": false,
+        "on-click": "sh -c '(wlogout)' & disown",
+        "format": ""
     },
+
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
         "format-icons": {
             "notification": "<span foreground='red'><sup></sup></span>",
-            "none": " ",
+            "none": "",
             "dnd-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-none": " ",
-            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-            "inhibited-none": " ",
-            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-inhibited-none": " ",
+            "dnd-none": ""
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
         "exec": "swaync-client -swb",
         "on-click": "swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",
-        "escape": true,
+        "escape": true
     },
-    // ==========================================
-    //           STREAM STATUS MODULE
-    // ==========================================
-    // Custom stream status indicator
+
     "custom/stream_status": {
-        "format": "{text}", // Display format
-        "exec": "~/.local/scripts/stream_status", // Custom script
-        "interval": 5, // Update every 5 seconds
-        "return-type": "json", // JSON output
-        "tooltip": true, // Enable tooltip
+        "format": "{text}",
+        "exec": "~/.local/scripts/stream_status",
+        "interval": 5,
+        "return-type": "json",
+        "tooltip": true
     },
-    // ==========================================
-    //           BATTERY MODULE
-    // ==========================================
-    // Battery status and power management
-    "battery#forest": {
-        "align": 0, // Alignment
-        "rotate": 0, // Rotation
-        "full-at": 100, // Full battery threshold
-        "design-capacity": false, // Use design capacity
-        "states": {
-            "good": 95, // Good battery level
-            "warning": 30, // Warning level
-            "critical": 15, // Critical level
-        },
-        "format": "{icon}  {capacity}%", // Normal format
-        "format-charging": "󱐌 {capacity}%", // Charging format
-        "format-plugged": "󱘖  {capacity}%", // Plugged format
-        "format-alt-click": "click", // Alt-click format
-        "format-full": "{icon} Full", // Full battery format
-        "format-alt": "{icon} {time}", // Alternative format
-        "format-icons": [
-            "󰂎",
-            "󰁺",
-            "󰁻",
-            "󰁼",
-            "󰁽",
-            "󰁾",
-            "󰁿",
-            "󰂀",
-            "󰂁",
-            "󰂂",
-            "󰁹" // Battery icons
-        ],
-        "format-time": "{H}h {M}min", // Time format
-        "tooltip": true, // Enable tooltip
-        "tooltip-format": "{timeTo} {power}w", // Tooltip format
-    },
-    // ==========================================
-    //           DISK MODULES
-    // ==========================================
-    // Root disk usage
-    "disk": {
-        "interval": 30, // Update every 30 seconds
-        "format": "󰆼 {percentage_used}%", // Display format
-        "path": "/", // Monitor root partition
-        "tooltip-format": "Root: {used:.1f}G / {total:.1f}G ({percentage_used}%)", // Tooltip
-        "tooltip": true, // Enable tooltip
-    },
-    // Home disk usage
-    "disk#home": {
-        "interval": 30, // Update every 30 seconds
-        "format": "󰆼 {percentage_used}%", // Display format
-        "path": "/home", // Monitor home partition
-        "tooltip-format": "Home: {used:.1f}G / {total:.1f}G ({percentage_used}%)", // Tooltip
-        "tooltip": true, // Enable tooltip
-    },
-    // ==========================================
-    //           CUSTOM MODULES
-    // ==========================================
-    // Later module template
-    "later": {
-        "format": "<span class='icon'>{icon}</span> <span class='text'>{text}</span>",
-    },
-    // Network speed monitor
-    "custom/netspeed": {
-        "exec": "~/.config/waybar/scripts/netspeed.sh", // Network speed script
-        "return-type": "json", // JSON output
-        "tooltip": true, // Enable tooltip
-    },
-    // ==========================================
-    //           CUSTOM WEATHER MODULE
-    // ==========================================
-    // Weather information from wttr.in
+
     "custom/weather": {
-        "exec": "~/.config/waybar/scripts/weather.sh",
+        "exec": "~/.config/waybar/scripts/weather",
         "return-type": "json",
         "interval": 900,
         "tooltip": true,
-        "on-click": "xdg-open 'https://wttr.in/Saharanpur'",
-    },
+        "on-click": "xdg-open 'https://wttr.in/Saharanpur'"
+    }
 }

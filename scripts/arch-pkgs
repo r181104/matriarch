@@ -78,7 +78,7 @@ DEVELOPMENT=(
     jdk-openjdk
     maven
     gradle
-    nodejs
+    nodejs-lts-iron
     npm
     vite
     obsidian-bin
