@@ -3,31 +3,28 @@
     "exclusive": true,
     "position": "bottom",
     "fixed-center": true,
-
     "modules-left": [
         "custom/stream_status",
         "hyprland/workspaces",
-        "custom/weather"
+        "hyprland/window"
     ],
     "modules-center": [
-        "clock",
+        "tray",
         "custom/notification",
-        "tray"
+        "clock"
     ],
-    "modules-right": [
+    "modules-right": ["network",
         "cpu",
         "memory",
         "disk",
-        "disk#home",
         "pulseaudio",
         "battery#forest",
-        "custom/lock",
+        "custom/lock"
     ],
-
     "hyprland/workspaces": {
         "disable-scroll": false,
         "all-outputs": true,
-        "format": "{icon}",
+        "format": " {icon} ",
         "on-click": "activate",
         "format-icons": {
             "1": "󰣇", "2": "󰈹", "3": "", "4": "",
@@ -35,41 +32,18 @@
             "10": "", "active": "󰮯", "default": "", "urgent": "👻"
         }
     },
-
-    "tray": {
-        "icon-size": 20,
-        "spacing": 8
-    },
-
-    "clock": {
-        "timezone": "Asia/Kolkata",
-        "format": "{:%A, %d %b %Y | %H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "tooltip": true
-    },
-
-    "network": {
-        "format-wifi": "󰤢",
-        "format-ethernet": "󰈀",
-        "format-disconnected": "󰤠",
-        "interval": 5,
-        "tooltip": false
-    },
-
     "cpu": {
         "interval": 1,
         "format": "{icon} {usage:>2}%",
         "format-icons": ["▁","▂","▃","▄","▅","▆","▇","█"]
     },
-
     "memory": {
         "interval": 10,
-        "format": " {used:0.1f}/{total:0.1f}G",
+        "format": "  {used:0.1f}/{total:0.1f}G",
         "format-alt": "{percentage}% ",
         "tooltip": true,
         "tooltip-format": "{used:.1f}G / {total:.1f}G"
     },
-
     "disk": {
         "interval": 30,
         "format": "󰆼 {percentage_used}%",
@@ -77,29 +51,16 @@
         "tooltip": true,
         "tooltip-format": "Root: {used:.1f}G / {total:.1f}G ({percentage_used}%)"
     },
-
-    "disk#home": {
-        "interval": 30,
-        "format": "󰆼 {percentage_used}%",
-        "path": "/home",
-        "tooltip": true,
-        "tooltip-format": "Home: {used:.1f}G / {total:.1f}G ({percentage_used}%)"
+    "tray": {
+        "icon-size": 20,
+        "spacing": 10
     },
-
-    "pulseaudio": {
-        "on-click": "pypr toggle pavucontrol && hyprctl dispatch bringactivetotop",
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} 󰂰 {volume}%",
-        "format-muted": "󰖁",
-        "format-icons": {
-            "headphone": "",
-            "headset": "",
-            "phone": "",
-            "car": "",
-            "default": ["","","󰕾",""]
-        }
+    "clock": {
+        "timezone": "Asia/Kolkata",
+        "format": "{:%A, %d %b %Y | %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip": true
     },
-
     "battery#forest": {
         "align": 0,
         "full-at": 100,
@@ -115,13 +76,11 @@
         "tooltip-format": "{timeTo} {power}w",
         "format-icons": ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
     },
-
-    "custom/lock": {
+        "custom/lock": {
         "tooltip": false,
         "on-click": "sh -c '(wlogout)' & disown",
         "format": ""
     },
-
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
@@ -138,7 +97,6 @@
         "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
-
     "custom/stream_status": {
         "format": "{text}",
         "exec": "~/.local/scripts/stream_status",
@@ -146,12 +104,25 @@
         "return-type": "json",
         "tooltip": true
     },
-
-    "custom/weather": {
-        "exec": "~/.config/waybar/scripts/weather",
-        "return-type": "json",
-        "interval": 900,
-        "tooltip": true,
-        "on-click": "xdg-open 'https://wttr.in/Saharanpur'"
-    }
+    "network": {
+        "format-wifi": "<span size='13000' foreground='#f5e0dc'>  </span>{essid}",
+        "format-ethernet": "<span size='13000' foreground='#f5e0dc'>󰤭  </span> Disconnected",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "<span size='13000' foreground='#f5e0dc'>  </span>Disconnected",
+        "tooltip-format-wifi": "Signal Strenght: {signalStrength}%",
+        "on-click": "nm-connection-editor"
+    },
+    "pulseaudio": {
+        "on-click": "pypr toggle pavucontrol && hyprctl dispatch bringactivetotop",
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} 󰂰 {volume}%",
+        "format-muted": "󰖁",
+        "format-icons": {
+            "headphone": "",
+            "headset": "",
+            "phone": "",
+            "car": "",
+            "default": ["","","󰕾",""]
+        }
+    },
 }
