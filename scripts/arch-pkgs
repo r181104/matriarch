@@ -82,7 +82,6 @@ DEVELOPMENT=(
     npm
     vite
     obsidian-bin
-    joplin-appimage
 )
 
 LSP=(
