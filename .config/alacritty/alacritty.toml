@@ -50,4 +50,4 @@ style = "Bold Italic"
 
 [general]
 live_config_reload = true
-import = ["~/.cache/wal/colors-alacritty.toml"]
+import = ["~/colors/alacritty.toml"]

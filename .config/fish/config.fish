@@ -69,7 +69,7 @@ alias openports 'netstat -tulanp'                # list open ports
 alias reboot 'systemctl reboot'
 alias shutdown 'shutdown now'
 alias logout 'loginctl kill-session $XDG_SESSION_ID'
-alias restart-dm 'systemctl restart display-manager'
+alias restart-dm 'sudo systemctl restart display-manager'
 
 # NOTE: Custom scripts (no extra notes needed)
 alias rebel '~/senv/scripts/rebuild'
@@ -241,12 +241,35 @@ end
 
 # NOTE: Kill all TTYs except tty1
 function tty_kill_all
-    set ttys (who | grep -v 'tty1' | cut -d' ' -f2 | sort -u)
-    if test -n "$ttys"
-        set tty_csv (string join , $ttys)
-        sudo pkill -t "$tty_csv"
+    # current tty name (basename of /dev/...)
+    set -l curtty (basename (tty))
+
+    # get only ttyN or pts/N entries from `who`, exclude current tty, uniq and sort
+    set -l ttys (who | awk '{print $2}' | grep -E '^(tty[0-9]+|pts/[0-9]+)$' | grep -v "^$curtty\$" | sort -u)
+
+    if test (count $ttys) -gt 0
+        set -l tty_csv (string join , $ttys)
+        echo "Targets: $tty_csv"
+        echo "Processes that would be signalled:"
+        # preview what we'd kill
+        pgrep -a -t "$tty_csv" || echo "(no matching processes shown)"
+
+        read -P "Proceed and send SIGTERM to these processes? (y/N) " answer
+        if test "$answer" = "y"
+            # soft terminate first
+            sudo pkill -t "$tty_csv"
+            sleep 1
+            # if anything still attached, force kill
+            if pgrep -a -t "$tty_csv" >/dev/null
+                echo "Some processes remain; sending SIGKILL..."
+                sudo pkill -9 -t "$tty_csv"
+            end
+            echo "Done."
+        else
+            echo "Aborted."
+        end
     else
-        echo "No TTYs found (excluding tty1)"
+        echo "No other TTYs found (excluding current: $curtty)."
     end
 end
 

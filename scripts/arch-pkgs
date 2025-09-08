@@ -80,7 +80,6 @@ DEVELOPMENT=(
     gradle
     nodejs-lts-iron
     npm
-    vite
     obsidian-bin
 )
 
@@ -167,12 +166,12 @@ HYPR_PKGS=(
     hyprland-qtutils
     hyprlock
     hyprpicker
+    hyprshot
     rofi-wayland
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-wlr
     xdg-desktop-portal-gtk
     xdg-desktop-portal
-    grimblast-git
     waybar
     swaync
     swww
