@@ -1,5 +1,3 @@
-add_newline = false
-
 format = '''
 $directory$git_branch$rust$python
 $character'''
@@ -46,6 +44,3 @@ format = "[](fg:color8 bg:color4)[${symbol}${version}](bg:color8 fg:color5)[�
 symbol = '🐍'
 # pyenv_version_name = true
 pyenv_prefix = 'venv'
-
-[git_status]
-disabled = true
