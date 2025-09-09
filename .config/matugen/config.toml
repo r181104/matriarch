@@ -1,0 +1,37 @@
+[config.wallpaper]
+command = 'swww'
+arguments = ['img', '--transition-type', 'center', '--transition-step', '15', '--transition-fps', '60']
+set = true
+
+[templates.hyprland]
+input_path = '~/.config/matugen/templates/hyprland-colors.conf'
+output_path = '~/colors/hypr-colors.conf'
+post_hook = 'hyprctl reload'
+
+[templates.waybar]
+input_path = '~/.config/matugen/templates/colors.css'
+output_path = '~/colors/waybar-colors.css'
+
+[templates.gtk]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/colors/gtk-colors.css'
+
+[templates.pywalfox]
+input_path = '~/.config/matugen/templates/pywalfox-colors.json'
+output_path = '~/colors/fox-colors.json'
+
+[templates.starship]
+input_path = '~/.config/matugen/templates/starship-colors.toml'
+output_path = '~/.config/starship.toml'
+
+[templates.alacritty]
+input_path = '~/.config/matugen/templates/alacritty.toml'
+output_path = '~/colors/alacritty.toml'
+
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/colors/kitty-colors.conf'
+
+[templates.rofi]
+input_path = '~/.config/matugen/templates/rofi-colors.rasi'
+output_path = '~/colors/rofi-colors.rasi'

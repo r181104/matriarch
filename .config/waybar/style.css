@@ -1,4 +1,4 @@
-@import './../../.cache/wal/colors-waybar.css';
+@import './../../colors/waybar-colors.css';
 
 /* ========== GLOBAL ========== */
 * {
@@ -13,7 +13,7 @@
 /* ========== WAYBAR ========== */
 window#waybar {
     background-color: alpha(@background, 0.4);
-    color: @foreground;
+    color: @on_surface;
     border-radius: 0;       /* full-width bar */
     margin: 0;              /* edge-to-edge */
     padding: 6px 10px;      /* internal breathing room */
@@ -37,8 +37,8 @@ window#waybar.hidden {
 #clock,
 #custom-lock,
 #custom-stream_status {
-    background: alpha(@color0, 0.25);
-    padding: 5px 10px;      /* slightly smaller than workspaces */
+    background: alpha(@surface_container_high, 0.25);
+    padding: 5px 10px;
     margin: 0 5px;
     border-radius: 10px;
 }
@@ -57,7 +57,7 @@ window#waybar.hidden {
 #custom-lock:hover,
 #custom-stream_status:hover,
 #hyprland-window:hover {
-    background: alpha(@color7, 0.25);
+    background: alpha(@surface_variant, 0.25);
 }
 
 /* ========== WORKSPACES ========== */
@@ -66,31 +66,31 @@ window#waybar.hidden {
 }
 
 #workspaces button {
-    color: @foreground;
-    background: alpha(@color0, 0.2);
-    padding: 7px 16px;      /* ⬅️ more padding for prominence */
+    color: @on_surface;
+    background: alpha(@surface_container, 0.2);
+    padding: 7px 16px;
     margin: 0 4px;
     border-radius: 12px;
     font-weight: 500;
 }
 
 #workspaces button.focused {
-    background: @color4;
-    color: @background;
+    background: @primary;
+    color: @on_primary;
 }
 
 #workspaces button.urgent {
-    background: @color1;
-    color: @background;
+    background: @error;
+    color: @on_error;
 }
 
 /* ========== HYPRLAND WINDOW ========== */
 #hyprland-window {
-    background: alpha(@color0, 0.25);
-    padding: 6px 18px;      /* bigger than other modules */
+    background: alpha(@surface_container_high, 0.25);
+    padding: 6px 18px;
     margin: 0 8px;
     border-radius: 12px;
-    font-size: 16px;        /* easier to read */
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -109,15 +109,15 @@ window#waybar.hidden {
 
 /* ========== BATTERY ========== */
 #battery.charging {
-    color: @color2;
+    color: @tertiary;
     font-weight: bold;
 }
 #battery.warning {
-    color: @color3;
+    color: @secondary;
     font-weight: bold;
 }
 #battery.critical {
-    color: @color1;
+    color: @error;
     font-weight: bold;
 }
 
@@ -129,7 +129,7 @@ window#waybar.hidden {
 
 /* ========== PULSEAUDIO ========== */
 #pulseaudio { min-width: 80px; }
-#pulseaudio.muted { color: @color1; }
+#pulseaudio.muted { color: @error; }
 
 /* ========== TRAY ========== */
 #tray { padding: 5px 8px; }
@@ -140,4 +140,3 @@ window#waybar.hidden {
 #custom-stream_status {
     padding: 5px 10px;
 }
-
