@@ -1,3 +1,330 @@
-@import '../../.cache/wal/colors-waybar.css';
-@import 'themes/nova-dark/notifications.css';
-@import 'themes/nova-dark/central_control.css';
+/* Import Matugen colors */
+@import './../../.cache/waybar-colors.css';
+
+/* === GLOBAL RESET / BASE === */
+* {
+  all: unset;
+  font-family: "MesloLGS Nerd Font", "Noto Sans", sans-serif;
+  font-size: 13px;
+  color: @on_surface;
+  transition: all 180ms ease;
+  -gtk-icon-transform: none;
+}
+
+/* Transparent blank window used by CC/notifications */
+.blank-window {
+  background: transparent;
+}
+
+/* === CONTROL CENTER (main container) === */
+.control-center {
+  background: alpha(@surface, 0.94);
+  border-radius: 16px;
+  border: 1px solid alpha(@primary, 0.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+  margin: 18px;
+  padding: 14px;
+  min-width: 320px;
+  max-width: 420px;
+}
+
+/* Section title bar */
+.widget-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: @on_surface;
+  margin: 6px 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Clear/Action button in titles */
+.widget-title button {
+  background: transparent;
+  border-radius: 10px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  color: @on_surface_variant;
+}
+.widget-title button:hover {
+  background: alpha(@primary, 0.12);
+  color: @on_surface;
+}
+
+/* === WIDGET PANELS === */
+
+/* Buttons grid */
+.widget-buttons-grid {
+  background: alpha(@surface_container, 0.85);
+  border-radius: 12px;
+  padding: 8px;
+  margin: 8px 0;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button {
+  border-radius: 10px;
+  padding: 8px;
+  min-width: 48px;
+  min-height: 40px;
+  color: @on_surface_variant;
+  border: 1px solid transparent;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+  background: alpha(@primary, 0.12);
+  color: @on_surface;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button:active {
+  background: alpha(@primary, 0.18);
+}
+
+/* Volume widget */
+.widget-volume {
+  background: alpha(@surface_container_high, 0.88);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+/* Do Not Disturb */
+.widget-dnd {
+  margin: 8px 0;
+}
+.widget-dnd > switch {
+  background: alpha(@surface_container_high, 0.75);
+  border-radius: 12px;
+  padding: 4px;
+}
+.widget-dnd > switch:checked {
+  background: alpha(@primary, 0.95);
+}
+.widget-dnd > switch slider {
+  background: @on_surface;
+}
+
+/* === MPRIS (media) - separated meta and controls === */
+.widget-mpris {
+  background: linear-gradient(180deg, alpha(@surface_container,0.6), alpha(@surface_container_high,0.6));
+  border-radius: 12px;
+  padding: 8px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* album art */
+.widget-mpris img {
+  border-radius: 8px;
+  min-width: 64px;
+  min-height: 64px;
+  max-width: 96px;
+  max-height: 96px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+/* player row holds meta (title/artist) on the left and controls on the right */
+.widget-mpris .widget-mpris-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* meta text column */
+.widget-mpris .mpris-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; /* allow truncation */
+  overflow: hidden;
+}
+.widget-mpris .widget-mpris-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: @on_surface;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.widget-mpris .widget-mpris-subtitle {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: @on_surface_variant;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* controls: visually separate from meta */
+.widget-mpris .mpris-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+}
+.widget-mpris .mpris-controls > button {
+  border-radius: 10px;
+  padding: 8px;
+  min-width: 44px;
+  min-height: 36px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: @on_surface;
+}
+.widget-mpris .mpris-controls > button:hover {
+  background: alpha(@primary, 0.14);
+  color: @on_primary_container;
+}
+
+/* Ensure buttons inside mpris do not steal layout from text */
+.widget-mpris .mpris-controls > button > image,
+.widget-mpris .mpris-controls > button > icon {
+  transform: scale(1);
+}
+
+/* === NOTIFICATIONS (floating + control center) === */
+
+/* Floating notifications container — stack vertically and add good spacing */
+.floating-notifications.background {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 14px;
+  max-width: 460px;
+}
+
+/* notification card background */
+.floating-notifications.background .notification-row .notification-background,
+.control-center .notification-row .notification-background {
+  background: alpha(@surface_container, 0.92);
+  border-radius: 14px;
+  padding: 10px;
+  border: 1px solid alpha(@outline, 0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  overflow: visible;
+}
+
+/* notification inner layout */
+.floating-notifications.background .notification-row .notification-background .notification,
+.control-center .notification-row .notification-background .notification {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 6px;
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* urgent (critical) notification accent */
+.floating-notifications.background .notification-row .notification-background .notification.critical,
+.control-center .notification-row .notification-background .notification.critical {
+  border: 1px solid alpha(@error, 0.9);
+  box-shadow: 0 10px 30px rgba(145, 20, 20, 0.15);
+}
+
+/* notification metadata/body */
+.notification .notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.notification .notification-title {
+  font-weight: 700;
+  color: @on_surface;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.notification .notification-body {
+  color: @on_surface_variant;
+  font-size: 0.9rem;
+  line-height: 1.1;
+  max-height: 5.2em;
+  overflow: hidden;
+}
+
+/* notification image (if any) */
+.notification .notification-image {
+  border-radius: 8px;
+  min-width: 64px;
+  min-height: 48px;
+  max-width: 200px;
+  max-height: 160px;
+  object-fit: cover;
+}
+
+/* actions (buttons inside notifications) */
+.notification-action {
+  background: transparent;
+  color: @on_surface;
+  border-radius: 10px;
+  padding: 6px 10px;
+  margin: 4px 4px 0 0;
+  border: 1px solid alpha(@outline, 0.06);
+}
+.notification-action:hover {
+  background: alpha(@primary, 0.12);
+  color: @on_surface;
+}
+.notification-action:active {
+  background: alpha(@primary, 0.18);
+}
+
+/* close button */
+.close-button {
+  background: transparent;
+  border-radius: 8px;
+  padding: 6px;
+  margin-left: 8px;
+  color: @on_surface_variant;
+}
+.close-button:hover {
+  background: alpha(@primary, 0.12);
+  color: @on_surface;
+}
+
+/* make sure notification rows stack without overlap */
+.notification-row {
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+  min-height: 56px;
+}
+
+/* small fade animations */
+.notification-row,
+.control-center .notification-row {
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+/* make small visual separators for clarity */
+.control-center .notification-row + .notification-row {
+  margin-top: 8px;
+}
+
+/* muted notifications (example) */
+.notification.muted {
+  opacity: 0.6;
+}
+
+/* helper alignment for icons inside widgets (consistent sizing) */
+.icon,
+img.icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+/* small screens / compact mode fallback */
+@media screen and (max-width: 720px) {
+  .control-center {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+  .widget-mpris {
+    padding: 6px;
+  }
+}
