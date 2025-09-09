@@ -22,7 +22,7 @@ output_path = '~/.cache/fox-colors.json'
 
 [templates.starship]
 input_path = '~/.config/matugen/templates/starship-colors.toml'
-output_path = '~/.cache/starship.toml'
+output_path = '~/.config/starship.toml'
 
 [templates.alacritty]
 input_path = '~/.config/matugen/templates/alacritty.toml'
