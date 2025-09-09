@@ -1,6 +1,6 @@
-format = '''
-$directory$git_branch$rust$python
-$character'''
+add_newline = false
+
+format = "$all"
 
 palette = 'colors'
 
@@ -36,11 +36,70 @@ format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 b
 
 [time]
 format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) $time](fg:color3 bg:color4)[](fg:color4) "
-disabled = false
-time_format = "%R" # Hour:Minute Format
+disabled = true
+time_format = "%R"
+
+# -------------------- Language Modules in Directory-style format --------------------
 
 [python]
-format = "[](fg:color8 bg:color4)[${symbol}${version}](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5)( ${virtualenv})](fg:color3 bg:color4)[](fg:color4) "
-symbol = '🐍'
-# pyenv_version_name = true
-pyenv_prefix = 'venv'
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version} ${virtualenv}](fg:color3 bg:color4)[](fg:color4)"
+
+[nodejs]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[ruby]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[golang]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[rust]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[java]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[php]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[deno]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[dotnet]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[lua]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[scala]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[kotlin]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[elixir]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[haskell]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[swift]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[c]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[cpp]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[perl]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[erlang]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[julia]
+format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ${version}](fg:color3 bg:color4)[](fg:color4)"
+
+[git_status]
+disabled = true
