@@ -1,6 +1,7 @@
 --target=$HOME
 --ignore=.stowrc
 --ignore=screenshots
+--ignore=nthng
 --ignore=scripts
 --ignore=guide
 --ignore=README

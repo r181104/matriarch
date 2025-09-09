@@ -101,7 +101,7 @@ window#waybar.hidden {
 }
 
 /* ========== CPU / MEMORY / DISK ========== */
-#cpu,
+#cpu
 #memory,
 #disk {
     font-weight: bold;
