@@ -64,29 +64,29 @@
             "image-radius": 12
         },
         "volume": {
-            "label": "󰕾",
+            "label": " 󰕾 ",
             "show-per-app": true
         },
         "buttons-grid": {
             "actions": [
                 {
-                    "label": "",
+                    "label": "  ",
                     "command": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
                 },
                 {
-                    "label": "",
+                    "label": "  ",
                     "command": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
                 },
                 {
-                    "label": "",
+                    "label": "  ",
                     "command": "nm-connection-editor"
                 },
                 {
-                    "label": "󰂯",
+                    "label": " 󰂯 ",
                     "command": "blueman-manager"
                 },
                 {
-                    "label": "󰏘",
+                    "label": "󰏘 ",
                     "command": "nwg-look"
                 }
             ]
