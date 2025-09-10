@@ -16,10 +16,6 @@ output_path = '~/.cache/waybar-colors.css'
 input_path = '~/.config/matugen/templates/gtk-colors.css'
 output_path = '~/.cache/gtk-colors.css'
 
-[templates.pywalfox]
-input_path = '~/.config/matugen/templates/pywalfox-colors.json'
-output_path = '~/.cache/fox-colors.json'
-
 [templates.starship]
 input_path = '~/.config/matugen/templates/starship-colors.toml'
 output_path = '~/.config/starship.toml'

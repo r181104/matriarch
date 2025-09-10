@@ -1,4 +1,5 @@
 @import './../../.cache/waybar-colors.css';
+@import './../../.cache/gtk-colors.css';
 
 /* ========== GLOBAL ========== */
 * {
