@@ -50,6 +50,7 @@ BASE_PKGS=(
     fish
     starship
     fzf
+    fd
     zoxide
     tmux
     ripgrep
