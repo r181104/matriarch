@@ -69,3 +69,18 @@ vim.diagnostic.config({
 		end,
 	},
 })
+
+-- Create a custom command :LiveServer
+vim.api.nvim_create_user_command("LiveServer", function()
+  local cwd = vim.fn.getcwd()
+  vim.fn.jobstart(
+    {"live-server", "--port=8000", "--no-browser", cwd},
+    { detach = true }
+  )
+  print("🚀 Live Server born at http://localhost:8000")
+end, {})
+
+vim.api.nvim_create_user_command("LiveServerStop", function()
+  vim.fn.system("pkill -f live-server")
+  print("🛑 Live Server killed")
+end, {})
