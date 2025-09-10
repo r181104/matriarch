@@ -87,6 +87,8 @@ LSP=(
     pyright
     lua-language-server
     jdtls
+    vtsls
+    tailwindcss-language-server
 )
 
 FORMATTERS=(
