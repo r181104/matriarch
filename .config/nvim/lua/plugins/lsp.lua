@@ -27,9 +27,6 @@ return {
 		setup("jdtls")
 		setup("rust_analyzer")
         setup("vtsls")
-        setup("html")
-        setup("cssls")
-        setup("jsonls")
         setup("tailwindcss")
 	end,
 }
