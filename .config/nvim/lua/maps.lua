@@ -85,3 +85,5 @@ end)
 map("n", "]d", function()
 	require("trouble").previous({ skip_groups = true, jump = true })
 end)
+
+map("n", "<leader>live", ":!live-server<CR>", { silent = true })
