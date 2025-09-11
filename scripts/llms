@@ -3,7 +3,21 @@
 set -e
 
 echo "Installing dependencies"
-paru --noconfirm -Syu --needed llama.cpp-vulkan
+if command -v paru >/dev/null 2>&1; then
+    if paru -S --needed --noconfirm llama.cpp-vulkan; then
+        echo "✔️  ${group_name} installed successfully"
+        return 0
+    fi
+elif command -v yay >/dev/null 2>&1; then
+    if yay -S --needed --noconfirm llama.cpp-vulkan; then
+        echo "✔️  ${group_name} installed successfully"
+        return 0
+    fi
+else
+    echo "❌  No supported AUR or pacman helper found"
+    return 1
+fi
+
 
 echo "Downloading Qwen2 for llm usage"
 mkdir ~/LLMS

@@ -2,13 +2,7 @@
 
 set -e
 
-echo "==> Installing intel-undervolt..."
-if ! command -v paru >/dev/null 2>&1; then
-    echo "ERROR: paru is not installed. Please install paru first."
-    exit 1
-fi
-
-paru -S --noconfirm intel-undervolt
+sudo pacman -S --noconfirm intel-undervolt
 
 echo "==> Creating undervolt configuration..."
 sudo tee /etc/intel-undervolt.conf >/dev/null <<'EOF'
