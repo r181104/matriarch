@@ -19,7 +19,7 @@ sudo tee "$CONF_PATH" >/dev/null <<'EOF'
 Color
 ILoveCandy
 CleanMethod = KeepCurrent
-IgnorePkg = linux firefox gnome-desktop
+IgnorePkg = linux firefox
 HoldPkg = pacman glibc
 Architecture = auto
 CheckSpace
