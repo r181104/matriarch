@@ -1,3 +1,4 @@
+![Logo](png/logo.png)
 # My Arch Linux & Hyprland Dotfiles
 
 This repository contains my personal dotfiles for my Arch Linux setup, featuring the Hyprland Wayland compositor. This setup is designed to be both aesthetically pleasing and highly functional, with a focus on keyboard-driven workflows.
