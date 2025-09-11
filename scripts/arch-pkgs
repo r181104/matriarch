@@ -31,6 +31,9 @@ GRAPHICS=(
 
 GAMING_PKGS=(
     steam 
+    lutris
+    wine
+    winetricks
     gamemode
     lib32-gamemode
     mangohud 
@@ -188,7 +191,7 @@ HYPR_PKGS=(
     networkmanager
     network-manager-applet
     brightnessctl
-    nautilus
+    pcmanfm
     nwg-look
     papirus-icon-theme
     nordzy-hyprcursors
@@ -212,6 +215,10 @@ install_package_group() {
 
     echo -e "\n${BLUE}Installing ${group_name}...${NC}"
     if paru -S --needed --noconfirm "${packages[@]}"; then
+        echo "✔️  ${group_name} installed successfully"
+    elif yay -S --needed --noconfirm "${packages[@]}"; then
+        echo "✔️  ${group_name} installed successfully"
+    elif sudo pacman -S --needed --noconfirm "${packages[@]}"; then
         echo "✔️  ${group_name} installed successfully"
     else
         echo "❌  Failed to install ${group_name}"
