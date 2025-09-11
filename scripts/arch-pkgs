@@ -32,7 +32,7 @@ GRAPHICS=(
 GAMING_PKGS=(
     steam 
     lutris
-    wine
+    wine-stage
     winetricks
     gamemode
     lib32-gamemode
