@@ -195,7 +195,7 @@ HYPR_PKGS=(
     nwg-look
     papirus-icon-theme
     nordzy-hyprcursors
-    python-pywal
+    matugen
     tty-colorscheme
 )
 
