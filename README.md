@@ -1,6 +1,6 @@
 <div align="center">
   <img src="png/logo.png" alt="Matriarch Logo" width="600" height="300" />
-  <h1>Matriarch Dotfiles</h1>
+  <h1>Matriarch</h1>
   <p>My personal collection of dotfiles for Arch Linux, curated for a sleek and powerful Hyprland experience.</p>
 </div>
 
@@ -109,10 +109,10 @@ The main keybindings are defined in `~/.config/hypr/conf/keybinds.conf`. Here ar
 
 -   `Super + Enter`: Open Alacritty
 -   `Super + Q`: Close the active window
--   `Super + D`: Open Rofi
+-   `Super + Space`: Open Rofi
 -   `Super + [1-9]`: Switch to workspace 1-9
 -   `Super + Shift + [1-9]`: Move the active window to workspace 1-9
--   `Super + H/J/K/L`: Move focus between windows
+-   `Alt + H/J/K/L`: Move focus between windows
 
 For a full list of keybindings, please refer to the `keybinds.conf` file.
 
