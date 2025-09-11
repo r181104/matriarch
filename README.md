@@ -1,6 +1,6 @@
 <img src="png/logo.png" alt="Logo" width="600" height="300" />
 
-# My Arch Linux & Hyprland Dotfiles
+# MATRIARCH
 
 This repository contains my personal dotfiles for my Arch Linux setup, featuring the Hyprland Wayland compositor. This setup is designed to be both aesthetically pleasing and highly functional, with a focus on keyboard-driven workflows.
 
