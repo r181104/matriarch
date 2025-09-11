@@ -20,9 +20,7 @@ This repository contains my personal dotfiles for my Arch Linux setup, featuring
 These dotfiles are managed with `stow`. To install them, clone this repository and use `stow` to create the necessary symlinks:
 
 ```bash
-git clone https://github.com/your-username/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-stow .
+     curl -fsSL https://raw.githubusercontent.com/r181104/matriarch/refs/heads/master/scripts/install | sh
 ```
 
 ## Configuration Details

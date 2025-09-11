@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+sudo pacman -Syu git curl
+
+git clone https://github.com/r181104/matriarch.git ~/matriarch
+
+cd ~/matriarch/scripts
+
+sh aur-installer
+sh arch-pkgs
+
+cd ~/matriarch
+
+rm -rf ~/.local/share/fonts
+rm -rf ~/.themes
+
+stow .
+
+echo "Reboot Now"
