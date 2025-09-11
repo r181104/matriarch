@@ -31,9 +31,6 @@ GRAPHICS=(
 
 GAMING_PKGS=(
     steam 
-    lutris
-    wine
-    winetricks
     gamemode
     lib32-gamemode
     mangohud 
