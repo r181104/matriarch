@@ -112,6 +112,8 @@ FORMATTERS=(
 BROWSERS=(
     brave-bin
     zen-browser-bin
+    ddgr
+    w3m
 )
 
 # NOTE: PACKAGES FOR GTK TO RUN CORRECTLY

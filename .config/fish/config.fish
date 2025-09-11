@@ -39,10 +39,10 @@ bind \en down-or-search
 bind \ep up-or-search
 
 # ==============================
-#   6. Package Manager Aliases
+#   6. Package Manager aliases
 # ==============================
 if type -q paru
-    alias i 'paru --noconfirm -S --needed'
+    alias i 'paru --noconfirm --needed -S'
     alias u 'paru --noconfirm -Syu'
     alias r 'paru -Rns'
     alias s 'paru -Ss'
@@ -50,7 +50,7 @@ if type -q paru
     alias aggressively-clear-cache 'sudo pacman -Scc && paru -Scc'
     alias clear-cache 'sudo pacman -Sc && paru -Sc'
 else if type -q yay
-    alias i 'yay --noconfirm -S --needed'
+    alias i 'yay --noconfirm --needed -S'
     alias u 'yay --noconfirm -Syu'
     alias r 'yay -Rns'
     alias s 'yay -Ss'
@@ -58,7 +58,7 @@ else if type -q yay
     alias aggressively-clear-cache 'sudo pacman -Scc && yay -Scc'
     alias clear-cache 'sudo pacman -Sc && yay -Sc'
 else
-    alias i 'sudo pacman --noconfirm -S --needed'
+    alias i 'sudo pacman --noconfirm --needed -S'
     alias u 'sudo pacman --noconfirm -Syu'
     alias r 'sudo pacman -Rns'
     alias s 'sudo pacman -Ss'
@@ -68,7 +68,7 @@ else
 end
 
 # ==============================
-#   7. General Aliases
+#   7. General aliases
 # ==============================
 # Navigation
 alias home 'cd ~'
@@ -156,6 +156,9 @@ alias anime '~/senv/scripts/ani-cli'
 # LLMS
 alias llama-chat "llama-simple-chat -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ngl 12"
 alias llama-server "llama-server -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ngl 12"
+
+# Terminal based browser
+alias tb "BROWSER=w3m ddgr"
 
 # ==============================
 #   8. File Listing (eza / ls)
