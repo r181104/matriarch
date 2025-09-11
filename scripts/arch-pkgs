@@ -31,6 +31,9 @@ GRAPHICS=(
 
 GAMING_PKGS=(
     steam 
+    playonlinux
+    wine
+    winetricks
     gamemode
     lib32-gamemode
     mangohud 
@@ -209,18 +212,30 @@ install_package_group() {
     local group_name="$1"
     shift
     local packages=("$@")
-
     echo -e "\n${BLUE}Installing ${group_name}...${NC}"
-    if paru -S --needed --noconfirm "${packages[@]}"; then
-        echo "✔️  ${group_name} installed successfully"
-    elif yay -S --needed --noconfirm "${packages[@]}"; then
-        echo "✔️  ${group_name} installed successfully"
-    elif sudo pacman -S --needed --noconfirm "${packages[@]}"; then
-        echo "✔️  ${group_name} installed successfully"
+
+    if command -v paru >/dev/null 2>&1; then
+        if paru -S --needed --noconfirm "${packages[@]}"; then
+            echo "✔️  ${group_name} installed successfully"
+            return 0
+        fi
+    elif command -v yay >/dev/null 2>&1; then
+        if yay -S --needed --noconfirm "${packages[@]}"; then
+            echo "✔️  ${group_name} installed successfully"
+            return 0
+        fi
+    elif command -v pacman >/dev/null 2>&1; then
+        if sudo pacman -S --needed --noconfirm "${packages[@]}"; then
+            echo "✔️  ${group_name} installed successfully"
+            return 0
+        fi
     else
-        echo "❌  Failed to install ${group_name}"
+        echo "❌  No supported AUR or pacman helper found"
         return 1
     fi
+
+    echo "❌  Failed to install ${group_name}"
+    return 1
 }
 
 # WARN: Make sure to read and then edit this part as

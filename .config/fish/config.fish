@@ -317,31 +317,12 @@ function fzf_nvim
     end
 end
 bind \er fzf_nvim
-
-function fzf_zoxide_dir
-    set -l selected_dir (
-    zoxide query -l | fzf --height=40% --reverse --ansi \
-        --prompt="📂 Jump to: " \
-        --preview 'eza --icons --tree --level=2 --color=always {} 2>/dev/null' \
-        --preview-window=right:50%:wrap
-    )
-    if test -n "$selected_dir"
-        z "$selected_dir"
-        commandline -f repaint
-    end
-end
-bind \ed fzf_zoxide_dir
+bind \ed fzf-cd-widget
+bind \et fzf-file-widget
 
 # ==============================
-#   10. Init (zoxide & fzf)
+#   10. Init (fzf)
 # ==============================
-if command -q zoxide
-    set -gx _ZO_ECHO 1
-    set -gx _ZO_EXCLUDE_DIRS "$HOME/private/*"
-    set -gx _ZO_FZF_PREVIEW 'ls --color=always {}'
-    zoxide init fish | source
-end
-
 if command -q fzf
     fzf_key_bindings | source
 end
