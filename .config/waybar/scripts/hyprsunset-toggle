@@ -1,0 +1,29 @@
+#!/bin/sh
+
+PIDFILE="/tmp/hyprsunset.pid"
+
+status() {
+  if [ -f "$PIDFILE" ] && pgrep -F "$PIDFILE" >/dev/null 2>&1; then
+    echo '{"icon":"ON"}'
+  else
+    echo '{"icon":"OFF"}'
+  fi
+}
+
+if [ "${1:-}" = "--status" ]; then
+  status
+  exit 0
+fi
+
+# Toggle state
+current_icon=$(status | sed -E 's/.*"icon":"([A-Z]+)".*/\1/')
+
+if [ "$current_icon" = "ON" ]; then
+  pkill -F "$PIDFILE"
+  rm -f "$PIDFILE"
+  echo '{"icon":"OFF"}'
+else
+  hyprsunset -t 5500 &
+  echo $! >"$PIDFILE"
+  echo '{"icon":"ON"}'
+fi

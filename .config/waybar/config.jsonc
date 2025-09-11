@@ -4,7 +4,6 @@
     "position": "bottom",
     "fixed-center": true,
     "modules-left": [
-        "custom/stream_status",
         "hyprland/workspaces",
         "hyprland/window"
     ],
@@ -18,6 +17,7 @@
         "memory",
         "disk",
         "pulseaudio",
+        "custom/hyprsunset",
         "battery#forest",
         "custom/lock"
     ],
@@ -76,7 +76,7 @@
         "tooltip-format": "{timeTo} {power}w",
         "format-icons": ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
     },
-        "custom/lock": {
+    "custom/lock": {
         "tooltip": false,
         "on-click": "sh -c '(wlogout)' & disown",
         "format": ""
@@ -97,12 +97,17 @@
         "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
-    "custom/stream_status": {
-        "format": "{text}",
-        "exec": "~/.local/scripts/stream_status",
-        "interval": 5,
+    "custom/hyprsunset": {
+        "exec": "~/.config/waybar/scripts/hyprsunset-toggle --status",
         "return-type": "json",
-        "tooltip": true
+        "format": "{icon}{}",
+        "format-icons": {
+            "ON": "  ",
+            "OFF": "  "
+        },
+        "on-click": "sleep 0.1 && ~/.config/waybar/scripts/hyprsunset-toggle",
+        "interval": 10,
+        "tooltip": false
     },
     "network": {
         "format-wifi": "<span size='13000' foreground='#f5e0dc'>  </span>{essid}",
@@ -116,13 +121,13 @@
         "on-click": "pypr toggle pavucontrol && hyprctl dispatch bringactivetotop",
         "format": "{icon} {volume}%",
         "format-bluetooth": "{icon} 󰂰 {volume}%",
-        "format-muted": "󰖁",
+        "format-muted": "󰖁 ",
         "format-icons": {
-            "headphone": "",
-            "headset": "",
-            "phone": "",
-            "car": "",
-            "default": ["","","󰕾",""]
+            "headphone": " ",
+            "headset": " ",
+            "phone": " ",
+            "car": " ",
+            "default": [" "," ","󰕾 "," "]
         }
-    },
+    }
 }

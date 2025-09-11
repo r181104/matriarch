@@ -37,6 +37,7 @@ window#waybar.hidden {
 #battery,
 #clock,
 #custom-lock,
+#custom-hyprsunset,
 #custom-stream_status {
     background: alpha(@surface_container_high, 0.25);
     padding: 5px 10px;
@@ -56,6 +57,7 @@ window#waybar.hidden {
 #battery:hover,
 #clock:hover,
 #custom-lock:hover,
+#custom-hyprsunset:hover,
 #custom-stream_status:hover,
 #hyprland-window:hover {
     background: alpha(@surface_variant, 0.25);
@@ -138,6 +140,7 @@ window#waybar.hidden {
 /* ========== CUSTOM MODULES ========== */
 #custom-lock,
 #custom-notification,
+#custom-hyprsunset,
 #custom-stream_status {
     padding: 5px 10px;
 }

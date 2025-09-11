@@ -168,13 +168,15 @@ BLUETOOTH=(
 # NOTE: PACKGES FOR HYPRLAND TO WORK WITH THE CONFIG I LIKE
 HYPR_PKGS=(
     hyprland
-    pyprland
     hypridle
+    hyprsunset
+    hyprland-protocols
     hyprland-qt-support
     hyprland-qtutils
     hyprlock
     hyprpicker
     hyprshot
+    pyprland
     rofi-wayland
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-wlr
