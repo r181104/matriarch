@@ -1,29 +1,34 @@
 #!/bin/sh
-
+# hyprsunset-toggle: toggle warm display using hyprsunset
 PIDFILE="/tmp/hyprsunset.pid"
 
+# Return JSON status
 status() {
-  if [ -f "$PIDFILE" ] && pgrep -F "$PIDFILE" >/dev/null 2>&1; then
+  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
     echo '{"icon":"ON"}'
   else
     echo '{"icon":"OFF"}'
   fi
 }
 
+# If called with --status, just return JSON
 if [ "${1:-}" = "--status" ]; then
   status
   exit 0
 fi
 
-# Toggle state
+# Toggle warm filter
 current_icon=$(status | sed -E 's/.*"icon":"([A-Z]+)".*/\1/')
 
 if [ "$current_icon" = "ON" ]; then
-  pkill -F "$PIDFILE"
+  # Turn off
+  kill "$(cat "$PIDFILE")" 2>/dev/null
   rm -f "$PIDFILE"
-  echo '{"icon":"OFF"}'
 else
-  hyprsunset -t 5500 &
+  # Turn on (5500K)
+  nohup /usr/bin/hyprsunset -t 5500 >/dev/null 2>&1 &
   echo $! >"$PIDFILE"
-  echo '{"icon":"ON"}'
 fi
+
+# Always print current status for Waybar
+status

@@ -326,3 +326,8 @@ bind \et fzf-file-widget
 if command -q fzf
     fzf_key_bindings | source
 end
+
+function wine-nfsmw
+    set -x WINEPREFIX $HOME/.wine
+    winecfg
+end

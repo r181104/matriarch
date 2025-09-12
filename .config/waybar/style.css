@@ -140,7 +140,6 @@ window#waybar.hidden {
 /* ========== CUSTOM MODULES ========== */
 #custom-lock,
 #custom-notification,
-#custom-hyprsunset,
-#custom-stream_status {
+#custom-hyprsunset {
     padding: 5px 10px;
 }

@@ -98,15 +98,15 @@
         "escape": true
     },
     "custom/hyprsunset": {
-        "exec": "~/.config/waybar/scripts/hyprsunset-toggle --status",
+        "exec": "/home/sten/.config/waybar/scripts/hyprsunset-toggle --status",
         "return-type": "json",
-        "format": "{icon}{}",
+        "format": "{icon}",
         "format-icons": {
             "ON": "  ",
             "OFF": "  "
         },
-        "on-click": "sleep 0.1 && ~/.config/waybar/scripts/hyprsunset-toggle",
-        "interval": 10,
+        "on-click": "/home/sten/.config/waybar/scripts/hyprsunset-toggle",
+        "interval": 5,
         "tooltip": false
     },
     "network": {
