@@ -37,10 +37,6 @@ GAMING_PKGS=(
     lib32-mangohud
     vulkan-icd-loader 
     lib32-vulkan-icd-loader
-    wine
-    winetricks
-    wine-mono
-    wine-gecko
 )
 
 # NOTE: THESE ARE SOME OF THE BASIC PACKAGES FOR FISH TO WORK AND HAVE GOOD EXPERIENCE USING TERMINAL OR TTY
@@ -199,6 +195,7 @@ HYPR_PKGS=(
     papirus-icon-theme
     nordzy-hyprcursors
     matugen
+    evince
     tty-colorscheme
 )
 
