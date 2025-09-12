@@ -45,6 +45,8 @@ BASE_PKGS=(
     neovim
     git
     git-delta
+    btop
+    htop
     wget
     curl
     fish
@@ -195,7 +197,7 @@ HYPR_PKGS=(
     papirus-icon-theme
     nordzy-hyprcursors
     matugen
-    evince
+    okular
     tty-colorscheme
 )
 
