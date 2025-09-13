@@ -5,7 +5,8 @@
     "fixed-center": true,
     "modules-left": [
         "hyprland/workspaces",
-        "hyprland/window"
+        // "hyprland/window",
+        "mpris"
     ],
     "modules-center": [
         "tray",
@@ -76,6 +77,26 @@
         "tooltip-format": "{timeTo} {power}w",
         "format-icons": ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
     },
+    "mpris": {
+  "format": "{status_icon} {title}",
+  "format-paused": "⏸ {title}",
+  "format-stopped": "⏹",
+  "player-icons": {
+    "spotify": "",
+    "mpv": "",
+    "firefox": ""
+  },
+  "status-icons": {
+    "playing": "▶",
+    "paused": "⏸",
+    "stopped": "⏹"
+  },
+  "max-length": 25,
+  "ellipsis": true,
+  "on-click": "playerctl play-pause",
+  "on-click-right": "playerctl next",
+  "on-click-middle": "playerctl previous"
+},
     "custom/lock": {
         "tooltip": false,
         "on-click": "sh -c '(wlogout)' & disown",

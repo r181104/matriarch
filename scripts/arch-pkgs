@@ -182,6 +182,7 @@ HYPR_PKGS=(
     xdg-desktop-portal-gtk
     xdg-desktop-portal
     waybar
+    playerctl
     swaync
     swww
     wlogout
