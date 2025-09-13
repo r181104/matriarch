@@ -80,7 +80,9 @@ alias c 'clear'
 
 # Editors
 alias n 'nvim'
+alias nd 'neovide'
 alias sn 'sudo nvim'
+alias snd 'sudo neovide'
 alias v 'vim'
 alias sv 'sudo vim'
 

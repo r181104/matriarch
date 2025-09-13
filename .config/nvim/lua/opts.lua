@@ -44,3 +44,12 @@ vim.g.have_nerd_font = true
 vim.scriptencoding = "utf-8"
 vim.o.encoding = "utf-8"
 vim.o.fileencoding = "utf-8"
+
+-- Options for Neovide only
+vim.o.guifont = "MesloLGS Nerd Font:h22"
+vim.g.neovide_padding_top = 0
+vim.g.neovide_padding_bottom = 0
+vim.g.neovide_padding_right = 0
+vim.g.neovide_padding_left = 0
+vim.g.neovide_opacity = 0.5
+vim.g.transparency = 0.8
