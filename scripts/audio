@@ -2,8 +2,11 @@
 
 set -e
 
+echo "Installing Dependencies for audio to work good"
 sudo pacman --noconfirm -S --needed pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol helvum
 
+echo "Enabling services so they start automatically and will work good"
 systemctl --user enable --now pipewire.socket pipewire-pulse.socket wireplumber.service
 
+echo "Restarting the audio services"
 systemctl --user restart pipewire pipewire-pulse wireplumber
