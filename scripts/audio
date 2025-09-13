@@ -3,4 +3,7 @@
 set -e
 
 sudo pacman --noconfirm -S --needed pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol helvum
+
 systemctl --user enable --now pipewire.socket pipewire-pulse.socket wireplumber.service
+
+systemctl --user restart pipewire pipewire-pulse wireplumber
