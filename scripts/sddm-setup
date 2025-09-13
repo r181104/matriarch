@@ -44,10 +44,8 @@ copy_files(){
     sudo cp -r "$path_to_git_clone"/sddm-astronaut-theme/* /usr/share/sddm/themes/sddm-astronaut-theme
     sudo cp -r /usr/share/sddm/themes/sddm-astronaut-theme/Fonts/* /usr/share/fonts/
     echo -e "${green}[*] Setting up theme.${no_color}"
-    echo "[Theme]
-    Current=sddm-astronaut-theme" | sudo tee /etc/sddm.conf
-    echo "[General]
-    InputMethod=qtvirtualkeyboard" | sudo tee /etc/sddm.conf.d/virtualkbd.conf
+    echo -e "[Theme]\nCurrent=sddm-astronaut-theme\n\n[General]\nDisplayServer=wayland" | sudo tee /etc/sddm.conf
+    echo "[General]\n    InputMethod=qtvirtualkeyboard" | sudo tee /etc/sddm.conf.d/virtualkbd.conf
 }
 
 select_theme(){
@@ -91,6 +89,22 @@ enable_sddm(){
     systemctl enable sddm.service 
 }
 
+setup_x11(){
+    read -p "[*] Do you want to set up X11 with a resolution of 1920x1080? (y/n): " answer
+    if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+        echo -e "${green}[*] Setting up X11 with resolution 1920x1080.${no_color}"
+        sudo mkdir -p /usr/share/sddm/scripts
+        sudo tee /usr/share/sddm/scripts/Xsetup > /dev/null <<'EOF'
+#!/bin/sh
+xrandr --output $(xrandr | grep " connected" | cut -f1 -d" ") --mode 1920x1080
+EOF
+        sudo chmod +x /usr/share/sddm/scripts/Xsetup
+        echo -e "[X11]\nDisplayCommand=/usr/share/sddm/scripts/Xsetup\n\n[General]\nDisplayServer=x11" | sudo tee /etc/sddm.conf.d/10-monitor.conf
+    else
+        echo -e "${red}[*] Skipping X11 setup.${no_color}"
+    fi
+}
+
 while true; do
     clear
     echo -e "${green}sddm-astronaut-theme made by Keyitdev${no_color}"
@@ -102,17 +116,19 @@ while true; do
     echo -e "5. Select theme (/usr/share/sddm/themes/)."
     echo -e "6. Preview the set theme (/usr/share/sddm/themes/)."
     echo -e "7. Disable other display managers and enable SDDM (systemd)."
-    echo -e "8. Exit."
+    echo -e "8. Set up X11 with 1920x1080 resolution."
+    echo -e "9. Exit."
     read -p "[*] Your choice: " x
     case $x in
-        [1]* ) install_dependencies; git_clone; copy_files; select_theme; enable_sddm; exit;;
+        [1]* ) install_dependencies; git_clone; copy_files; select_theme; setup_x11; enable_sddm; exit;;
         [2]* ) install_dependencies; exit;;
         [3]* ) git_clone; exit;;
         [4]* ) copy_files; exit;;
         [5]* ) select_theme; exit;;
         [6]* ) sddm-greeter-qt6 --test-mode --theme /usr/share/sddm/themes/sddm-astronaut-theme/; exit;;
         [7]* ) enable_sddm; exit;;
-        [8]* ) exit;;
+        [8]* ) setup_x11; exit;;
+        [9]* ) exit;;
         * )  echo -e "${red}[*] Error: invalid number or input.${no_color}";;
     esac
 done
