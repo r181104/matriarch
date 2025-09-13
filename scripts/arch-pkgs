@@ -113,7 +113,7 @@ FORMATTERS=(
 # NOTE: BROWERS I LIKE TO HAVE
 BROWSERS=(
     brave-bin
-    zen-browser-bin
+    firefox-developer-edition
     ddgr
     w3m
 )
