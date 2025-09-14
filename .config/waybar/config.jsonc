@@ -5,7 +5,6 @@
     "fixed-center": true,
     "modules-left": [
         "hyprland/workspaces",
-        // "hyprland/window",
         "mpris"
     ],
     "modules-center": [
@@ -78,25 +77,25 @@
         "format-icons": ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
     },
     "mpris": {
-  "format": "{status_icon} {title}",
-  "format-paused": "⏸ {title}",
-  "format-stopped": "⏹",
-  "player-icons": {
-    "spotify": "",
-    "mpv": "",
-    "firefox": ""
-  },
-  "status-icons": {
-    "playing": "▶",
-    "paused": "⏸",
-    "stopped": "⏹"
-  },
-  "max-length": 25,
-  "ellipsis": true,
-  "on-click": "playerctl play-pause",
-  "on-click-right": "playerctl next",
-  "on-click-middle": "playerctl previous"
-},
+        "format": "{status_icon} {title}",
+        "format-paused": "⏸ {title}",
+        "format-stopped": "⏹",
+        "player-icons": {
+            "spotify": "",
+            "mpv": "",
+            "firefox": ""
+        },
+        "status-icons": {
+            "playing": "▶",
+            "paused": "⏸",
+            "stopped": "⏹"
+        },
+        "max-length": 25,
+        "ellipsis": true,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl next",
+        "on-click-middle": "playerctl previous"
+    },
     "custom/lock": {
         "tooltip": false,
         "on-click": "sh -c '(wlogout)' & disown",
@@ -118,18 +117,6 @@
         "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
-    "custom/hyprsunset": {
-        "exec": "/home/sten/.config/waybar/scripts/hyprsunset-toggle --status",
-        "return-type": "json",
-        "format": "{icon}",
-        "format-icons": {
-            "ON": "  ",
-            "OFF": "  "
-        },
-        "on-click": "/home/sten/.config/waybar/scripts/hyprsunset-toggle",
-        "interval": 5,
-        "tooltip": false
-    },
     "network": {
         "format-wifi": "<span size='13000' foreground='#f5e0dc'>  </span>{essid}",
         "format-ethernet": "<span size='13000' foreground='#f5e0dc'>󰤭  </span> Disconnected",
@@ -150,5 +137,13 @@
             "car": " ",
             "default": [" "," ","󰕾 "," "]
         }
+    },
+    "custom/hyprsunset": {
+        "format": "  {text}",
+        "return-type": "plain",
+        "exec": "~/.config/waybar/scripts/hyprsunset status",
+        "on-click": "~/.config/waybar/scripts/hyprsunset toggle",
+        "interval": 5,
+        "tooltip": false
     }
 }
