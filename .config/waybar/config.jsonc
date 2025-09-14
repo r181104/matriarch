@@ -78,17 +78,17 @@
     },
     "mpris": {
         "format": "{status_icon} {title}",
-        "format-paused": "⏸ {title}",
-        "format-stopped": "⏹",
+        "format-paused": "▶ {title}",
+        "format-stopped": "⏹ ",
         "player-icons": {
-            "spotify": "",
-            "mpv": "",
-            "firefox": ""
+            "spotify": " ",
+            "mpv": " ",
+            "firefox": " "
         },
         "status-icons": {
-            "playing": "▶",
-            "paused": "⏸",
-            "stopped": "⏹"
+            "playing": "⏸ ",
+            "paused": "▶ ",
+            "stopped": "⏹ "
         },
         "max-length": 25,
         "ellipsis": true,
