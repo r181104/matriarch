@@ -1,7 +1,7 @@
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    require("lazy").update({ show = false }) -- `show = true` if you want to see update UI
-  end,
+	callback = function()
+		require("lazy").update({ show = false }) -- `show = true` if you want to see update UI
+	end,
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -72,15 +72,23 @@ vim.diagnostic.config({
 
 -- Create a custom command :LiveServer
 vim.api.nvim_create_user_command("LiveServer", function()
-  local cwd = vim.fn.getcwd()
-  vim.fn.jobstart(
-    {"live-server", "--port=8000", "--no-browser", cwd},
-    { detach = true }
-  )
-  print("🚀 Live Server born at http://localhost:8000")
+	local cwd = vim.fn.getcwd()
+	vim.fn.jobstart({ "live-server", "--port=8000", "--no-browser", cwd }, { detach = true })
+	print("🚀 Live Server born at http://localhost:8000")
 end, {})
 
 vim.api.nvim_create_user_command("LiveServerStop", function()
-  vim.fn.system("pkill -f live-server")
-  print("🛑 Live Server killed")
+	vim.fn.system("pkill -f live-server")
+	print("🛑 Live Server killed")
+end, {})
+
+vim.api.nvim_create_user_command("PyServer", function()
+	local cwd = vim.fn.getcwd()
+	vim.fn.jobstart({ "python", "-m", "http.server", "8000", "--directory", cwd }, { detach = true })
+	print("🚀 Python HTTP Server born at http://localhost:8000")
+end, {})
+
+vim.api.nvim_create_user_command("PyServerStop", function()
+	vim.fn.system("pkill -f 'python -m http.server'")
+	print("🛑 Python HTTP Server killed")
 end, {})
