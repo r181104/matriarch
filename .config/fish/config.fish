@@ -162,6 +162,10 @@ alias llama-server "llama-server -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ng
 # Terminal based browser
 alias tb "BROWSER=w3m ddgr"
 
+# Python Server
+alias phs "python -m http.server"
+alias phsd "python -m http.server --directory"
+
 # ==============================
 #   8. File Listing (eza / ls)
 # ==============================
