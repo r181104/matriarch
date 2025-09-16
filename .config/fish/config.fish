@@ -8,9 +8,9 @@ end
 #   2. Core Environment Variables
 # ==============================
 set -gx LANG en_IN.UTF-8
-set -gx BROWSER "brave"
+set -gx BROWSER "firefox-developer-edition"
 set -gx TERM "alacritty"
-set -gx EDITOR "zeditor"
+set -gx EDITOR "neovide"
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di=1;34:fi=0"
 # set -gx LS_COLORS "di 1;3;34:fi=0"
