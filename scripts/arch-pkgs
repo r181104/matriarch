@@ -146,7 +146,6 @@ AUDIO=(
     pavucontrol
     helvum 
     qpwgraph
-    jamesdsp
 )
 
 # NOTE: PACKAGES TO RUN VIDEO THE BEST IN ARCH
@@ -184,6 +183,7 @@ HYPR_PKGS=(
     waybar
     playerctl
     swaync
+    swayosd
     swww
     wlogout
     wl-clipboard
