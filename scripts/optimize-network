@@ -18,35 +18,35 @@ warn() { echo -e "${YELLOW}! $1${NC}"; }
 # =============================
 # Logging
 if [ "$(id -u)" -eq 0 ]; then
-    LOGFILE="/var/log/network_optimize.log"
+  LOGFILE="/var/log/network_optimize.log"
 else
-    LOGFILE="$HOME/.local/state/network_optimize.log"
-    mkdir -p "$(dirname "$LOGFILE")"
+  LOGFILE="$HOME/.local/state/network_optimize.log"
+  mkdir -p "$(dirname "$LOGFILE")"
 fi
-log() { echo "$(date '+%F %T') - $1" >> "$LOGFILE"; }
+log() { echo "$(date '+%F %T') - $1" >>"$LOGFILE"; }
 
 # =============================
 # Root check (sudo or doas)
 if [ "$(id -u)" -ne 0 ]; then
-    if command -v sudo >/dev/null 2>&1; then
-        warn "Re-running with sudo..."
-        exec sudo "$0" "$@"
-    elif command -v doas >/dev/null 2>&1; then
-        warn "Re-running with doas..."
-        exec doas "$0" "$@"
-    else
-        fail "Root privileges required (install sudo or doas)"
-        exit 1
-    fi
+  if command -v sudo >/dev/null 2>&1; then
+    warn "Re-running with sudo..."
+    exec sudo "$0" "$@"
+  elif command -v doas >/dev/null 2>&1; then
+    warn "Re-running with doas..."
+    exec doas "$0" "$@"
+  else
+    fail "Root privileges required (install sudo or doas)"
+    exit 1
+  fi
 fi
 
 # =============================
 # Dependency check
 for cmd in nmcli iw lsmod systemctl ping curl; do
-    if ! command -v "$cmd" >/dev/null 2>&1; then
-        fail "Missing required command: $cmd"
-        exit 1
-    fi
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    fail "Missing required command: $cmd"
+    exit 1
+  fi
 done
 
 # =============================
@@ -56,14 +56,46 @@ echo "1) Cloudflare (1.1.1.1, 2606:4700:4700::1111)"
 echo "2) Google     (8.8.8.8, 2001:4860:4860::8888)"
 echo "3) Quad9      (9.9.9.9, 2620:fe::fe)"
 echo "4) OpenDNS    (208.67.222.222, 2620:119:35::35)"
-read -rp "Select provider [1-4]: " choice
+echo "5) AdGuard    (94.140.14.14, 2a10:50c0::ad1:ff) [Ad + Tracker Blocking]"
+echo "6) AdGuard Family (94.140.14.15, 2a10:50c0::bad1:ff) [Ads + Trackers + Adult Filtering]"
+read -rp "Select provider [1-6]: " choice
 
 case $choice in
-    1) DNS4="1.1.1.1,1.0.0.1"; DNS6="2606:4700:4700::1111,2606:4700:4700::1001"; NAME="Cloudflare" ;;
-    2) DNS4="8.8.8.8,8.8.4.4"; DNS6="2001:4860:4860::8888,2001:4860:4860::8844"; NAME="Google" ;;
-    3) DNS4="9.9.9.9,149.112.112.112"; DNS6="2620:fe::fe,2620:fe::9"; NAME="Quad9" ;;
-    4) DNS4="208.67.222.222,208.67.220.220"; DNS6="2620:119:35::35,2620:119:53::53"; NAME="OpenDNS" ;;
-    *) DNS4="1.1.1.1,8.8.8.8"; DNS6="2606:4700:4700::1111,2001:4860:4860::8888"; NAME="Default (Cloudflare+Google)" ;;
+  1)
+    DNS4="1.1.1.1,1.0.0.1"
+    DNS6="2606:4700:4700::1111,2606:4700:4700::1001"
+    NAME="Cloudflare"
+    ;;
+  2)
+    DNS4="8.8.8.8,8.8.4.4"
+    DNS6="2001:4860:4860::8888,2001:4860:4860::8844"
+    NAME="Google"
+    ;;
+  3)
+    DNS4="9.9.9.9,149.112.112.112"
+    DNS6="2620:fe::fe,2620:fe::9"
+    NAME="Quad9"
+    ;;
+  4)
+    DNS4="208.67.222.222,208.67.220.220"
+    DNS6="2620:119:35::35,2620:119:53::53"
+    NAME="OpenDNS"
+    ;;
+  5)
+    DNS4="94.140.14.14,94.140.15.15"
+    DNS6="2a10:50c0::ad1:ff,2a10:50c0::ad2:ff"
+    NAME="AdGuard (Ad + Tracker Blocking)"
+    ;;
+  6)
+    DNS4="94.140.14.15,94.140.15.16"
+    DNS6="2a10:50c0::bad1:ff,2a10:50c0::bad2:ff"
+    NAME="AdGuard Family (Ads + Trackers + Adult Filtering)"
+    ;;
+  *)
+    DNS4="1.1.1.1,8.8.8.8"
+    DNS6="2606:4700:4700::1111,2001:4860:4860::8888"
+    NAME="Default (Cloudflare+Google)"
+    ;;
 esac
 success "Using DNS: $NAME"
 
@@ -79,28 +111,28 @@ eth_conn=$(echo "$eth_info" | cut -d: -f1)
 eth_dev=$(echo "$eth_info" | cut -d: -f2)
 
 if [ -z "$wifi_conn" ] && [ -z "$eth_conn" ]; then
-    warn "No active Wi-Fi or Ethernet connections found."
-    exit 0
+  warn "No active Wi-Fi or Ethernet connections found."
+  exit 0
 fi
 
 # =============================
 # Optimize Wi-Fi
 if [ -n "$wifi_conn" ]; then
-    section "Optimizing Wi-Fi: $wifi_conn ($wifi_dev)"
+  section "Optimizing Wi-Fi: $wifi_conn ($wifi_dev)"
 
-    if iw dev "$wifi_dev" set power_save off 2>/dev/null; then
-        success "Disabled Wi-Fi power saving for $wifi_dev"
-    else
-        warn "Failed to disable Wi-Fi power saving (may not be supported)"
+  if iw dev "$wifi_dev" set power_save off 2>/dev/null; then
+    success "Disabled Wi-Fi power saving for $wifi_dev"
+  else
+    warn "Failed to disable Wi-Fi power saving (may not be supported)"
   fi
 
   if lsmod | grep -q iwlwifi; then
-      CONF_FILE="/etc/modprobe.d/iwlwifi.conf"
-      if ! grep -q "power_save=0" "$CONF_FILE" 2>/dev/null; then
-          echo "options iwlwifi power_save=0" >> "$CONF_FILE"
-          success "Permanent Wi-Fi power save disabled in $CONF_FILE"
-      else
-          warn "Wi-Fi power save already disabled in $CONF_FILE"
+    CONF_FILE="/etc/modprobe.d/iwlwifi.conf"
+    if ! grep -q "power_save=0" "$CONF_FILE" 2>/dev/null; then
+      echo "options iwlwifi power_save=0" >>"$CONF_FILE"
+      success "Permanent Wi-Fi power save disabled in $CONF_FILE"
+    else
+      warn "Wi-Fi power save already disabled in $CONF_FILE"
     fi
   fi
 
@@ -112,23 +144,23 @@ fi
 # =============================
 # Optimize Ethernet
 if [ -n "$eth_conn" ]; then
-    section "Optimizing Ethernet: $eth_conn ($eth_dev)"
-    nmcli connection modify "$eth_conn" ipv4.dns "$DNS4"
-    nmcli connection modify "$eth_conn" ipv6.dns "$DNS6"
-    success "Applied $NAME DNS for Ethernet"
+  section "Optimizing Ethernet: $eth_conn ($eth_dev)"
+  nmcli connection modify "$eth_conn" ipv4.dns "$DNS4"
+  nmcli connection modify "$eth_conn" ipv6.dns "$DNS6"
+  success "Applied $NAME DNS for Ethernet"
 fi
 
 # =============================
 # Restart network manager
 section "Restarting Network Service"
 if systemctl is-active --quiet NetworkManager; then
-    systemctl restart NetworkManager && success "NetworkManager restarted"
+  systemctl restart NetworkManager && success "NetworkManager restarted"
 elif systemctl is-active --quiet wicked; then
-    systemctl restart wicked && success "Wicked restarted"
+  systemctl restart wicked && success "Wicked restarted"
 elif systemctl is-active --quiet systemd-networkd; then
-    systemctl restart systemd-networkd && success "systemd-networkd restarted"
+  systemctl restart systemd-networkd && success "systemd-networkd restarted"
 else
-    warn "Unknown network service manager, skipping restart"
+  warn "Unknown network service manager, skipping restart"
 fi
 
 sleep 3
@@ -140,15 +172,15 @@ sleep 3
 # Flush DNS caches (multi-distro)
 section "Flushing DNS cache"
 if systemctl is-active --quiet systemd-resolved; then
-    resolvectl flush-caches && success "Flushed systemd-resolved cache"
+  resolvectl flush-caches && success "Flushed systemd-resolved cache"
 elif systemctl is-active --quiet dnsmasq; then
-    systemctl restart dnsmasq && success "Restarted dnsmasq (cache flushed)"
+  systemctl restart dnsmasq && success "Restarted dnsmasq (cache flushed)"
 elif systemctl is-active --quiet nscd; then
-    systemctl restart nscd && success "Restarted nscd (cache flushed)"
+  systemctl restart nscd && success "Restarted nscd (cache flushed)"
 elif systemctl is-active --quiet unbound; then
-    systemctl restart unbound && success "Restarted unbound (cache flushed)"
+  systemctl restart unbound && success "Restarted unbound (cache flushed)"
 else
-    warn "No DNS caching service detected (nothing to flush)"
+  warn "No DNS caching service detected (nothing to flush)"
 fi
 
 # =============================
