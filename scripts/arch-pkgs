@@ -188,7 +188,7 @@ HYPR_PKGS=(
     swww
     wlogout
     wl-clipboard
-    wlroots
+    wlroots0.19
     xwaylandvideobridge
     xwayland-run
     networkmanager
