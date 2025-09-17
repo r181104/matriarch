@@ -2,8 +2,6 @@
 
 sudo pacman --noconfirm -S --needed neovim git nodejs rustup pyright lua-language-server stylua black isort prettier gofumpt goimports rustfmt shfmt clang sqlfluff yamlfmt prettierd google-java-format
 
-mkdir ~/.config
-
 mv ~/.config/nvim ~/.config/nvim.bak
 
 git clone https://github.com/r181104/neovim ~/.config/nvim
