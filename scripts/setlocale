@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+echo "🔍 Checking locale availability..."
+if ! grep -q "^en_IN.UTF-8" /etc/locale.gen; then
+  echo "⚙️ Enabling en_IN.UTF-8 in /etc/locale.gen"
+  echo "en_IN.UTF-8 UTF-8" | sudo tee -a /etc/locale.gen
+fi
+
+echo "🛠 Generating locales..."
+sudo locale-gen
+
+echo "⚙️ Setting system-wide locale in /etc/locale.conf..."
+sudo bash -c 'cat > /etc/locale.conf <<EOF
+LANG=en_IN.UTF-8
+LC_ALL=en_IN.UTF-8
+EOF'
+
+echo "⚙️ Forcing locale for all shells via /etc/profile.d/locale.sh..."
+sudo bash -c 'cat > /etc/profile.d/locale.sh <<EOF
+export LANG=en_IN.UTF-8
+export LC_ALL=en_IN.UTF-8
+EOF'
+
+echo "✅ Locale configuration applied!"
+echo "👉 Please log out & back in (or reboot) to apply everywhere."
+echo "💡 Verify with: locale"
