@@ -1,0 +1,76 @@
+```roff
+.TH PACMAN-OPTIMIZE 1 "September 2025" "1.0" "Custom Manual"
+.SH NAME
+pacman-optimize \- Arch Linux pacman.conf optimization guide
+.SH SYNOPSIS
+.B man pacman-optimize
+.SH DESCRIPTION
+This guide provides useful tweaks for improving pacman's performance, control,
+and usability on Arch Linux.
+
+.SH SECTIONS
+.TP
+.B ⚡ Faster Downloads: Parallel Downloads
+Enable multiple simultaneous downloads by adding
+.B ParallelDownloads = N
+under [options]. Recommended: 3–6.
+
+.TP
+.B 🎨 Colorful Output
+Enable colored terminal output by adding
+.B Color
+under [options].
+
+.TP
+.B 💾 Auto-clean Old Packages
+Use
+.B CleanMethod = KeepCurrent
+or
+.B CleanMethod = KeepInstalled
+to manage old packages. Alternatively run
+.B pacman -Sc
+manually.
+
+.TP
+.B 🛑 Hold Back Problematic Updates
+Prevent updates by adding
+.B IgnorePkg = package1 package2
+to pacman.conf.
+
+.TP
+.B 📦 Skip Entire Package Groups
+Ignore package groups using
+.B IgnoreGroup = groupname
+
+.TP
+.B ⏳ Disable Download Timeouts
+Add
+.B DisableDownloadTimeout
+to prevent cancellation of slow downloads.
+
+.TP
+.B 🖥️ Enable Multilib
+Uncomment the [multilib] section and refresh databases with
+.B pacman -Sy
+
+.TP
+.B 🕹️ Pac-manimation
+Enable the Pac-Man progress animation with
+.B ILoveCandy
+
+.TP
+.B 🔍 Verify Changes
+Check for syntax errors with
+.B pacman-conf
+
+.TP
+.B 💡 Additional Tips
+Always back up
+.I /etc/pacman.conf
+before editing. Changes take effect immediately.
+
+.SH FILES
+.I /etc/pacman.conf
+
+.SH SEE ALSO
+pacman(8), pacman.conf(5)
