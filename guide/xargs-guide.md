@@ -243,15 +243,3 @@ echo "hello world" | xargs -t echo
 ```
 
 ➡️ Shows the expanded command before executing it.
-
----
-
-✨ Congrats! You now know everything important about `xargs`.
-It’s one of the most underrated tools in the Unix toolbox 🧰.
-
-```
-
----
-
-Would you like me to also make a **printable PDF version** of this guide, so you can keep it offline as a quick reference?
-```
