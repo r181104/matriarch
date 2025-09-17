@@ -1,11 +1,8 @@
-# ==============================
-#   1. Run only in interactive shell
-# ==============================
 if status is-interactive
 end
 
-# ==============================
-#   2. Core Environment Variables
+# NOTE: ==============================
+#   Core Environment Variables
 # ==============================
 set -gx LANG en_IN.UTF-8
 set -gx BROWSER "firefox-developer-edition"
@@ -13,33 +10,33 @@ set -gx TERM "alacritty"
 set -gx EDITOR "neovide"
 set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di=1;34:fi=0"
-# set -gx LS_COLORS "di 1;3;34:fi=0"
+# NOTE: set -gx LS_COLORS "di 1;3;34:fi=0"
 
-# Java environment (auto-detect JDK)
+# NOTE: Java environment (auto-detect JDK)
 set -Ux JAVA_HOME (archlinux-java get | string replace 'java-' '/usr/lib/jvm/java-')
 set -Ux PATH $JAVA_HOME/bin $PATH
 
-# ==============================
-#   3. Auth & Agents
+# NOTE: ==============================
+#   Auth & Agents
 # ==============================
 set -Ux SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
-# ==============================
-#   4. Prompt (Starship)
+# NOTE: ==============================
+#   Prompt (Starship)
 # ==============================
 if command -q starship
     starship init fish | source
 end
 
-# ==============================
-#   5. Key Bindings
+# NOTE: ==============================
+#   Key Bindings
 # ==============================
 set -g fish_key_bindings fish_default_key_bindings
 bind \en down-or-search
 bind \ep up-or-search
 
-# ==============================
-#   6. Package Manager aliases
+# NOTE: ==============================
+#   Package Manager aliases
 # ==============================
 if type -q paru
     alias i 'paru --noconfirm --needed -S'
@@ -67,10 +64,10 @@ else
     alias clear-cache 'sudo pacman -Sc'
 end
 
+# NOTE: ==============================
+#   General aliases
 # ==============================
-#   7. General aliases
-# ==============================
-# Navigation
+# NOTE: Navigation
 alias home 'cd ~'
 alias .. 'cd ..'
 alias ... 'cd ../..'
@@ -78,7 +75,7 @@ alias .... 'cd ../../..'
 alias ..... 'cd ../../../..'
 alias c 'clear'
 
-# Editors
+# NOTE: Editors
 alias n 'nvim'
 alias nd 'neovide'
 alias sn 'sudo nvim'
@@ -86,12 +83,12 @@ alias snd 'sudo neovide'
 alias v 'vim'
 alias sv 'sudo vim'
 
-# Tmux
+# NOTE: Tmux
 alias tns 'tmux new -s'
 alias ta 'tmux attach'
 alias td 'tmux detach'
 
-# System helpers
+# NOTE: System helpers
 alias ps 'ps auxf'
 alias ping 'ping -c 5'
 alias less 'less -R'
@@ -102,31 +99,31 @@ alias ffind "fzf --preview='bat {}' --bind 'enter:execute(nvim {})'"
 alias f "find . | grep "
 alias openports 'netstat -tulanp'
 
-# System control
+# NOTE: System control
 alias reboot 'systemctl reboot'
 alias shutdown 'shutdown now'
 alias logout 'loginctl kill-session $XDG_SESSION_ID'
 alias restart-dm 'sudo systemctl restart display-manager'
 
-# Custom scripts
+# NOTE: Custom scripts
 alias rebel '~/matriarch/scripts/rebuild'
 alias uprebel '~/matriarch/scripts/up-rebuild'
 alias cwifi '~/matriarch/scripts/cwifi'
 alias op-net '~/matriarch/scripts/optimize-network'
 
-# File operations
+# NOTE: File operations
 alias cp 'cp -i'
 alias mv 'mv -i'
 alias mkdir 'mkdir -p'
 alias rmd '/bin/rm -rfv'
 
-# Disk usage
+# NOTE: Disk usage
 alias diskspace "du -S | sort -n -r | less"
 alias folders 'du -h --max-depth=1'
 alias mountedinfo 'df -hT'
 alias duf 'duf -hide special'
 
-# Permissions & security
+# NOTE: Permissions & security
 alias mx 'chmod a+x'
 alias 000 'chmod -R 000'
 alias 644 'chmod -R 644'
@@ -136,37 +133,37 @@ alias 777 'chmod -R 777'
 alias sha1 'openssl sha1'
 alias chown 'sudo chown -R $USER'
 
-# Dev & tools
+# NOTE: Dev & tools
 alias grep 'grep --color=auto'
 alias rg 'rg --color=auto'
 alias bright 'brightnessctl set'
 
-# Git helpers
+# NOTE: Git helpers
 alias gp 'git push'
 
-# Programming helpers
+# NOTE: Programming helpers
 alias pyr 'python'
 
-# Utilities
+# NOTE: Utilities
 alias kssh "kitty +kitten ssh"
 alias web 'cd /var/www/html'
 alias da 'date "+%Y-%m-%d %A %T %Z"'
 alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l'
 alias anime '~/matriarch/scripts/ani-cli'
 
-# LLMS
+# NOTE: LLMS
 alias llama-chat "llama-simple-chat -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ngl 12"
 alias llama-server "llama-server -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ngl 12"
 
-# Terminal based browser
+# NOTE: Terminal based browser
 alias tb "BROWSER=w3m ddgr"
 
-# Python Server
+# NOTE: Python Server
 alias phs "python -m http.server"
 alias phsd "python -m http.server --directory"
 
-# ==============================
-#   8. File Listing (eza / ls)
+# NOTE: ==============================
+#   File Listing (eza / ls)
 # ==============================
 if type -q eza
     alias ls    'eza -a --icons'
@@ -200,6 +197,9 @@ else
     alias tree  'ls -R --color=auto'
 end
 
+# NOTE: ==============================
+#   FZF
+# ==============================
 bind \er fzf_nvim
 bind \ed fzf-cd-widget
 bind \et fzf-file-widget
