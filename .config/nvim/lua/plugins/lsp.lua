@@ -26,23 +26,18 @@ return {
 					},
 				},
 			},
-			filetypes = { "lua" },
 			root_dir = function(fname)
 				return vim.lsp.util.root_pattern("lua_ls.toml", ".git")(fname) or vim.loop.cwd()
 			end,
 		})
 		-- NOTE: Python
-		vim.lsp.config("pyright", {
-			filetypes = { "python" },
-		})
+		vim.lsp.config("pyright", {})
 		-- NOTE: Java (jdtls)
 		vim.lsp.config("jdtls", {
-			filetypes = { "java" },
 			cmd = { "jdtls" },
 		})
 		-- NOTE: Rust
 		vim.lsp.config("rust_analyzer", {
-			filetypes = { "rust" },
 			settings = {
 				["rust-analyzer"] = {
 					cargo = { allFeatures = true },
@@ -51,13 +46,9 @@ return {
 			},
 		})
 		-- NOTE: TypeScript / JS via vtsls
-		vim.lsp.config("vtsls", {
-			filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-		})
+		vim.lsp.config("vtsls", {})
 		-- NOTE: Tailwind CSS
-		vim.lsp.config("tailwindcss", {
-			filetypes = { "html", "css", "javascript", "typescript", "typescriptreact", "svelte", "vue" },
-		})
+		vim.lsp.config("tailwindcss", {})
 		-- NOTE: Finally, enable all those servers
 		vim.lsp.enable({
 			"lua_ls",

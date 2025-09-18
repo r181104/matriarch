@@ -1,6 +1,6 @@
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		require("lazy").update({ show = false }) -- `show = true` if you want to see update UI
+		require("lazy").update({ show = false })
 	end,
 })
 
