@@ -2,43 +2,70 @@ return {
 	"neovim/nvim-lspconfig",
 	config = function()
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		local ok, blink_cmp = pcall(require, "blink.cmp")
-		if ok then
+		local has_blink, blink_cmp = pcall(require, "blink.cmp")
+		if has_blink then
 			capabilities = blink_cmp.get_lsp_capabilities(capabilities)
 		end
 
-		local function setup(server, opts)
-			opts = opts or {}
-			opts.capabilities = capabilities
-			opts.on_attach = on_attach
+		local function on_attach(client, bufnr) end
 
-			vim.lsp.config[server] = opts
-
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "*",
-				callback = function(ev)
-					local bufnr = ev.buf
-					local ft = vim.bo[bufnr].filetype
-					local config = vim.lsp.config[server]
-					if vim.tbl_contains(config.filetypes or {}, ft) then
-						vim.lsp.start(config, { bufnr = bufnr })
-					end
-				end,
-			})
-		end
-
-		setup("lua_ls", {
+		vim.lsp.config("*", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+			root_markers = { ".git", "package.json", "pyproject.toml" },
+		})
+		-- NOTE: Lua
+		vim.lsp.config("lua_ls", {
 			settings = {
 				Lua = {
-					diagnostics = { globals = { "vim" } },
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						checkThirdParty = false,
+					},
+				},
+			},
+			filetypes = { "lua" },
+			root_dir = function(fname)
+				return vim.lsp.util.root_pattern("lua_ls.toml", ".git")(fname) or vim.loop.cwd()
+			end,
+		})
+		-- NOTE: Python
+		vim.lsp.config("pyright", {
+			filetypes = { "python" },
+		})
+		-- NOTE: Java (jdtls)
+		vim.lsp.config("jdtls", {
+			filetypes = { "java" },
+			cmd = { "jdtls" },
+		})
+		-- NOTE: Rust
+		vim.lsp.config("rust_analyzer", {
+			filetypes = { "rust" },
+			settings = {
+				["rust-analyzer"] = {
+					cargo = { allFeatures = true },
+					checkOnSave = { command = "clippy" },
 				},
 			},
 		})
-
-		setup("pyright")
-		setup("jdtls")
-		setup("rust_analyzer")
-		setup("vtsls")
-		setup("tailwindcss")
+		-- NOTE: TypeScript / JS via vtsls
+		vim.lsp.config("vtsls", {
+			filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+		})
+		-- NOTE: Tailwind CSS
+		vim.lsp.config("tailwindcss", {
+			filetypes = { "html", "css", "javascript", "typescript", "typescriptreact", "svelte", "vue" },
+		})
+		-- NOTE: Finally, enable all those servers
+		vim.lsp.enable({
+			"lua_ls",
+			"pyright",
+			"jdtls",
+			"rust_analyzer",
+			"vtsls",
+			"tailwindcss",
+		})
 	end,
 }
