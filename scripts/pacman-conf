@@ -20,7 +20,7 @@ Color
 ILoveCandy
 CleanMethod = KeepCurrent
 IgnorePkg = linux firefox
-HoldPkg = pacman glibc
+HoldPkg = pacman glibc linux-zen linux-zen-headers dracut kernel-install-for-dracut eos-dracut
 Architecture = auto
 CheckSpace
 ParallelDownloads = 8
