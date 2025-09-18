@@ -3,7 +3,7 @@
 set -euo pipefail
 
 echo ">>> Installing TLP..."
-sudo pacman -S --noconfirm tlp tlp-rdw
+sudo pacman -S --needed --noconfirm tlp tlp-rdw
 
 echo ">>> Enabling TLP service..."
 sudo systemctl enable --now tlp.service
