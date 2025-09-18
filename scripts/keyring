@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-SSH_KEY="$USER_HOME/.ssh/id_rsa"
+SSH_KEY="~/.ssh/id_rsa"
 if [[ -f "$SSH_KEY" ]]; then
     echo "Adding SSH key..."
     ssh-add "$SSH_KEY" || true
