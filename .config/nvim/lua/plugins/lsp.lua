@@ -20,8 +20,6 @@ return {
 					local bufnr = ev.buf
 					local ft = vim.bo[bufnr].filetype
 					local config = vim.lsp.config[server]
-
-					-- check if this server supports the filetype
 					if vim.tbl_contains(config.filetypes or {}, ft) then
 						vim.lsp.start(config, { bufnr = bufnr })
 					end
@@ -35,13 +33,12 @@ return {
 					diagnostics = { globals = { "vim" } },
 				},
 			},
-			filetypes = { "lua" },
 		})
 
-		setup("pyright", { filetypes = { "python" } })
-		setup("jdtls", { filetypes = { "java" } })
-		setup("rust_analyzer", { filetypes = { "rust" } })
-		setup("vtsls", { filetypes = { "javascript", "typescript" } })
-		setup("tailwindcss", { filetypes = { "html", "css", "javascript", "typescript" } })
+		setup("pyright")
+		setup("jdtls")
+		setup("rust_analyzer")
+		setup("vtsls")
+		setup("tailwindcss")
 	end,
 }
