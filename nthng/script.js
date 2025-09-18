@@ -14,7 +14,7 @@ let links = [
   { name: "Perplexity", url: "https://www.perplexity.ai" },
   { name: "ChatGpt", url: "https://www.chatgpt.com" },
   { name: "Chess", url: "https://www.chess.com" },
-  { name: "Anime", url: "https://www.anicrush.to/home" },
+  { name: "Anime", url: "https://all-wish.me/home" },
   { name: "GitHub", url: "https://github.com" },
   { name: "Gmail", url: "https://gmail.com" },
   { name: "Reddit", url: "https://reddit.com" },
