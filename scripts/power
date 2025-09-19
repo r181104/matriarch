@@ -21,8 +21,8 @@ echo ">>> Restarting TLP..."
 sudo systemctl restart tlp.service
 
 echo ">>> Verifying TLP setup..."
-tlp-stat -s || true
-tlp-stat -b || true
-tlp-stat -p || true
+sudo tlp-stat -s || true
+sudo tlp-stat -b || true
+sudo tlp-stat -p || true
 
 echo ">>> Done! TLP is running in balanced mode with charging thresholds set (80–95%)."
