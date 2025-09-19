@@ -6,7 +6,7 @@ plugins = [
 
 # Configure scratchpads
 [scratchpads.term]
-command = "alacritty --class=scratchterm"
+command = "kitty --class=scratchterm"
 animation = "fromTop"
 size = "60% 80%"
 lazy = true
