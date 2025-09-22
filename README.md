@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="png/logo.png" alt="Mir Logo" width="600" height="300" />
+  <img src="pictrs/logo.png" alt="Mir Logo" width="600" height="300" />
   <h1>Mir</h1>
   <p>My personal collection of dotfiles for Arch Linux, curated for a sleek and powerful Hyprland experience.</p>
 </div>
