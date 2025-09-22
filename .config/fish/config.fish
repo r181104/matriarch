@@ -106,10 +106,10 @@ alias logout 'loginctl kill-session $XDG_SESSION_ID'
 alias restart-dm 'sudo systemctl restart display-manager'
 
 # NOTE: Custom scripts
-alias rebel '~/matriarch/scripts/rebuild'
-alias uprebel '~/matriarch/scripts/up-rebuild'
-alias cwifi '~/matriarch/scripts/cwifi'
-alias op-net '~/matriarch/scripts/optimize-network'
+alias rebel '~/mir/scripts/rebuild'
+alias uprebel '~/mir/scripts/up-rebuild'
+alias cwifi '~/mir/scripts/cwifi'
+alias op-net '~/mir/scripts/optimize-network'
 
 # NOTE: File operations
 alias cp 'cp -i'
@@ -149,7 +149,7 @@ alias kssh "kitty +kitten ssh"
 alias web 'cd /var/www/html'
 alias da 'date "+%Y-%m-%d %A %T %Z"'
 alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l'
-alias anime '~/matriarch/scripts/ani-cli'
+alias anime '~/mir/scripts/ani-cli'
 
 # NOTE: LLMS
 alias llama-chat "llama-simple-chat -m ~/LLMS/qwen2.5-0.5b-instruct-q4_k_m.gguf -ngl 12"
