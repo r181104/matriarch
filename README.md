@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="png/logo.png" alt="Matriarch Logo" width="600" height="300" />
-  <h1>Matriarch</h1>
+  <img src="png/logo.png" alt="Mir Logo" width="600" height="300" />
+  <h1>Mir</h1>
   <p>My personal collection of dotfiles for Arch Linux, curated for a sleek and powerful Hyprland experience.</p>
 </div>
 
@@ -26,7 +26,7 @@ This repository houses my personal dotfiles for my Arch Linux setup, centered ar
 These dotfiles are managed with `stow`. To install them, clone this repository and use `stow` to create the necessary symlinks:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/r181104/matriarch/master/scripts/install | sh
+curl -fsSL https://raw.githubusercontent.com/r181104/mir/master/scripts/install | sh
 ```
 
 ## ⚙️ Configuration Details
