@@ -198,6 +198,7 @@ QTILE_PKGS=(
     feh
     picom
     dunst
+    flameshot
     bemenu
     lxappearance
     xclip

@@ -12,8 +12,9 @@ picom &
 xset s off
 xset s noblank
 xset -dpms
-# dunst &
+dunst &
 nm-applet &
 blueman-applet &
-# flameshot &
+flameshot &
 xset r rate 220 40
+~/.fehbg
