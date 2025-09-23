@@ -7,8 +7,8 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 # --- MODIFIERS AND TERMINAL ---
-mod = "mod4"  # Super key
-mmod = "mod1"  # Alt key
+mod = "mod4"
+mmod = "mod1"
 mmodd = "control"
 menu = "bemenu-run --fn 'MesloLGS Nerd Font 20' -l 8 -i --nb '#1d1f21cc' --nf '#c5c8c6' --sb '#81a2becc' --sf '#sffffff'"
 terminal = "alacritty"
@@ -143,7 +143,7 @@ layouts = [
 
 # --- WIDGET DEFAULTS ---
 widget_defaults = {
-    "font": "JetBrainsMono NF Bold",
+    "font": "MesloLGS Nerd Font",
     "fontsize": 15,
     "padding": 10,
     "foreground": colors[7],
@@ -154,7 +154,7 @@ extension_defaults = widget_defaults.copy()
 # --- BAR CONFIGURATION ---
 def create_bar_widgets():
     return [
-        widget.CurrentLayoutIcon(scale=0.7, foreground=colors[3], padding=12),
+        widget.CurrentLayout(foreground=colors[3], padding=12),
         widget.Spacer(length=12),
         widget.GroupBox(
             highlight_method="block",
@@ -166,6 +166,7 @@ def create_bar_widgets():
             rounded=True,
             padding=12,
             margin_x=6,
+            font="MesloLGS Nerd Font",
         ),
         widget.Spacer(length=12),
         widget.Prompt(padding=12),
@@ -210,7 +211,7 @@ def create_bar_widgets():
             low_foreground=colors[1],
             foreground=colors[9],
             padding=10,
-            font="JetBrainsMono Nerd Font",
+            font="MesloLGS Nerd Font",
             fontsize=16,
             show_short_text=False,
             update_interval=10,
