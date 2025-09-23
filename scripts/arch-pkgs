@@ -78,7 +78,6 @@ BASE_PKGS=(
 TERM_PKGS=(
     alacritty
     kitty
-    ghostty
 )
 
 # NOTE: SOME PACKGES FOR PROGRAMMING LANGUAGES I LIKE

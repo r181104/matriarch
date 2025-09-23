@@ -10,7 +10,7 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 mmod = "mod1"
 mmodd = "control"
-menu = "bemenu-run --fn 'MesloLGS Nerd Font 20' -l 8 -i --nb '#2E3440' --nf '#D8DEE9' --sb '#5E81AC' --sf '#ECEFF4'"
+menu = "bemenu-run --fn 'MesloLGS Nerd Font 20' -l 8"
 terminal = "alacritty"
 term = guess_terminal()
 filemanager = "pcmanfm"
@@ -99,6 +99,7 @@ keys = [
     Key([mod], "f", lazy.window.toggle_fullscreen()),
     Key([mod], "t", lazy.window.toggle_floating()),
     Key([mod], "r", lazy.reload_config()),
+    Key([mod, "shift"], "r", lazy.restart()),
     Key([mmod, "control"], "q", lazy.shutdown()),
     Key([mod], "space", lazy.spawn(menu)),
 ]
