@@ -16,5 +16,5 @@ dunst &
 nm-applet &
 blueman-applet &
 flameshot &
-xset r rate 220 40
+xset r rate 200 50
 ~/.fehbg
