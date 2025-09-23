@@ -15,70 +15,77 @@ terminal = "alacritty"
 term = guess_terminal()
 filemanager = "thunar"
 theme = os.path.expanduser("~/snix/scripts/wset-qtile")
-# browser = "brave --gtk-version=3 --disable-extensions --disable-background-networking --disable-sync --disable-component-update --disable-default-apps --disable-translate --disable-notifications --no-first-run --enable-features=FastTabUnloading "
 browser = "firefox-developers-edition"
 
-# --- LOAD PYWAL COLORS ---
-colors = []
-cache = os.path.expanduser("~/.cache/wal/colors")
-with open(cache, "r") as file:
-    for i in range(16):
-        colors.append(file.readline().strip())
+# --- NORD COLOR PALETTE ---
+nord = {
+    "nord0":  "#2E3440",
+    "nord1":  "#3B4252",
+    "nord2":  "#434C5E",
+    "nord3":  "#4C566A",
+    "nord4":  "#D8DEE9",
+    "nord5":  "#E5E9F0",
+    "nord6":  "#ECEFF4",
+    "nord7":  "#8FBCBB",
+    "nord8":  "#88C0D0",
+    "nord9":  "#81A1C1",
+    "nord10": "#5E81AC",
+    "nord11": "#BF616A",
+    "nord12": "#D08770",
+    "nord13": "#EBCB8B",
+    "nord14": "#A3BE8C",
+    "nord15": "#B48EAD",
+}
+
+colors = [
+    nord["nord0"],  # background
+    nord["nord11"], # red
+    nord["nord14"], # green
+    nord["nord13"], # yellow
+    nord["nord9"],  # blue
+    nord["nord10"], # blue-alt
+    nord["nord8"],  # cyan
+    nord["nord4"],  # fg-light
+    nord["nord3"],  # gray
+    nord["nord6"],  # fg
+]
 
 # --- KEYBINDINGS ---
 keys = [
-    # Custom keybinds
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
     Key([mmodd], "space", lazy.spawn(theme), desc="Launch theme changer"),
     Key([mod], "e", lazy.spawn(filemanager), desc="Launch file manager"),
-    # Workspace navigation
     Key([mod], "j", lazy.screen.prev_group()),
     Key([mod], "k", lazy.screen.next_group()),
-    # Window management
     Key([mod, "control"], "w", lazy.window.toggle_maximize()),
     Key([mod, "control"], "s", lazy.window.toggle_minimize()),
     Key([mmod, "control"], "l", lazy.spawn("betterlockscreen -l")),
-    # Media controls
-    Key(
-        [],
-        "XF86AudioRaiseVolume",
-        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%"),
-    ),
-    Key(
-        [],
-        "XF86AudioLowerVolume",
-        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"),
-    ),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
     Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
     Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
-    # System controls
     Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +10%")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 10%-")),
     Key([], "XF86AudioMedia", lazy.spawn("pavucontrol")),
-    # Any terminal that is installed
     Key([mod, "shift"], "Return", lazy.spawn(term), desc="Launch terminal"),
-    # Layout navigation
     Key([mmod], "h", lazy.layout.left()),
     Key([mmod], "j", lazy.layout.down()),
     Key([mmod], "k", lazy.layout.up()),
     Key([mmod], "l", lazy.layout.right()),
     Key([mod, "shift"], "space", lazy.layout.next()),
-    # Window movement
     Key([mod, "shift"], "h", lazy.layout.shuffle_left()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
     Key([mod, "shift"], "l", lazy.layout.shuffle_right()),
-    # Window resizing
     Key([mod, "control"], "h", lazy.layout.grow_left()),
     Key([mod, "control"], "j", lazy.layout.grow_down()),
     Key([mod, "control"], "k", lazy.layout.grow_up()),
     Key([mod, "control"], "l", lazy.layout.grow_right()),
     Key([mod], "n", lazy.layout.normalize()),
     Key([mod, "control"], "Return", lazy.layout.toggle_split()),
-    # System commands
     Key([mod, "shift"], "Return", lazy.spawn(guess_terminal())),
     Key([mod], "Tab", lazy.next_layout()),
     Key([mod], "q", lazy.window.kill()),
@@ -86,11 +93,9 @@ keys = [
     Key([mod], "t", lazy.window.toggle_floating()),
     Key([mod], "r", lazy.reload_config()),
     Key([mmod, "control"], "q", lazy.shutdown()),
-    # Key([mod], "space", lazy.spawncmd()),
     Key([mod], "space", lazy.spawn(menu)),
 ]
 
-# VT switching
 for vt in range(1, 8):
     keys.append(
         Key(
@@ -101,21 +106,20 @@ for vt in range(1, 8):
         )
     )
 
-# --- GROUPS WITH NERD FONT ICONS ---
+# --- GROUPS ---
 groups = [
-    Group("1", label=""),  # Terminal
-    Group("2", label=""),  # Browser
-    Group("3", label=""),  # Code
-    Group("4", label=""),  # Tools
-    Group("5", label=""),  # Files
-    Group("6", label=""),  # Media
-    Group("7", label=""),  # Chat
-    Group("8", label=""),  # Containers
-    Group("9", label=""),  # Docs
-    Group("0", label=""),  # Settings
+    Group("1", label=""),
+    Group("2", label=""),
+    Group("3", label=""),
+    Group("4", label=""),
+    Group("5", label=""),
+    Group("6", label=""),
+    Group("7", label=""),
+    Group("8", label=""),
+    Group("9", label=""),
+    Group("0", label=""),
 ]
 
-# Group keybindings
 for i in groups:
     keys.extend(
         [
@@ -124,7 +128,7 @@ for i in groups:
         ]
     )
 
-# --- LAYOUTS WITH PYWAL COLORS ---
+# --- LAYOUTS ---
 layout_common = {
     "border_focus": colors[5],
     "border_normal": colors[8],
@@ -137,23 +141,21 @@ layouts = [
     layout.Columns(**layout_common),
 ]
 
-# --- WIDGET DEFAULTS (LARGER FONT & SPACING) ---
+# --- WIDGET DEFAULTS ---
 widget_defaults = {
     "font": "JetBrainsMono NF Bold",
-    "fontsize": 15,  # Increased font size
-    "padding": 10,  # Increased padding
+    "fontsize": 15,
+    "padding": 10,
     "foreground": colors[7],
     "background": colors[0],
 }
 extension_defaults = widget_defaults.copy()
 
-
-# --- BAR CONFIGURATION (MORE SPACING) ---
+# --- BAR CONFIGURATION ---
 def create_bar_widgets():
     return [
-        # Left side with increased spacing
         widget.CurrentLayoutIcon(scale=0.7, foreground=colors[3], padding=12),
-        widget.Spacer(length=12),  # Increased spacer
+        widget.Spacer(length=12),
         widget.GroupBox(
             highlight_method="block",
             block_highlight_text_color=colors[7],
@@ -162,16 +164,14 @@ def create_bar_widgets():
             this_current_screen_border=colors[5],
             urgent_text=colors[1],
             rounded=True,
-            padding=12,  # Increased padding
-            margin_x=6,  # Increased margin
+            padding=12,
+            margin_x=6,
         ),
         widget.Spacer(length=12),
         widget.Prompt(padding=12),
-        # Middle section
         widget.Spacer(),
         widget.WindowName(max_chars=60, foreground=colors[6], padding=12),
         widget.Spacer(),
-        # Right side with generous spacing
         widget.Systray(icon_size=20, padding=12),
         widget.Spacer(length=12),
         widget.CheckUpdates(
@@ -220,13 +220,12 @@ def create_bar_widgets():
         widget.Spacer(length=12),
     ]
 
-
 screens = [
     Screen(
         bottom=bar.Bar(
             create_bar_widgets(),
-            36,  # Increased bar height to accommodate larger text and spacing
-            margin=[8, 12, 4, 12],  # Increased side margins
+            36,
+            margin=[8, 12, 4, 12],
             background=colors[0],
             opacity=0.95,
         ),
@@ -235,15 +234,8 @@ screens = [
 
 # --- MOUSE CONFIGURATION ---
 mouse = [
-    Drag(
-        [mod],
-        "Button1",
-        lazy.window.set_position_floating(),
-        start=lazy.window.get_position(),
-    ),
-    Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
-    ),
+    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
@@ -271,8 +263,7 @@ floating_layout = layout.Floating(
     ]
 )
 
-
 # --- AUTOSTART HOOK ---
 @hook.subscribe.startup_once
 def autostart():
-    subprocess.Popen([os.path.expanduser("~/sqtile/scripts/autostart")])
+    subprocess.Popen([os.path.expanduser("~/.config/qtile/autostart")])
