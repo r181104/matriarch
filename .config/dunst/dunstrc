@@ -1,0 +1,79 @@
+[global]
+  # Position & Geometry
+  monitor = 0
+  follow = mouse
+  origin = top-right
+  offset = 15x15
+  width = 350
+  height = 300
+  progress_bar = true
+  progress_bar_height = 8
+  progress_bar_frame_width = 1
+  progress_bar_min_width = 120
+  progress_bar_max_width = 280
+
+  # Appearance
+  font = MesloLGS Nerd Font 12
+  line_height = 3
+  padding = 10
+  horizontal_padding = 12
+  frame_width = 2
+  separator_height = 2
+  separator_color = "frame"
+  
+  # Icons
+  icon_theme = Papirus-Dark
+  icon_theme_size = 48
+
+  # Mouse actions
+  mouse_middle_click = close_current
+  mouse_right_click = close_current
+  mouse_left_click = do_action, close_current
+
+  # Behavior
+  idle_threshold = 120
+  ignore_dbusclose = false
+  stack_duplicates = true
+  show_indicators = true
+  sticky_history = true
+  history_length = 20
+  browser = xdg-open
+
+  # Colors (Nord Palette)
+  background = "#2E3440"   # nord0
+  foreground = "#D8DEE9"   # nord4
+  frame_color = "#88C0D0"  # nord8
+  timeout = 8
+
+[urgency_low]
+  background = "#2E3440"   # nord0
+  foreground = "#A3BE8C"   # nord14
+  frame_color = "#A3BE8C"
+  timeout = 5
+
+[urgency_normal]
+  background = "#2E3440"   # nord0
+  foreground = "#EBCB8B"   # nord13
+  frame_color = "#EBCB8B"
+  timeout = 8
+
+[urgency_critical]
+  background = "#2E3440"   # nord0
+  foreground = "#BF616A"   # nord11
+  frame_color = "#BF616A"
+  timeout = 0
+
+# Advanced Features
+[experimental]
+  per_monitor_dpi = false
+
+# Application-specific rules
+[discord]
+  appname = Discord
+  urgency = low
+
+[spotify]
+  appname = Spotify
+  background = "#434C5E"   # nord1
+  frame_color = "#81A1C1"  # nord9
+  timeout = 5

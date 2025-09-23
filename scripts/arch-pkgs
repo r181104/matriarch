@@ -43,6 +43,7 @@ GAMING_PKGS=(
 BASE_PKGS=(
     vim
     neovim
+    neovide
     git
     git-delta
     btop
@@ -197,6 +198,7 @@ QTILE_PKGS=(
     playerctl
     feh
     picom
+    dunst
     bemenu
     lxappearance
     xclip

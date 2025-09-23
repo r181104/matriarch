@@ -148,7 +148,6 @@ alias pyr 'python'
 alias kssh "kitty +kitten ssh"
 alias web 'cd /var/www/html'
 alias da 'date "+%Y-%m-%d %A %T %Z"'
-alias random-lock 'betterlockscreen -u ~/Wallpapers/Pictures --fx blur -l'
 alias anime '~/mir/scripts/ani-cli'
 
 # NOTE: LLMS

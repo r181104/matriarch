@@ -10,7 +10,7 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 mmod = "mod1"
 mmodd = "control"
-menu = "bemenu-run --fn 'MesloLGS Nerd Font 20' -l 8 -i --nb '#1d1f21cc' --nf '#c5c8c6' --sb '#81a2becc' --sf '#sffffff'"
+menu = "bemenu-run --fn 'MesloLGS Nerd Font 20' -l 8 -i --nb '#2E3440' --nf '#D8DEE9' --sb '#5E81AC' --sf '#ECEFF4'"
 terminal = "alacritty"
 term = guess_terminal()
 filemanager = "pcmanfm"
@@ -19,16 +19,16 @@ browser = "firefox-developer-edition"
 
 # --- NORD COLOR PALETTE ---
 nord = {
-    "nord0":  "#2E3440",
-    "nord1":  "#3B4252",
-    "nord2":  "#434C5E",
-    "nord3":  "#4C566A",
-    "nord4":  "#D8DEE9",
-    "nord5":  "#E5E9F0",
-    "nord6":  "#ECEFF4",
-    "nord7":  "#8FBCBB",
-    "nord8":  "#88C0D0",
-    "nord9":  "#81A1C1",
+    "nord0": "#2E3440",
+    "nord1": "#3B4252",
+    "nord2": "#434C5E",
+    "nord3": "#4C566A",
+    "nord4": "#D8DEE9",
+    "nord5": "#E5E9F0",
+    "nord6": "#ECEFF4",
+    "nord7": "#8FBCBB",
+    "nord8": "#88C0D0",
+    "nord9": "#81A1C1",
     "nord10": "#5E81AC",
     "nord11": "#BF616A",
     "nord12": "#D08770",
@@ -39,11 +39,11 @@ nord = {
 
 colors = [
     nord["nord0"],  # background
-    nord["nord11"], # red
-    nord["nord14"], # green
-    nord["nord13"], # yellow
+    nord["nord11"],  # red
+    nord["nord14"],  # green
+    nord["nord13"],  # yellow
     nord["nord9"],  # blue
-    nord["nord10"], # blue-alt
+    nord["nord10"],  # blue-alt
     nord["nord8"],  # cyan
     nord["nord4"],  # fg-light
     nord["nord3"],  # gray
@@ -60,8 +60,16 @@ keys = [
     Key([mod], "k", lazy.screen.next_group()),
     Key([mod, "shift"], "f", lazy.window.toggle_maximize()),
     Key([mod], "h", lazy.window.toggle_minimize()),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%"),
+    ),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"),
+    ),
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
     Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
@@ -136,8 +144,8 @@ layout_common = {
 }
 
 layouts = [
-    layout.Tile(**layout_common),
     layout.Columns(**layout_common),
+    layout.Tile(**layout_common),
 ]
 
 # --- WIDGET DEFAULTS ---
@@ -149,6 +157,7 @@ widget_defaults = {
     "background": colors[0],
 }
 extension_defaults = widget_defaults.copy()
+
 
 # --- BAR CONFIGURATION ---
 def create_bar_widgets():
@@ -220,6 +229,7 @@ def create_bar_widgets():
         widget.Spacer(length=12),
     ]
 
+
 screens = [
     Screen(
         bottom=bar.Bar(
@@ -234,8 +244,15 @@ screens = [
 
 # --- MOUSE CONFIGURATION ---
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
@@ -262,6 +279,7 @@ floating_layout = layout.Floating(
         Match(title="pinentry"),
     ]
 )
+
 
 # --- AUTOSTART HOOK ---
 @hook.subscribe.startup_once
