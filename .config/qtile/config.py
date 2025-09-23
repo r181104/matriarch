@@ -13,9 +13,9 @@ mmodd = "control"
 menu = "bemenu-run --fn 'MesloLGS Nerd Font 20' -l 8 -i --nb '#1d1f21cc' --nf '#c5c8c6' --sb '#81a2becc' --sf '#sffffff'"
 terminal = "alacritty"
 term = guess_terminal()
-filemanager = "thunar"
+filemanager = "pcmanfm"
 theme = os.path.expanduser("~/snix/scripts/wset-qtile")
-browser = "firefox-developers-edition"
+browser = "firefox-developer-edition"
 
 # --- NORD COLOR PALETTE ---
 nord = {
@@ -58,9 +58,8 @@ keys = [
     Key([mod], "e", lazy.spawn(filemanager), desc="Launch file manager"),
     Key([mod], "j", lazy.screen.prev_group()),
     Key([mod], "k", lazy.screen.next_group()),
-    Key([mod, "control"], "w", lazy.window.toggle_maximize()),
-    Key([mod, "control"], "s", lazy.window.toggle_minimize()),
-    Key([mmod, "control"], "l", lazy.spawn("betterlockscreen -l")),
+    Key([mod, "shift"], "f", lazy.window.toggle_maximize()),
+    Key([mod], "h", lazy.window.toggle_minimize()),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
     Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),

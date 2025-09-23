@@ -192,6 +192,8 @@ QTILE_PKGS=(
     python-xcffib
     python-iwlib
     python-keyring
+    python-pytest
+    mypy
     playerctl
     feh
     picom
@@ -201,34 +203,6 @@ QTILE_PKGS=(
     xsel
     udisks2
     udiskie
-)
-
-# NOTE: PACKGES FOR HYPRLAND TO WORK WITH THE CONFIG I LIKE
-HYPR_PKGS=(
-    hyprland
-    hypridle
-    hyprsunset
-    hyprland-protocols
-    hyprland-qt-support
-    hyprland-qtutils
-    hyprlock
-    hyprpicker
-    hyprshot
-    pyprland
-    rofi-wayland
-    xdg-desktop-portal-hyprland
-    xdg-desktop-portal-wlr
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal
-    waybar
-    playerctl
-    swaync
-    swww
-    wlogout
-    wl-clipboard
-    wlroots0.19
-    xwaylandvideobridge
-    xwayland-run
 )
 
 # WARN: IF YOU ARE ON A NEW ARCH INSTALL HAVE NO DESKTOP AND WANT TO RICE A WINDOW MANAGER FROM SCRATCH THEN 
@@ -286,7 +260,6 @@ install_package_group "Pipewire packages" "${AUDIO[@]}"
 install_package_group "Pipewire packages" "${VIDEO[@]}"
 install_package_group "Bluetooth Packages" "${BLUETOOTH[@]}"
 install_package_group "Qtile packages" "${QTILE_PKGS[@]}"
-install_package_group "Hyprland packages" "${HYPR_PKGS[@]}"
 # install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
 
 echo "I HOPE THIS SCRIPT HELPED YOU WITH YOUR ARCH"
