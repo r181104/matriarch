@@ -61,6 +61,16 @@ BASE_PKGS=(
     stow
     eza
     bc
+    networkmanager
+    network-manager-applet
+    brightnessctl
+    pcmanfm
+    nwg-look
+    papirus-icon-theme
+    nordzy-hyprcursors
+    matugen
+    okular
+    tty-colorscheme
 )
 
 # NOTE: PACKAGES FOR TERMINAL
@@ -184,23 +194,12 @@ HYPR_PKGS=(
     waybar
     playerctl
     swaync
-    swayosd
     swww
     wlogout
     wl-clipboard
     wlroots0.19
     xwaylandvideobridge
     xwayland-run
-    networkmanager
-    network-manager-applet
-    brightnessctl
-    pcmanfm
-    nwg-look
-    papirus-icon-theme
-    nordzy-hyprcursors
-    matugen
-    okular
-    tty-colorscheme
 )
 
 # WARN: IF YOU ARE ON A NEW ARCH INSTALL HAVE NO DESKTOP AND WANT TO RICE A WINDOW MANAGER FROM SCRATCH THEN 
