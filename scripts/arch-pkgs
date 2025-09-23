@@ -174,6 +174,35 @@ BLUETOOTH=(
     bluez-utils
 )
 
+QTILE_PKGS=(
+    qtile
+    python-dbus-next
+    python-gobject
+    xorg
+    xorg-xinit
+    xorg-xrandr
+    xorg-xsetroot
+    xorg-xset
+    xorg-xprop
+    xorg-xinput
+    xorg-xkbcomp
+    python-psutil
+    python-setproctitle
+    python-cairocffi
+    python-xcffib
+    python-iwlib
+    python-keyring
+    playerctl
+    feh
+    picom
+    bemenu
+    lxappearance
+    xclip
+    xsel
+    udisks2
+    udiskie
+)
+
 # NOTE: PACKGES FOR HYPRLAND TO WORK WITH THE CONFIG I LIKE
 HYPR_PKGS=(
     hyprland
@@ -256,6 +285,7 @@ install_package_group "Browser" "${BROWSERS[@]}"
 install_package_group "Pipewire packages" "${AUDIO[@]}"
 install_package_group "Pipewire packages" "${VIDEO[@]}"
 install_package_group "Bluetooth Packages" "${BLUETOOTH[@]}"
+install_package_group "Qtile packages" "${QTILE_PKGS[@]}"
 install_package_group "Hyprland packages" "${HYPR_PKGS[@]}"
 # install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
 
