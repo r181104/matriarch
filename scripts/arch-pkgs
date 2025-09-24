@@ -149,6 +149,7 @@ FORMATTERS=(
     yamlfmt
     prettierd
     google-java-format
+    jq
 )
 
 # NOTE: BROWERS I LIKE TO HAVE
