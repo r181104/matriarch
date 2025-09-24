@@ -58,6 +58,7 @@ BASE_PKGS=(
     tmux
     ripgrep
     bat
+    bind
     man
     stow
     eza
