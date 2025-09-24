@@ -15,6 +15,26 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
+static const char *const autostart[] = {
+    "sh", "-c",
+    "xset r rate 200 50; "
+    "xset -b; "
+    "xset s off -dpms; "
+    "command -v numlockx >/dev/null 2>&1 && numlockx &; "
+    "for dev in 'Elan Touchpad' 'Elan TrackPoint'; do xinput list \"$dev\" >/dev/null 2>&1 || continue; done; "
+    "xinput --set-prop 'Elan Touchpad' 'libinput Tapping Enabled' 1 2>/dev/null; "
+    "xinput --set-prop 'Elan Touchpad' 'libinput Natural Scrolling Enabled' 0 2>/dev/null; "
+    "xinput --set-prop 'Elan Touchpad' 'libinput Disable While Typing Enabled' 1 2>/dev/null; "
+    "xinput --set-prop 'Elan Touchpad' 'libinput Accel Speed' 2 2>/dev/null; "
+    "xinput --set-prop 'Elan TrackPoint' 'libinput Accel Speed' 0 2>/dev/null; "
+    "for output in eDP1 eDP2 eDP3 eDP4 eDP-1 eDP-2 eDP-3 eDP-4; do xrandr --output \"$output\" --mode 1920x1080 --rate 60.00 2>/dev/null; done; "
+    "pgrep -x dunst >/dev/null || (dunst &); "
+    "pgrep -x picom >/dev/null || (picom &); "
+    "[ -f /home/sten/.fehbg ] && /home/sten/.fehbg &",
+    NULL,
+    NULL
+};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
