@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+# Install required packages
+yay -S --needed --noconfirm optimus-manager optimus-manager-qt nvidia-prime
+
+# Enable optimus-manager service
+sudo systemctl enable optimus-manager.service
+
+# Configure optimus-manager
+sudo mkdir -p /etc/optimus-manager
+sudo tee /etc/optimus-manager/optimus-manager.conf >/dev/null <<'EOF'
+[optimus]
+switching=none
+startup_mode=hybrid
+pci_power_control=no
+pci_remove=no
+pci_reset=no
+EOF
+
+echo "Configuration done. Reboot required."
