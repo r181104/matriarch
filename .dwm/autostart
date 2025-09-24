@@ -25,3 +25,5 @@ xrandr --output eDP-4 --mode 1920x1080 --rate 60.00
 
 dunst & disown
 picom & disown
+
+~/.fehbg
