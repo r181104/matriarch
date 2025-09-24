@@ -20,7 +20,7 @@ set -Ux PATH $JAVA_HOME/bin $PATH
 #   Auth & Agents
 # ==============================
 if type -q keychain
-    eval (keychain --eval --agents ssh ~/.ssh/id_rsa)
+    keychain --quiet --eval ~/.ssh/id_rsa | source
 end
 
 # NOTE: ==============================

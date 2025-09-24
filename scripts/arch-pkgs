@@ -45,6 +45,7 @@ BASE_PKGS=(
     neovim
     neovide
     git
+    keychain
     git-delta
     btop
     htop
