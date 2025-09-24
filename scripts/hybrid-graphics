@@ -19,4 +19,12 @@ pci_remove=no
 pci_reset=no
 EOF
 
+sudo tee /etc/X11/xorg.conf.d/10-intel.conf >/dev/null <<'EOF'
+Section "Device"
+    Identifier "Intel Graphics"
+    Driver "modesetting"
+    BusID "PCI:0:2:0"
+EndSection
+EOF
+
 echo "Configuration done. Reboot required."

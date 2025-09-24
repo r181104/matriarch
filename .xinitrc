@@ -1,5 +1,7 @@
 #!/bin/sh
 
-sh -c ~/.dwm/autostart
+[ -f ~/.xprofile ] && . ~/.xprofile
 
-exec dwm
+while :; do
+    ssh-agent dwm || break
+done
