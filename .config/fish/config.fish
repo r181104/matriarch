@@ -19,7 +19,9 @@ set -Ux PATH $JAVA_HOME/bin $PATH
 # NOTE: ==============================
 #   Auth & Agents
 # ==============================
-set -Ux SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+if type -q keychain
+    eval (keychain --eval --agents ssh ~/.ssh/id_rsa)
+end
 
 # NOTE: ==============================
 #   Prompt (Starship)
