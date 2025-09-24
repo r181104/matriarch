@@ -66,11 +66,8 @@ BASE_PKGS=(
     network-manager-applet
     brightnessctl
     pcmanfm
-    nwg-look
     papirus-icon-theme
-    nordzy-hyprcursors
-    matugen
-    okular
+    bibata-cursor-translucent
     tty-colorscheme
 )
 
@@ -100,7 +97,7 @@ DEVELOPMENT=(
 LSP=(
     pyright
     lua-language-server
-    jdtls
+    # jdtls
     vtsls
     tailwindcss-language-server
 )
@@ -174,37 +171,18 @@ BLUETOOTH=(
     bluez-utils
 )
 
-QTILE_PKGS=(
-    qtile
-    python-dbus-next
-    python-gobject
-    xorg
+DWM=(
+    xorg-server
     xorg-xinit
-    xorg-xrandr
-    xorg-xsetroot
-    xorg-xset
-    xorg-xprop
-    xorg-xinput
-    xorg-xkbcomp
-    python-psutil
-    python-setproctitle
-    python-cairocffi
-    python-xcffib
-    python-iwlib
-    python-keyring
-    python-pytest
-    mypy
-    playerctl
+    xorg-xsetroot 
+    dmenu
+    libx11
+    libxft
+    libxinerama
     feh
     picom
-    dunst
-    flameshot
-    bemenu
+    xclip 
     lxappearance
-    xclip
-    xsel
-    udisks2
-    udiskie
 )
 
 # WARN: IF YOU ARE ON A NEW ARCH INSTALL HAVE NO DESKTOP AND WANT TO RICE A WINDOW MANAGER FROM SCRATCH THEN 
@@ -261,7 +239,7 @@ install_package_group "Browser" "${BROWSERS[@]}"
 install_package_group "Pipewire packages" "${AUDIO[@]}"
 install_package_group "Pipewire packages" "${VIDEO[@]}"
 install_package_group "Bluetooth Packages" "${BLUETOOTH[@]}"
-install_package_group "Qtile packages" "${QTILE_PKGS[@]}"
+install_package_group "DWM Packages" "${DWM[@]}"
 # install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
 
 echo "I HOPE THIS SCRIPT HELPED YOU WITH YOUR ARCH"
