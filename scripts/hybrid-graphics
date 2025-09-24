@@ -12,9 +12,9 @@ sudo systemctl enable optimus-manager.service
 sudo mkdir -p /etc/optimus-manager
 sudo tee /etc/optimus-manager/optimus-manager.conf >/dev/null <<'EOF'
 [optimus]
-switching=none
-startup_mode=hybrid
-pci_power_control=no
+startup_mode=intel
+switching=auto
+pci_power_control=yes
 pci_remove=no
 pci_reset=no
 EOF
