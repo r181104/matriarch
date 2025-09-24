@@ -208,3 +208,11 @@ bind \et fzf-file-widget
 if command -q fzf
     fzf_key_bindings | source
 end
+
+# Auto-start X on TTY1, once per login
+if status --is-interactive; and not set -q DISPLAY; and tty | grep -q '/dev/tty1'; and not set -q SSH_CONNECTION
+    if not test -f /tmp/.xsession_started_$USER
+        touch /tmp/.xsession_started_$USER
+        startx >/dev/null 2>&1 || echo "startx failed, check ~/.xsession-errors"
+    end
+end
