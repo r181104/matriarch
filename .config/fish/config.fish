@@ -5,7 +5,7 @@ end
 #   Core Environment Variables
 # ==============================
 set -gx LANG en_IN.UTF-8
-set -gx BROWSER "firefox-developer-edition"
+set -gx BROWSER "brave"
 set -gx TERM "alacritty"
 set -gx EDITOR "neovide"
 set -gx COLORTERM "truecolor"

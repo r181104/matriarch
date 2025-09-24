@@ -57,12 +57,14 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *browser[]  = { "firefox-developer-edition", NULL };
+static const char *browser0[]  = { "firefox-developer-edition", NULL };
+static const char *browser1[]  = { "brave", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_b,      spawn,          {.v = browser } },
+	{ MODKEY,                       XK_b,      spawn,          {.v = browser0 } },
+	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browser1 } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_f,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
