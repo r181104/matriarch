@@ -72,7 +72,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *menu[] = { "bemenu-run", "--fn", "JetBrainsMono NF 20", "-l", "8", "-i", "--nb", "#1d1f21cc", "--nf", "#c5c8c6", "--sb", "#81a2becc", "--sf", "#sffffff", NULL };
+static const char *menu[] = { "bemenu-run", "--fn", "MesloLGS Nerd Font 20", "-l", "8", "-i", "--nb", "#1d1f21cc", "--nf", "#c5c8c6", "--sb", "#81a2becc", "--sf", "#sffffff", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browser0[]  = { "firefox-developer-edition", "--enable-accelerated-video-decode", "--enable-hardware-overlays", "--enable-gpu-rasterization", "--enable-webrender", NULL };
 static const char *browser1[]  = { "brave", NULL };
