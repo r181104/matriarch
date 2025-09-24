@@ -80,6 +80,8 @@ static const char *browser0[]  = { "firefox-developer-edition", NULL };
 static const char *browser1[]  = { "brave", NULL };
 static const char *incvol[] = {"/usr/bin/amixer", "set", "Master", "5%+", NULL};
 static const char *decvol[] = {"/usr/bin/amixer", "set", "Master", "5%-", NULL};
+static const char *brightnessup[] = { "brightnessctl", "set", "5%+", NULL };
+static const char *brightnessdown[] = { "brightnessctl", "set", "5%-", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -115,10 +117,10 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, 
-    // {0,                             XF86XK_AudioRaiseVolume, spawn, {.v = raisevolume } },
-    // {0,                             XF86XK_AudioLowerVolume, spawn, {.v = lowervolume } },
-   	{ 0,				            XF86XK_AudioLowerVolume,  spawn,  {.v = decvol} },	
-	{ 0,				            XF86XK_AudioRaiseVolume,  spawn,  {.v = incvol} },
+   	{ 0,XF86XK_AudioLowerVolume,               spawn,          {.v = decvol} },	
+	{ 0,XF86XK_AudioRaiseVolume,               spawn,          {.v = incvol} },
+    { 0, XF86XK_MonBrightnessUp,               spawn,          {.v = brightnessup } },
+    { 0, XF86XK_MonBrightnessDown,             spawn,          {.v = brightnessdown } },
 };
 
 /* button definitions */
