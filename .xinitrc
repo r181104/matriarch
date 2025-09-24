@@ -6,11 +6,13 @@ xset -b
 
 numlockx &
 
-xinput --set-prop "pointer:<your-touchpad-name>" "libinput Tapping Enabled" 1
-xinput --set-prop "pointer:<your-touchpad-name>" "libinput Natural Scrolling Enabled" 1
-xinput --set-prop "pointer:<your-touchpad-name>" "libinput Disable While Typing Enabled" 1
-xinput --set-prop "pointer:<your-touchpad-name>" "libinput Accel Speed" 0.3
-xinput --set-prop "pointer:<your-touchpad-name>" "libinput Scroll Method Enabled" 0 0 1
+xset s off -dpms
+
+xinput --set-prop "Elan Touchpad" "libinput Tapping Enabled" 1
+xinput --set-prop "Elan Touchpad" "libinput Natural Scrolling Enabled" 0
+xinput --set-prop "Elan Touchpad" "libinput Disable While Typing Enabled" 1
+xinput --set-prop "Elan Touchpad" "libinput Accel Speed" 2
+xinput --set-prop "Elan TrackPoint" "libinput Accel Speed" 0
 
 xrandr --output eDP1 --mode 1920x1080 --rate 60.00
 xrandr --output eDP2 --mode 1920x1080 --rate 60.00
