@@ -130,7 +130,7 @@ DEVELOPMENT=(
 LSP=(
     pyright
     lua-language-server
-    # jdtls
+    jdtls
     vtsls
     tailwindcss-language-server
 )
@@ -178,11 +178,12 @@ DWM=(
     xorg-server
     xorg-xinit
     xorg-xsetroot 
-    dmenu
+    bmenu-x11
     libx11
     libxft
     libxinerama
     feh
+    bemenu-x11
     picom
     dunst
     xclip 

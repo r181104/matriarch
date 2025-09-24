@@ -1,0 +1,20 @@
+[config.wallpaper]
+command = "swww"
+arguments = ["img", "--transition-type", "center", "--transition-step", "15", "--transition-fps", "60"]
+set = true
+
+[templates.starship]
+input_path = "~/.config/matugen/templates/starship-colors.toml"
+output_path = "~/.config/starship.toml"
+
+[templates.alacritty]
+input_path = "~/.config/matugen/templates/alacritty.toml"
+output_path = "~/.cache/alacritty.toml"
+
+[templates.kitty]
+input_path = "~/.config/matugen/templates/kitty-colors.conf"
+output_path = "~/.cache/kitty-colors.conf"
+
+[templates.colors]
+input_path = "~/.config/matugen/templates/colors.css"
+output_path = "~/.cache/colors.css"

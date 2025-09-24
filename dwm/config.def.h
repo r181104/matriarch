@@ -3,7 +3,6 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "MesloLGS Nerd Font:size=14" };
-static const char dmenufont[]       = "MesloLGS Nerd Font:size=20";
 static const unsigned int gappih    = 4;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 4;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 4;       /* horiz outer gap between windows and screen edge */
@@ -73,8 +72,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *menu[] = { "bemenu-run", "--fn", "JetBrainsMono NF 20", "-l", "8", "-i", "--nb", "#1d1f21cc", "--nf", "#c5c8c6", "--sb", "#81a2becc", "--sf", "#sffffff", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browser0[]  = { "firefox-developer-edition", "--enable-accelerated-video-decode", "--enable-hardware-overlays", "--enable-gpu-rasterization", "--enable-webrender", NULL };
 static const char *browser1[]  = { "brave", NULL };
@@ -86,7 +84,7 @@ static const char *brightnessdown[] = { "brightnessctl", "set", "5%-", NULL };
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_space,  spawn,          {.v = menu } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browser0 } },
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browser1 } },
    	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
