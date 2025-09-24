@@ -14,6 +14,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xproto.h>
 #include <X11/Xutil.h>
+#include <X11/XF86keysym.h>
 #ifdef XINERAMA
 #include <X11/extensions/Xinerama.h>
 #endif /* XINERAMA */
@@ -159,7 +160,7 @@ static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
-static void incnmaster(const Arg *arg);
+// static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
@@ -806,7 +807,6 @@ focus(Client *c)
 		if (c->isurgent)
 			seturgent(c, 0);
 		detachstack(c);
-        attachaside(c);
 		attachstack(c);
 		grabbuttons(c, 1);
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);

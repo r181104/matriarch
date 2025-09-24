@@ -26,11 +26,6 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
@@ -46,8 +41,9 @@ static const int refreshrate = 120;  /* refresh rate (per second) for client mov
 #include "vanitygaps.c"
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "[]=",      tile },
+ 	{ "[@]",      spiral },
+	{ "><>",      NULL },
 	{ "[M]",      monocle },
 	{ "[@]",      spiral },
 	{ "[\\]",     dwindle },
@@ -60,14 +56,13 @@ static const Layout layouts[] = {
 	{ ":::",      gaplessgrid },
 	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
- 	{ "[@]",      spiral },
  	{ "[\\]",      dwindle },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -83,21 +78,21 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browser0[]  = { "firefox-developer-edition", NULL };
 static const char *browser1[]  = { "brave", NULL };
+static const char *incvol[] = {"/usr/bin/amixer", "set", "Master", "5%+", NULL};
+static const char *decvol[] = {"/usr/bin/amixer", "set", "Master", "5%-", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browser0 } },
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browser1 } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
    	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
-	{ MODKEY|ShiftMask,             XK_f,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ ALTKEY,                       XK_f,      togglebar,      {0} },
+	{ ALTKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	{ ALTKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ ALTKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+	{ ALTKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -119,7 +114,11 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
+	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, 
+    // {0,                             XF86XK_AudioRaiseVolume, spawn, {.v = raisevolume } },
+    // {0,                             XF86XK_AudioLowerVolume, spawn, {.v = lowervolume } },
+   	{ 0,				            XF86XK_AudioLowerVolume,  spawn,  {.v = decvol} },	
+	{ 0,				            XF86XK_AudioRaiseVolume,  spawn,  {.v = incvol} },
 };
 
 /* button definitions */
