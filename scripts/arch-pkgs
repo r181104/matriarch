@@ -73,6 +73,37 @@ BASE_PKGS=(
     tty-colorscheme
 )
 
+# NOTE: PACKAGES TO RUN AUDIO THE BEST IN ARCH
+AUDIO=(
+    pipewire 
+    pipewire-alsa 
+    pipewire-audio 
+    pipewire-pulse 
+    pipewire-jack 
+    pipewire-zeroconf 
+    gst-plugin-pipewire 
+    wireplumber 
+    pipewire-docs
+    pavucontrol
+    helvum 
+    qpwgraph
+)
+
+# NOTE: PACKAGES TO RUN VIDEO THE BEST IN ARCH
+VIDEO=(
+    mpv
+    vlc
+    ffmpeg
+    imagemagick
+)
+
+# NOTE: PACKAGES FOR BLUETOOH
+BLUETOOTH=(
+    blueman
+    bluez
+    bluez-utils
+)
+
 # NOTE: PACKAGES FOR TERMINAL
 TERM_PKGS=(
     alacritty
@@ -142,37 +173,6 @@ GTK_PKGS=(
     hicolor-icon-theme
 )
 
-# NOTE: PACKAGES TO RUN AUDIO THE BEST IN ARCH
-AUDIO=(
-    pipewire 
-    pipewire-alsa 
-    pipewire-audio 
-    pipewire-pulse 
-    pipewire-jack 
-    pipewire-zeroconf 
-    gst-plugin-pipewire 
-    wireplumber 
-    pipewire-docs
-    pavucontrol
-    helvum 
-    qpwgraph
-)
-
-# NOTE: PACKAGES TO RUN VIDEO THE BEST IN ARCH
-VIDEO=(
-    mpv
-    vlc
-    ffmpeg
-    imagemagick
-)
-
-# NOTE: PACKAGES FOR BLUETOOH
-BLUETOOTH=(
-    blueman
-    bluez
-    bluez-utils
-)
-
 DWM=(
     xorg-server
     xorg-xinit
@@ -233,15 +233,15 @@ install_package_group "System Packages" "${SYSTEM[@]}"
 install_package_group "Graphics Packages" "${GRAPHICS[@]}"
 install_package_group "Gaming Packages" "${GAMING_PKGS[@]}"
 install_package_group "Base Packages" "${BASE_PKGS[@]}"
+install_package_group "Pipewire packages" "${AUDIO[@]}"
+install_package_group "Video packages" "${VIDEO[@]}"
+install_package_group "Bluetooth Packages" "${BLUETOOTH[@]}"
 install_package_group "Terminal Emulators" "${TERM_PKGS[@]}"
 install_package_group "GTK Dependencies" "${GTK_PKGS[@]}"
 install_package_group "Development Languages and tools" "${DEVELOPMENT[@]}"
 install_package_group "LSP's for neovim" "${LSP[@]}"
 install_package_group "Formatters for neovim" "${FORMATTERS[@]}"
 install_package_group "Browser" "${BROWSERS[@]}"
-install_package_group "Pipewire packages" "${AUDIO[@]}"
-install_package_group "Pipewire packages" "${VIDEO[@]}"
-install_package_group "Bluetooth Packages" "${BLUETOOTH[@]}"
 install_package_group "DWM Packages" "${DWM[@]}"
 # install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
 
