@@ -25,6 +25,9 @@ static       int smartgaps          = 1;        /* 1 = no outer gap if only 1 wi
 static const int vertpad            = 2;        /* bar vertical padding */
 static const int sidepad            = 8;        /* bar horizontal padding */
 
+static int hidden_tags_start = 5; // zero-indexed, tags 6–10 are hidden
+static int hidden_tags_visible = 0; // 0 = hidden, 1 = visible
+
 /* Colors */
 static const char *colors[][3] = {
     /*               fg           bg        border   */
@@ -32,18 +35,6 @@ static const char *colors[][3] = {
     [SchemeSel]  = { nord6,      nord8,    nord13 },   // selected: bright text on icy bg with orange border
 };
 
-/* tagging */
-// static const char *tags[] = {
-//     "  ",
-//     "  ",
-//     "  ",
-//     "  ",
-//     "  ",
-//     "  ",
-//     "  ",
-//     "  ",
-//     "  ",
-// };
 static const char *tags[] = {
     "  ", "  ", "  ", "  ", "  ",
     "  ", "  ", "  ", "  ", "  "
