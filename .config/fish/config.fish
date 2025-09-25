@@ -16,6 +16,20 @@ set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di=1;34:fi=0"
 # NOTE: set -gx LS_COLORS "di 1;3;34:fi=0"
 
+# NOTE: Wipe any existing PATH (fish auto-imports from system files otherwise)
+set -gx PATH
+set -gx PATH $HOME/.local/bin
+set -gx PATH $HOME/.local/sbin $PATH
+set -gx PATH /usr/local/bin $PATH
+set -gx PATH /usr/local/sbin $PATH
+set -gx PATH /usr/bin $PATH
+set -gx PATH /usr/sbin $PATH
+set -gx PATH /bin $PATH
+set -gx PATH /sbin $PATH
+
+# NOTE: Optional: add nix or other stuff only if *you want*
+# NOTE: set -gx PATH /nix/var/nix/profiles/default/bin $PATH
+
 # NOTE: Java environment (auto-detect JDK)
 set -Ux JAVA_HOME (archlinux-java get | string replace 'java-' '/usr/lib/jvm/java-')
 set -Ux PATH $JAVA_HOME/bin $PATH

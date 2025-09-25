@@ -93,6 +93,7 @@ static const char *incvol[] = {"/usr/bin/amixer", "set", "Master", "5%+", NULL};
 static const char *decvol[] = {"/usr/bin/amixer", "set", "Master", "5%-", NULL};
 static const char *brightnessup[] = { "brightnessctl", "set", "5%+", NULL };
 static const char *brightnessdown[] = { "brightnessctl", "set", "5%-", NULL };
+static const char *lock[] = { "lock", NULL };
 
 /* keys */
 static const Key keys[] = {
@@ -100,6 +101,7 @@ static const Key keys[] = {
     { MODKEY,                       XK_space,  spawn,          {.v = menu } },
     { MODKEY,                       XK_b,      spawn,          {.v = browser0 } },
     { MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browser1 } },
+    { ALTKEY|ControlMask,           XK_l,      spawn,          {.v = lock } },
     { MODKEY,                       XK_f,      togglefullscr,  {0} },
     { MODKEY|ShiftMask,             XK_f,      togglebar,      {0} },
     { MODKEY,                       XK_j,      shiftview,      { .i = -1 } },

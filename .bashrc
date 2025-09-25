@@ -1,3 +1,17 @@
+# Clear existing PATH
+PATH=""
+# Add your preferred paths manually
+PATH="$HOME/.local/bin"
+PATH="$HOME/.local/sbin:$PATH"
+PATH="/usr/local/bin:$PATH"
+PATH="/usr/local/sbin:$PATH"
+PATH="/usr/bin:$PATH"
+PATH="/usr/sbin:$PATH"
+PATH="/bin:$PATH"
+PATH="/sbin:$PATH"
+# Export it so all child processes see it
+export PATH
+
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'

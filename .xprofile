@@ -10,7 +10,6 @@ xset s off -dpms
 # Start numlock if available
 command -v numlockx >/dev/null 2>&1 && numlockx &
 command -v libinput-gestures >/dev/null 2>&1 && libinput-gestures &
-~/mir/dwm/dwmbar/build/dwmblocks
 
 # === Touchpad & TrackPoint ===
 for dev in "Elan Touchpad" "Elan TrackPoint"; do
