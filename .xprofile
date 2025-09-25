@@ -10,10 +10,11 @@ xset s off -dpms
 # Start numlock if available
 command -v numlockx >/dev/null 2>&1 && numlockx &
 command -v libinput-gestures >/dev/null 2>&1 && libinput-gestures &
+command -v dwmblocks >/dev/null 2>&1 && dwmblocks &
 
 # === Touchpad & TrackPoint ===
 for dev in "Elan Touchpad" "Elan TrackPoint"; do
-    xinput list "$dev" >/dev/null 2>&1 || continue
+  xinput list "$dev" >/dev/null 2>&1 || continue
 done
 
 xinput --set-prop "Elan Touchpad" "libinput Tapping Enabled" 1 2>/dev/null
@@ -24,7 +25,7 @@ xinput --set-prop "Elan TrackPoint" "libinput Accel Speed" 0 2>/dev/null
 
 # === Monitor setup ===
 for output in eDP1 eDP2 eDP3 eDP4 eDP-1 eDP-2 eDP-3 eDP-4; do
-    xrandr --output "$output" --mode 1920x1080 --rate 60.00 2>/dev/null
+  xrandr --output "$output" --mode 1920x1080 --rate 60.00 2>/dev/null
 done
 
 # === Start background apps only if not already running ===
