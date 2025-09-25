@@ -99,8 +99,8 @@ static const char *menu[] = {
 };
 
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *browser0[]  = { "firefox-developer-edition", "--enable-accelerated-video-decode", "--enable-hardware-overlays", "--enable-gpu-rasterization", "--enable-webrender", NULL };
-static const char *browser1[]  = { "brave", NULL };
+static const char *browser0[]  = { "firefox-developer-edition", "--no-remote", NULL };
+static const char *browser1[]  = { "brave",  "--no-sandbox", "--disable-extensions", "--disable-plugins", "--disable-background-networking", "--disk-cache-dir=/tmp/brave-cache", "--new-window about:blank", NULL };
 static const char *incvol[] = {"/usr/bin/amixer", "set", "Master", "5%+", NULL};
 static const char *decvol[] = {"/usr/bin/amixer", "set", "Master", "5%-", NULL};
 static const char *brightnessup[] = { "brightnessctl", "set", "5%+", NULL };
