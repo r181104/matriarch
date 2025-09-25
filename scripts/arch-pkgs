@@ -64,6 +64,7 @@ BASE_PKGS=(
     stow
     eza
     bc
+    fastfetch
     networkmanager
     network-manager-applet
     brightnessctl
