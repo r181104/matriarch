@@ -1,4 +1,7 @@
 if status is-interactive
+    if command -q fastfetch
+        fastfetch --config my.jsonc
+    end
 end
 
 # NOTE: ==============================
