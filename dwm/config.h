@@ -1,4 +1,3 @@
-/* Nord Color Palette */
 static const char nord0[]  = "#2E3440"; // Polar Night 0 - background
 static const char nord1[]  = "#3B4252"; // Polar Night 1 - darker elements
 static const char nord2[]  = "#434C5E"; // Polar Night 2 - borders
@@ -34,7 +33,17 @@ static const char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1","2","3","4","5","6","7","8","9" };
+static const char *tags[] = {
+    "  ",
+    "  ",
+    "  ",
+    "  ",
+    "  ",
+    "  ",
+    "  ",
+    "  ",
+    "  ",
+};
 
 /* rules */
 static const Rule rules[] = {
@@ -43,31 +52,30 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; 
-static const int nmaster     = 1;    
-static const int resizehints = 1;    
-static const int lockfullscreen = 1; 
-static const int refreshrate = 120;  
+static const float mfact     = 0.5;
+static const int nmaster     = 1;
+static const int resizehints = 1;
+static const int lockfullscreen = 1;
+static const int refreshrate = 60;
 
-#define FORCE_VSPLIT 1  
+#define FORCE_VSPLIT 1
 #include "vanitygaps.c"
 
 static const Layout layouts[] = {
-    { "[]=",      tile },
-    { "[@]",      spiral },
-    { "><>",      NULL },
-    { "[M]",      monocle },
-    { "[\\]",     dwindle },
-    { "H[]",      deck },
-    { "TTT",      bstack },
-    { "===",      bstackhoriz },
-    { "HHH",      grid },
-    { "###",      nrowgrid },
-    { "---",      horizgrid },
-    { ":::",      gaplessgrid },
-    { "|M|",      centeredmaster },
-    { ">M>",      centeredfloatingmaster },
-    { NULL,       NULL },
+    { "﩯",      tile },
+    { "舘",      spiral },
+    { "",      NULL },
+    { "",      monocle },
+    { "﩯﩯",    dwindle },
+    { "ﳴ",      deck },
+    { "",      bstack },
+    { "恵",      bstackhoriz },
+    { "﩯恵",    grid },
+    { "",      nrowgrid },
+    { "ﭿ",      horizgrid },
+    { "",      gaplessgrid },
+    { "﩯並",    centeredmaster },
+    { "ﲔ",      centeredfloatingmaster }
 };
 
 /* key definitions */
@@ -82,7 +90,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *menu[] = { 
+static const char *menu[] = {
     "bemenu-run",
     "--fn", "MesloLGS Nerd Font 20",
     "-l", "8",
@@ -93,7 +101,7 @@ static const char *menu[] = {
     "--sf", "#ECEFF4",
     "--hb", "#3B4252",
     "--hf", "#D8DEE9",
-    NULL 
+    NULL
 };
 
 static const char *termcmd[]  = { "alacritty", NULL };
@@ -112,6 +120,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browser1 } },
     { MODKEY,                       XK_f,      togglefullscr,  {0} },
     { MODKEY|ShiftMask,             XK_f,      togglebar,      {0} },
+    { MODKEY,                       XK_j,      shiftview,      { .i = -1 } },
+    { MODKEY,                       XK_k,      shiftview,      { .i = +1 } },
     { ALTKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { ALTKEY,                       XK_k,      focusstack,     {.i = -1 } },
     { ALTKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -138,7 +148,7 @@ static const Key keys[] = {
     TAGKEYS(                        XK_9,                      8)
     { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
     { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
-    { 0,XF86XK_AudioLowerVolume,               spawn,          {.v = decvol} },    
+    { 0,XF86XK_AudioLowerVolume,               spawn,          {.v = decvol} },
     { 0,XF86XK_AudioRaiseVolume,               spawn,          {.v = incvol} },
     { 0, XF86XK_MonBrightnessUp,               spawn,          {.v = brightnessup } },
     { 0, XF86XK_MonBrightnessDown,             spawn,          {.v = brightnessdown } },
