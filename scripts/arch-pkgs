@@ -189,6 +189,8 @@ DWM=(
     dunst
     xclip 
     lxappearance
+    libinput-gestures
+    xdotool
 )
 
 # WARN: IF YOU ARE ON A NEW ARCH INSTALL HAVE NO DESKTOP AND WANT TO RICE A WINDOW MANAGER FROM SCRATCH THEN 

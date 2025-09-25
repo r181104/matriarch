@@ -24,9 +24,8 @@ static const unsigned int gappov    = 4;        /* vert outer gap */
 static       int smartgaps          = 1;        /* 1 = no outer gap if only 1 window */
 static const int vertpad            = 2;        /* bar vertical padding */
 static const int sidepad            = 8;        /* bar horizontal padding */
-
-static int hidden_tags_start = 5; // zero-indexed, tags 6–10 are hidden
-static int hidden_tags_visible = 0; // 0 = hidden, 1 = visible
+static int hidden_tags_start = 5;               // zero-indexed, tags 6–10 are hidden
+static int hidden_tags_visible = 0;             // 0 = hidden, 1 = visible
 
 /* Colors */
 static const char *colors[][3] = {
@@ -117,6 +116,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_f,      togglebar,      {0} },
     { MODKEY,                       XK_j,      shiftview,      { .i = -1 } },
     { MODKEY,                       XK_k,      shiftview,      { .i = +1 } },
+    { MODKEY,                       XK_Left,   shiftview,      { .i = -1 } },
+    { MODKEY,                       XK_Right,  shiftview,      { .i = +1 } },
     { ALTKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { ALTKEY,                       XK_k,      focusstack,     {.i = -1 } },
     { ALTKEY,                       XK_h,      setmfact,       {.f = -0.05} },
