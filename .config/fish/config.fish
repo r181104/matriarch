@@ -1,6 +1,7 @@
 if status is-interactive
     if command -q fastfetch
-        fastfetch --config my.jsonc
+        fastfetch --config my
+        alias fetch "fastfetch --config my"
     end
 end
 
