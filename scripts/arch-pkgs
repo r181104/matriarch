@@ -52,7 +52,6 @@ BASE_PKGS=(
     wget
     curl
     fish
-    starship
     fzf
     fd
     zoxide
@@ -249,5 +248,9 @@ install_package_group "Formatters for neovim" "${FORMATTERS[@]}"
 install_package_group "Browser" "${BROWSERS[@]}"
 install_package_group "DWM Packages" "${DWM[@]}"
 # install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
+#
+echo "Setting up inputs to be available for your user"
+sudo gpasswd -a $USER input
+echo "Setting up inputs Done"
 
 echo "I HOPE THIS SCRIPT HELPED YOU WITH YOUR ARCH"
