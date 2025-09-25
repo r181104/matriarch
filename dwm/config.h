@@ -25,7 +25,7 @@ static       int smartgaps          = 1;        /* 1 = no outer gap if only 1 wi
 static const int vertpad            = 2;        /* bar vertical padding */
 static const int sidepad            = 8;        /* bar horizontal padding */
 static int hidden_tags_start = 5;               // zero-indexed, tags 6–10 are hidden
-static int hidden_tags_visible = 0;             // 0 = hidden, 1 = visible
+static int hidden_tags_visible = 1;             // 0 = hidden, 1 = visible
 
 /* Colors */
 static const char *colors[][3] = {
@@ -127,7 +127,6 @@ static const Key keys[] = {
     { MODKEY,                       XK_q,      killclient,     {0} },
     { MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
     { MODKEY|ShiftMask,             XK_p,      togglefloating, {0} },
-    { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
     { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
     { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
     { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
@@ -142,6 +141,7 @@ static const Key keys[] = {
     TAGKEYS(                        XK_7,                      6)
     TAGKEYS(                        XK_8,                      7)
     TAGKEYS(                        XK_9,                      8)
+    TAGKEYS(                        XK_0,                      9)
     { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
     { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
     { 0,XF86XK_AudioLowerVolume,               spawn,          {.v = decvol} },
