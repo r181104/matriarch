@@ -5,8 +5,8 @@ SETUVAR --export FZF_CTRL_T_COMMAND:command\x20find\x20\x2dL\x20\x24dir\x20\x2dt
 SETUVAR --export FZF_DEFAULT_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2d\x2dhidden\x20\x2d\x2dexclude\x20\x2egit
 SETUVAR --export JAVA_HOME:/usr/lib/jvm/java\x2d25\x2dopenjdk
 SETUVAR --export --path PATH:/usr/lib/jvm/java\x2d25\x2dopenjdk/bin\x1e/etc/profiles/per\x2duser/sten/bin\x1e/run/current\x2dsystem/sw/bin\x1e/etc/profiles/per\x2duser/hack/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/bin\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl
-SETUVAR --export SSH_AGENT_PID:1392
-SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXX8Do9oW/agent\x2e1391
+SETUVAR --export SSH_AGENT_PID:1433
+SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXX9aqA1b/agent\x2e1432
 SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
