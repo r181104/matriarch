@@ -1,3 +1,6 @@
+[colors.primary]
+background = "#000000"
+
 [cursor]
 unfocused_hollow = false
 
@@ -47,4 +50,4 @@ style = "Bold Italic"
 
 [general]
 live_config_reload = true
-import = ["~/.config/alacritty/nord-colors.toml"]
+import = ["~/.config/alacritty/material-colors.toml"]

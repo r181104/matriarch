@@ -1,18 +1,5 @@
-static const char nord0[]  = "#2E3440"; // Polar Night 0 - background
-static const char nord1[]  = "#3B4252"; // Polar Night 1 - darker elements
-static const char nord2[]  = "#434C5E"; // Polar Night 2 - borders
-static const char nord3[]  = "#4C566A"; // Polar Night 3 - faded text
-static const char nord4[]  = "#D8DEE9"; // Snow Storm 0 - normal text
-static const char nord5[]  = "#E5E9F0"; // Snow Storm 1 - light highlight
-static const char nord6[]  = "#ECEFF4"; // Snow Storm 2 - bright text
-static const char nord8[]  = "#88C0D0"; // Frost 0 - selected background
-static const char nord9[]  = "#81A1C1"; // Frost 1 - subtle accent
-static const char nord11[] = "#BF616A"; // Aurora 0 - red accent
-static const char nord12[] = "#B48EAD"; // Aurora 1 - purple accent
-static const char nord13[] = "#D08770"; // Aurora 2 - orange accent
-
 /* Window & Bar settings */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -28,10 +15,11 @@ static int hidden_tags_start = 5;               // zero-indexed, tags 6–10 are
 static int hidden_tags_visible = 1;             // 0 = hidden, 1 = visible
 
 /* Colors */
+#include "colors.h"
 static const char *colors[][3] = {
-    /*               fg           bg        border   */
-    [SchemeNorm] = { nord4,      nord0,    nord2 },    // normal text: light on dark
-    [SchemeSel]  = { nord6,      nord8,    nord13 },   // selected: bright text on icy bg with orange border
+    /*               fg           bg           border   */
+    [SchemeNorm] = { color4_m,    color0_m,    color2_m },    // normal text: light on dark
+    [SchemeSel]  = { color6_m,    color8_m,    color13_m },   // selected: bright text on icy bg with orange border
 };
 
 static const char *tags[] = {
