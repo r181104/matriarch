@@ -192,6 +192,14 @@ DWM=(
     xdotool
 )
 
+ZATHURA=(
+    zathura
+    zathura-pdf-mupdf
+    zathura-djvu
+    zathura-ps
+    zathura-epub
+)
+
 # WARN: IF YOU ARE ON A NEW ARCH INSTALL HAVE NO DESKTOP AND WANT TO RICE A WINDOW MANAGER FROM SCRATCH THEN 
 # ENABLE THIS AT THE END OF THE FILE AND YOU WILL HAVE A GOOD DESKTOP TO THEN RICE YOUR WINDOW MANAGER FROM
 PREFERRED_DM=(
@@ -247,6 +255,7 @@ install_package_group "LSP's for neovim" "${LSP[@]}"
 install_package_group "Formatters for neovim" "${FORMATTERS[@]}"
 install_package_group "Browser" "${BROWSERS[@]}"
 install_package_group "DWM Packages" "${DWM[@]}"
+install_package_group "Zathura Packages" "${ZATHURA[@]}"
 # install_package_group "Preferred Desktop Manager" "${PREFERRED_DM[@]}"
 #
 echo "Setting up inputs to be available for your user"
