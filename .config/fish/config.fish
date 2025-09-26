@@ -16,16 +16,22 @@ set -gx COLORTERM "truecolor"
 set -gx LS_COLORS "di=1;34:fi=0"
 # NOTE: set -gx LS_COLORS "di 1;3;34:fi=0"
 
-# NOTE: Wipe any existing PATH (fish auto-imports from system files otherwise)
-set -gx PATH
-set -gx PATH $HOME/.local/bin
-set -gx PATH $HOME/.local/sbin $PATH
-set -gx PATH /usr/local/bin $PATH
-set -gx PATH /usr/local/sbin $PATH
-set -gx PATH /usr/bin $PATH
-set -gx PATH /usr/sbin $PATH
-set -gx PATH /bin $PATH
-set -gx PATH /sbin $PATH
+# NOTE: Ensure PATH exists
+set -q PATH; or set PATH
+
+# NOTE: User paths (prepended)
+for p in $HOME/.local/bin $HOME/.local/sbin
+    if not contains $p $PATH
+        set -p PATH $p
+    end
+end
+
+# NOTE: System paths (appended)
+for p in /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin
+    if not contains $p $PATH
+        set -a PATH $p
+    end
+end
 
 # NOTE: Optional: add nix or other stuff only if *you want*
 # NOTE: set -gx PATH /nix/var/nix/profiles/default/bin $PATH
